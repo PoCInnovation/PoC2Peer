@@ -1,9 +1,10 @@
 package p2p
 
 import (
-	"github.com/veggiedefender/torrent-client/client"
-	"github.com/veggiedefender/torrent-client/message"
-	"github.com/veggiedefender/torrent-client/peers"
+	"log"
+	"runtime"
+
+	"Poc2PeerBitTorrent/peers"
 )
 
 // MaxBlockSize is the largest number of bytes a request can ask for
@@ -35,42 +36,58 @@ type pieceResult struct {
 }
 
 type pieceProgress struct {
-	index      int
-	client     *client.Client
+	index int
+	//client     *client.Client
 	buf        []byte
 	downloaded int
 	requested  int
 	backlog    int
 }
 
-func (state *pieceProgress) readMessage() error {
-	msg, err := state.client.Read() // this call blocks
-	if err != nil {
-		return err
+func (t *Torrent) calculateBoundsForPiece(index int) (begin int, end int) {
+	begin = index * t.PieceLength
+	end = begin + t.PieceLength
+	if end > t.Length {
+		end = t.Length
+	}
+	return begin, end
+}
+
+func (t *Torrent) calculatePieceSize(index int) int {
+	begin, end := t.calculateBoundsForPiece(index)
+	return end - begin
+}
+
+// Download downloads the torrent. This stores the entire file in memory.
+func (t *Torrent) Download() ([]byte, error) {
+	log.Println("Starting download for", t.Name)
+	// Init queues for workers to retrieve work and send results
+	workQueue := make(chan *pieceWork, len(t.PieceHashes))
+	results := make(chan *pieceResult)
+	for index, hash := range t.PieceHashes {
+		length := t.calculatePieceSize(index)
+		workQueue <- &pieceWork{index, hash, length}
 	}
 
-	if msg == nil { // keep-alive
-		return nil
+	// Start workers
+	for _, peer := range t.Peers {
+		go t.startDownloadWorker(peer, workQueue, results)
 	}
 
-	switch msg.ID {
-	case message.MsgUnchoke:
-		state.client.Choked = false
-	case message.MsgChoke:
-		state.client.Choked = true
-	case message.MsgHave:
-		index, err := message.ParseHave(msg)
-		if err != nil {
-			return err
-		}
-		state.client.Bitfield.SetPiece(index)
-	case message.MsgPiece:
-		n, err := message.ParsePiece(state.index, state.buf, msg)
-		if err != nil {
-			return err
-		}
-		state.downloaded += n
-		state.backlog--
+	// Collect results into a buffer until full
+	buf := make([]byte, t.Length)
+	donePieces := 0
+	for donePieces < len(t.PieceHashes) {
+		res := <-results
+		begin, end := t.calculateBoundsForPiece(res.index)
+		copy(buf[begin:end], res.buf)
+		donePieces++
+
+		percent := float64(donePieces) / float64(len(t.PieceHashes)) * 100
+		numWorkers := runtime.NumGoroutine() - 1 // subtract 1 for main thread
+		log.Printf("(%0.2f%%) Downloaded piece #%d from %d peers\n", percent, res.index, numWorkers)
 	}
-	return nil
+	close(workQueue)
+
+	return buf, nil
 }
