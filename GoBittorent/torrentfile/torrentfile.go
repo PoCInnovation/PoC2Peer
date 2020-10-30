@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"os"
 
+	"Poc2PeerBitTorrent/p2p"
 	"github.com/jackpal/bencode-go"
-	"github.com/veggiedefender/torrent-client/p2p"
 )
 
 // Port to listen on
