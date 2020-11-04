@@ -1,9 +1,14 @@
 package p2p
 
 import (
+	"bytes"
+	"crypto/sha1"
+	"fmt"
 	"log"
 	"runtime"
+	"time"
 
+	"Poc2PeerBitTorrent/client"
 	"Poc2PeerBitTorrent/peers"
 )
 
@@ -42,6 +47,14 @@ type pieceProgress struct {
 	downloaded int
 	requested  int
 	backlog    int
+}
+
+func checkIntegrity(pw *pieceWork, buf []byte) error {
+	hash := sha1.Sum(buf)
+	if !bytes.Equal(hash[:], pw.hash[:]) {
+		return fmt.Errorf("Index %d failed integrity check", pw.index)
+	}
+	return nil
 }
 
 func (t *Torrent) calculateBoundsForPiece(index int) (begin int, end int) {
