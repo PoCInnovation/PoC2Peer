@@ -3,44 +3,40 @@ package main
 import (
 	"bufio"
 	"context"
+	"crypto/rand"
+	"flag"
 	"fmt"
-	"github.com/ipfs/go-log"
-	"github.com/libp2p/go-libp2p"
-	"github.com/libp2p/go-libp2p-core/network"
-	"github.com/libp2p/go-libp2p-core/protocol"
-	dht "github.com/libp2p/go-libp2p-kad-dht"
-	"github.com/multiformats/go-multiaddr"
+	"io"
+	"log"
+	mrand "math/rand"
 	"os"
+
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p-core/crypto"
+	"github.com/libp2p/go-libp2p-core/network"
+	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/peerstore"
+
+	"github.com/multiformats/go-multiaddr"
 )
 
-var logger = log.Logger("rendezvous")
+func handleStream(s network.Stream) {
+	log.Println("Got a new stream!")
 
-func handleStream(stream network.Stream) {
-	logger.Info("Got a new stream!")
-
-	// Create a buffer stream for non blocking read and write.
-	rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
+	rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
 
 	go readData(rw)
 	go writeData(rw)
 
-	// 'stream' will stay open until you close it (or the other side closes it).
 }
-
 func readData(rw *bufio.ReadWriter) {
 	for {
-		str, err := rw.ReadString('\n')
-		if err != nil {
-			fmt.Println("Error reading from buffer")
-			panic(err)
-		}
+		str, _ := rw.ReadString('\n')
 
 		if str == "" {
 			return
 		}
 		if str != "\n" {
-			// Green console colour: 	\x1b[32m
-			// Reset console colour: 	\x1b[0m
 			fmt.Printf("\x1b[32m%s\x1b[0m> ", str)
 		}
 
@@ -53,53 +49,108 @@ func writeData(rw *bufio.ReadWriter) {
 	for {
 		fmt.Print("> ")
 		sendData, err := stdReader.ReadString('\n')
+
 		if err != nil {
-			fmt.Println("Error reading from stdin")
 			panic(err)
 		}
 
-		_, err = rw.WriteString(fmt.Sprintf("%s\n", sendData))
-		if err != nil {
-			fmt.Println("Error writing to buffer")
-			panic(err)
-		}
-		err = rw.Flush()
-		if err != nil {
-			fmt.Println("Error flushing buffer")
-			panic(err)
-		}
+		rw.WriteString(fmt.Sprintf("%s\n", sendData))
+		rw.Flush()
 	}
+
 }
 
 func main() {
-	//log.SetAllLoggers(logging.WARNING)
-	log.SetLogLevel("rendezvous", "info")
-	config, err := ParseFlags()
+	sourcePort := flag.Int("sp", 0, "Source port number")
+	dest := flag.String("d", "", "Destination multiaddr string")
+	help := flag.Bool("help", false, "Display help")
+	debug := flag.Bool("debug", false, "Debug generates the same node ID on every execution")
+
+	flag.Parse()
+
+	if *help {
+		fmt.Printf("This program demonstrates a simple p2p chat application using libp2p\n\n")
+		fmt.Println("Usage: Run './chat -sp <SOURCE_PORT>' where <SOURCE_PORT> can be any port number.")
+		fmt.Println("Now run './chat -d <MULTIADDR>' where <MULTIADDR> is multiaddress of previous listener host.")
+
+		os.Exit(0)
+	}
+
+	var r io.Reader
+	if *debug {
+		r = mrand.New(mrand.NewSource(int64(*sourcePort)))
+	} else {
+		r = rand.Reader
+	}
+
+	prvKey, _, err := crypto.GenerateKeyPairWithReader(crypto.RSA, 2048, r)
 	if err != nil {
 		panic(err)
 	}
 
-	ctx := context.Background()
+	sourceMultiAddr, _ := multiaddr.NewMultiaddr(fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", *sourcePort))
 
-	host, err := libp2p.New(ctx,
-		libp2p.ListenAddrs([]multiaddr.Multiaddr(config.ListenAddresses)...),
+	host, err := libp2p.New(
+		context.Background(),
+		libp2p.ListenAddrs(sourceMultiAddr),
+		libp2p.Identity(prvKey),
 	)
-	if err != nil {
-		panic(err)
-	}
-	logger.Info("Host created. We are:", host.ID())
-	logger.Info(host.Addrs())
 
-	host.SetStreamHandler(protocol.ID(config.ProtocolID), handleStream)
-	kademliaDHT, err := dht.New(ctx, host)
 	if err != nil {
 		panic(err)
 	}
 
-	logger.Debug("Bootstrapping the DHT")
-	if err = kademliaDHT.Bootstrap(ctx); err != nil {
-		panic(err)
-	}
+	if *dest == "" {
+		host.SetStreamHandler("/chat/1.0.0", handleStream)
 
-	select {}
+		var port string
+		for _, la := range host.Network().ListenAddresses() {
+			if p, err := la.ValueForProtocol(multiaddr.P_TCP); err == nil {
+				port = p
+				break
+			}
+		}
+
+		if port == "" {
+			panic("was not able to find actual local port")
+		}
+
+		fmt.Printf("Run './chat -d /ip4/127.0.0.1/tcp/%v/p2p/%s' on another console.\n", port, host.ID().Pretty())
+		fmt.Println("You can replace 127.0.0.1 with public IP as well.")
+		fmt.Printf("\nWaiting for incoming connection\n\n")
+
+		// Hang forever
+		<-make(chan struct{})
+	} else {
+		fmt.Println("This node's multiaddresses:")
+		for _, la := range host.Addrs() {
+			fmt.Printf(" - %v\n", la)
+		}
+		fmt.Println()
+
+		maddr, err := multiaddr.NewMultiaddr(*dest)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		info, err := peer.AddrInfoFromP2pAddr(maddr)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		host.Peerstore().AddAddrs(info.ID, info.Addrs, peerstore.PermanentAddrTTL)
+
+		s, err := host.NewStream(context.Background(), info.ID, "/chat/1.0.0")
+		if err != nil {
+			panic(err)
+		}
+
+		rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
+
+		go writeData(rw)
+		go readData(rw)
+
+		// Hang forever.
+		select {}
+	}
 }
