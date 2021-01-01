@@ -29,7 +29,8 @@ var (
 		"/ip6/2604:a880:800:10::4a:5001/tcp/4001/p2p/QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64",
 		"/ip6/2a03:b0c0:0:1010::23:1001/tcp/4001/p2p/QmSoLer265NRgSp2LA3dPaeykiS1J6DifTC88f5uVQKNAd",
 	})
-	LOCAL_PEER_ENDPOINT = "http://localhost:5001/api/v0/id"
+	//LOCAL_PEER_ENDPOINT = "http://localhost:5001/api/v0/id"
+	LOCAL_PEER_ENDPOINT = "http://localhost:5001/ID"
 )
 
 // Borrowed from ipfs code to parse the results of the command `ipfs id`
