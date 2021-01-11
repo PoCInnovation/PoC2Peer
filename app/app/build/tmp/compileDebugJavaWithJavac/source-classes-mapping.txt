@@ -8,10 +8,10 @@ com/example/android/uamp/BuildConfig.java
  com.example.android.uamp.BuildConfig
 com/example/android/uamp/databinding/FragmentMediaitemBinding.java
  com.example.android.uamp.databinding.FragmentMediaitemBinding
-com/example/android/uamp/BR.java
- com.example.android.uamp.BR
 androidx/databinding/DataBinderMapperImpl.java
  androidx.databinding.DataBinderMapperImpl
+com/example/android/uamp/BR.java
+ com.example.android.uamp.BR
 com/example/android/uamp/DataBindingTriggerClass.java
  com.example.android.uamp.DataBindingTriggerClass
 com/example/android/uamp/databinding/CastContextErrorBinding.java

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/oursin/Documents/repos/uamp/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v21/values-watch-v21.xml",
+            "outputFile": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v21/values-watch-v21.xml",
             "map": [
                 {
-                    "source": "/home/oursin/.gradle/caches/transforms-2/files-2.1/ac47c14283e96b801d0ae888aa18a394/appcompat-1.2.0/res/values-watch-v21/values-watch-v21.xml",
+                    "source": "/Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c6f66d06d926d9ec8a44c358011566/appcompat-1.2.0/res/values-watch-v21/values-watch-v21.xml",
                     "from": {
                         "startLines": "2,6,10",
                         "startColumns": "4,4,4",

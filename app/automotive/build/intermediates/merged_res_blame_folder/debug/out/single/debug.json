@@ -1,0 +1,202 @@
+[
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_ic_launcher_background.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout-h900dp_qr_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout-h900dp/qr_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_sign_in_button_background.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/sign_in_button_background.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_default_button_background.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/default_button_background.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_sign_in_toolbar_back_icon.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/sign_in_toolbar_back_icon.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_sign_in_toolbar_back_ripple_background.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/sign_in_toolbar_back_ripple_background.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_phone_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/phone_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_google_sign_in_button_background.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/google_sign_in_button_background.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_preference.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/preference.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout-h900dp_phone_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout-h900dp/phone_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout-h900dp_sign_in_landing_page.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout-h900dp/sign_in_landing_page.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout-h900dp_sign_in_landing_page_with_username_and_password.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout-h900dp/sign_in_landing_page_with_username_and_password.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/xml_automotive_app_desc.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/xml/automotive_app_desc.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_activity_login.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/activity_login.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_sign_in_landing_page.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/sign_in_landing_page.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_google_sign_in_button_logo.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/google_sign_in_button_logo.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/color_car_text_dark.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/color/car_text_dark.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_pin_background.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/pin_background.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/color_car_text_light.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/color/car_text_light.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_activity_settings.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/activity_settings.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout-h900dp_username_and_password_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout-h900dp/username_and_password_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_google_logo.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/google_logo.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_qr_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/qr_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_pin_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/pin_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_pin_item.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/pin_item.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_preference_category.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/preference_category.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_sign_in_landing_page_with_username_and_password.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/sign_in_landing_page_with_username_and_password.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_activity_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/activity_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout_username_and_password_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout/username_and_password_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/layout-h900dp_pin_sign_in.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/layout-h900dp/pin_sign_in.xml"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/drawable_aural_logo.png.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/drawable/aural_logo.png"
+    },
+    {
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/build/intermediates/res/merged/debug/xml_preferences.xml.flat",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/automotive/src/main/res/xml/preferences.xml"
+    }
+]

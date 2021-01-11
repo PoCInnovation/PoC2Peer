@@ -1,22 +1,22 @@
 [
     {
-        "merged": "/home/oursin/Documents/repos/uamp/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_mediaitem_list.xml",
-        "source": "/home/oursin/Documents/repos/uamp/app/src/main/res/layout/fragment_mediaitem_list.xml"
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_main.xml",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/res/layout/activity_main.xml"
     },
     {
-        "merged": "/home/oursin/Documents/repos/uamp/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/cast_context_error.xml",
-        "source": "/home/oursin/Documents/repos/uamp/app/src/main/res/layout/cast_context_error.xml"
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/cast_context_error.xml",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/res/layout/cast_context_error.xml"
     },
     {
-        "merged": "/home/oursin/Documents/repos/uamp/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_nowplaying.xml",
-        "source": "/home/oursin/Documents/repos/uamp/app/src/main/res/layout/fragment_nowplaying.xml"
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_mediaitem_list.xml",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/res/layout/fragment_mediaitem_list.xml"
     },
     {
-        "merged": "/home/oursin/Documents/repos/uamp/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_mediaitem.xml",
-        "source": "/home/oursin/Documents/repos/uamp/app/src/main/res/layout/fragment_mediaitem.xml"
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_nowplaying.xml",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/res/layout/fragment_nowplaying.xml"
     },
     {
-        "merged": "/home/oursin/Documents/repos/uamp/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_main.xml",
-        "source": "/home/oursin/Documents/repos/uamp/app/src/main/res/layout/activity_main.xml"
+        "merged": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_mediaitem.xml",
+        "source": "/Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/res/layout/fragment_mediaitem.xml"
     }
 ]

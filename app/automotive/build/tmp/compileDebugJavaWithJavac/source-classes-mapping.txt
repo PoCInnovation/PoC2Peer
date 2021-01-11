@@ -1,0 +1,2 @@
+com/example/android/uamp/automotive/BuildConfig.java
+ com.example.android.uamp.automotive.BuildConfig
