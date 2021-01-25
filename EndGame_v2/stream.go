@@ -4,7 +4,7 @@ import (
 	"bufio"
 
 	//inet "github.com/libp2p/go-libp2p-net"
-	inet "github.com/libp2p/go-libp2p-core/network"
+	inet "github.com/libp2p/go-libp2p-bittorent/network"
 	//multicodec "github.com/multiformats/go-multicodec"
 	//json "github.com/multiformats/go-multicodec/json"
 	json "encoding/json"

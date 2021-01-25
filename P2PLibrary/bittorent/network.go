@@ -1,4 +1,4 @@
-package core
+package bittorent
 
 import (
 	"container/list"
@@ -11,7 +11,7 @@ import (
 	inet "github.com/libp2p/go-libp2p-core/network"
 	p2ppeer "github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-peerstore/pstoremem"
-	// Deprecated: use github.com/libp2p/go-libp2p-core/helpers.EOFTimeout instead.
+	// Deprecated: use github.com/libp2p/go-libp2p-bittorent/helpers.EOFTimeout instead.
 
 	ps "github.com/libp2p/go-libp2p-core/peerstore"
 	libp2pswarm "github.com/libp2p/go-libp2p-swarm"

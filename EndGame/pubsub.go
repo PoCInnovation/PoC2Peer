@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	peer "github.com/libp2p/go-libp2p-core/peer"
+	peer "github.com/libp2p/go-libp2p-bittorent/peer"
 	pubsub "github.com/libp2p/go-libp2p-pubsub"
 )
 

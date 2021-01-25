@@ -1,4 +1,4 @@
-package core
+package bittorent
 
 // ChunkID identifies a chunk of content
 type ChunkID uint32

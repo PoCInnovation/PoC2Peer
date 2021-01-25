@@ -3,6 +3,7 @@ module P2PServer
 go 1.15
 
 require (
+	github.com/PoCInnovation/PoPoc2PeerLibrary v0.0.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/ipfs/go-datastore v0.4.5
 	github.com/libp2p/go-libp2p v0.13.0
@@ -13,3 +14,5 @@ require (
 	github.com/libp2p/go-tcp-transport v0.2.1
 	github.com/multiformats/go-multiaddr v0.3.1
 )
+
+replace github.com/PoCInnovation/PoPoc2PeerLibrary => ../P2PLibrary

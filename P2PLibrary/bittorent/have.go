@@ -1,4 +1,4 @@
-package core
+package bittorent
 
 import "github.com/golang/glog"
 import "fmt"

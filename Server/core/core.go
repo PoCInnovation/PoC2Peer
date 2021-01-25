@@ -15,7 +15,7 @@ type P2PServer struct {
 }
 
 func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
-	p2pServer, err := p2pHost.MakeBasicHost("127.0.0.1", "tcp", P2PPort)
+	p2pServer, err := p2pHost.NewP2PHost("127.0.0.1", "tcp", P2PPort)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +28,6 @@ func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
 
 func (s *P2PServer) Run() error {
 	go func() {
-		//if err := s.HTTPHost.Run(":5001"); err != nil {
 		if err := s.HTTPHost.Run("0.0.0.0:5001"); err != nil {
 			log.Fatal(err)
 		}
@@ -55,13 +54,14 @@ func (s *P2PServer) Close() error {
 
 // doEcho reads a line of data from a stream and writes it back
 func doEcho(s network.Stream) error {
-	buf := bufio.NewReader(s)
-	str, err := buf.ReadString('\n')
-	if err != nil {
-		return err
-	}
+	for {
+		buf := bufio.NewReader(s)
+		str, err := buf.ReadString('\n')
+		if err != nil {
+			return err
+		}
 
-	log.Printf("read: %s\n", str)
-	_, err = s.Write([]byte(str))
-	return err
+		log.Printf("read: %s\n", str)
+		//_, err = s.Write([]byte(str))
+	}
 }
