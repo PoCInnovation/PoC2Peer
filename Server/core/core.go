@@ -4,6 +4,7 @@ import (
 	"P2PServer/httpHost"
 	"P2PServer/p2pHost"
 	"bufio"
+	"fmt"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/network"
 	"log"
@@ -34,6 +35,7 @@ func (s *P2PServer) Run() error {
 	}()
 	s.P2PHost.SetStreamHandler("/echo/1.0.0", func(s network.Stream) {
 		log.Println("Got a new stream!")
+		fmt.Println(s.ID())
 		if err := doEcho(s); err != nil {
 			log.Println(err)
 			s.Reset()

@@ -1,18 +1,13 @@
-module P2PServer
+module github.com/PoCInnovation/PoC2Peer/Poc2PeerServer
 
 go 1.15
 
 require (
-	github.com/PoCInnovation/PoPoc2PeerLibrary v0.0.0
+	github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary v0.0.0
 	github.com/gin-gonic/gin v1.6.3
-	github.com/ipfs/go-datastore v0.4.5
 	github.com/libp2p/go-libp2p v0.13.0
 	github.com/libp2p/go-libp2p-core v0.8.0
-	github.com/libp2p/go-libp2p-kad-dht v0.11.1
-	github.com/libp2p/go-libp2p-peerstore v0.2.6
-	github.com/libp2p/go-libp2p-swarm v0.4.0
-	github.com/libp2p/go-tcp-transport v0.2.1
 	github.com/multiformats/go-multiaddr v0.3.1
 )
 
-replace github.com/PoCInnovation/PoPoc2PeerLibrary => ../P2PLibrary
+replace github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary => ../Poc2PeerLibrary

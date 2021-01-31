@@ -1,11 +1,10 @@
-package bittorent
+package bittorentP2p
 
 import "github.com/golang/glog"
 import "fmt"
 
 // HaveMsg holds a have message data payload
 type HaveMsg struct {
-	// TODO: start chunk / end chunk
 	Start ChunkID
 	End   ChunkID
 }

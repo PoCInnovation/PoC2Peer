@@ -3,7 +3,7 @@ package p2pHost
 import (
 	"context"
 	"fmt"
-	libcore "github.com/PoCInnovation/PoPoc2PeerLibrary/core"
+	libcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/host"

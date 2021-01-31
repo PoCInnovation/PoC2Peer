@@ -1,4 +1,4 @@
-package bittorent
+package bittorentP2p
 
 import (
 	"bytes"
