@@ -1,9 +1,9 @@
 package main
 
 import (
-	"P2PServer/core"
 	"flag"
 	"fmt"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/core"
 	_ "github.com/libp2p/go-libp2p-core"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"

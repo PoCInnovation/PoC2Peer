@@ -2,11 +2,13 @@ package gomobile
 
 import (
 	"fmt"
-	"time"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
+	"time"
 )
 
 var Lib core.LibP2pCore
+
+var buffer []byte
 
 // callback
 var jc JavaCallback
@@ -49,14 +51,13 @@ func CallInterfaceInt() interface{} {
 }
 
 func CallMap() map[string]int {
-	return map[string]int{"lol": 1, "mdr":2, "xd": 3}
+	return map[string]int{"lol": 1, "mdr": 2, "xd": 3}
 }
 
 func CallInterfaceMap() interface{} {
-	return map[string]int{"lol": 1, "mdr":2, "xd": 3}
+	return map[string]int{"lol": 1, "mdr": 2, "xd": 3}
 }
 
 func CallPackageVariableStringified() string {
 	return fmt.Sprintf("%v\n", packageVar)
 }
-

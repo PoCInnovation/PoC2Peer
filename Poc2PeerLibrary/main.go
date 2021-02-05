@@ -24,6 +24,7 @@ func main() {
 	if *peerID == "" {
 		log.Fatal(errors.New("no peerID"))
 	}
+
 	priv, _, err := crypto.GenerateKeyPair(crypto.RSA, 2048)
 	if err != nil {
 		log.Fatal(err)

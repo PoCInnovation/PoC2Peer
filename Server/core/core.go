@@ -1,10 +1,10 @@
 package core
 
 import (
-	"P2PServer/httpHost"
-	"P2PServer/p2pHost"
 	"bufio"
 	"fmt"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/httpHost"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/p2pHost"
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/network"
 	"log"
