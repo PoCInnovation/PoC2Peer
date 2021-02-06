@@ -13,6 +13,7 @@ import (
 
 type LibP2pCore struct {
 	host.Host
+	Test string
 }
 
 // makeBasicHost creates a LibP2P host with a random peer ID listening on the
