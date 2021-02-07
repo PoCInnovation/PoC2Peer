@@ -3,7 +3,7 @@ package p2pHost
 import (
 	"context"
 	"fmt"
-	libcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
+	libP2Pcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -21,5 +21,5 @@ func NewP2PHost(ip, prot string, listenPort int) (host.Host, error) {
 		libp2p.DefaultTransports,
 		libp2p.NATPortMap(),
 	}
-	return libcore.MakeBasicHost(context.Background(), opts)
+	return libP2Pcore.MakeBasicHost(context.Background(), opts)
 }

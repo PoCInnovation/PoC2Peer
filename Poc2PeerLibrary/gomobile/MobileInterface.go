@@ -1,9 +1,6 @@
 package gomobile
 
-import "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
-
 //var Lib core.LibP2pCore
-var Lib = core.LibP2pCore{nil, "coucou"}
 
 type SoundBuffer []byte
 

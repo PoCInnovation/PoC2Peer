@@ -1,19 +1,49 @@
 package gomobile
 
 import (
+	"fmt"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/gomobile"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 var Global = gomobile.SoundBuffer("SALUT JE SUIS UN ARRAY DE BYTES")
-var Lib = core.LibP2pCore{Test: "coucou"}
+var Lib core.LibP2pCore
 
 func ReadBuffer() []byte {
 	return Global.Read()
 }
 
-func ReadString() string {
-	return Lib.Test
+const httpEndpoint = "http://192.168.0.31:5001/ID"
+
+func GetID() string {
+	res, err := http.Get(httpEndpoint)
+	if err != nil {
+		return err.Error()
+	} else if res.StatusCode != http.StatusOK {
+		return fmt.Sprintf("Http Endpoint returned wrong status: %d\n", res.StatusCode)
+	}
+	byteID, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return err.Error()
+	}
+	return string(byteID)
+}
+
+func LaunchP2P() int {
+	lib, err := core.NewLibP2p("0.0.0.0")
+	if err != nil {
+		log.Println(err)
+		return 84
+	}
+	err = lib.Launch()
+	if err != nil {
+		log.Println(err)
+		return 84
+	}
+	return 0
 }
 
 //// callback
