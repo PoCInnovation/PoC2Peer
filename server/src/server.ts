@@ -52,17 +52,3 @@ server.get('/repeat-my-cookie', (req, res) => {
     res.status(httpStatus.OK).send(req.cookies.message);
   }
 });
-
-//   interface Queries {
-// 	 key: string;
-// 	 value: string;
-//   }
-
-// server.get('/repeat-all-my-queries', (req, res) => {
-//   const entries = Object.keys(req.query);
-//   const queries: Array<Queries> = entries.map((key) => ({
-// 	  key,
-// 	  value: req.query[key] as string,
-//   }));
-//   res.status(httpStatus.OK).send(queries);
-// });
