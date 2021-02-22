@@ -2,7 +2,9 @@ package core
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/protocol"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/httpHost"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/p2pHost"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -16,7 +18,7 @@ type P2PServer struct {
 }
 
 func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
-	p2pServer, err := p2pHost.NewP2PHost("127.0.0.1", "tcp", P2PPort)
+	p2pServer, err := p2pHost.NewP2PHost("0.0.0.0", "tcp", P2PPort)
 	if err != nil {
 		return nil, err
 	}
@@ -33,15 +35,29 @@ func (s *P2PServer) Run() error {
 			log.Fatal(err)
 		}
 	}()
-	s.P2PHost.SetStreamHandler("/echo/1.0.0", func(s network.Stream) {
+	s.P2PHost.SetStreamHandler(protocol.FileTransferProtocol, func(s network.Stream) {
 		log.Println("Got a new stream!")
 		fmt.Println(s.ID())
-		if err := doEcho(s); err != nil {
-			log.Println(err)
-			s.Reset()
-		} else {
-			s.Close()
+		w := bufio.NewWriter(s)
+		dec := json.NewEncoder(s)
+		h := protocol.DataExchange{Start: 0, End: 0, Data: []byte("coucou")}
+		m := protocol.Msg{Op: protocol.Data, Data: h}
+		d := protocol.NewDataGram(m)
+		err := dec.Encode(&d)
+		if err != nil {
+			log.Fatal(err)
 		}
+		err = w.Flush()
+		if err != nil {
+			log.Fatal(err)
+		}
+		s.Reset()
+		//if err := doEcho(s); err != nil {
+		//	log.Println(err)
+		//	s.Reset()
+		//} else {
+		//	s.Close()
+		//}
 	})
 
 	return nil
@@ -54,7 +70,7 @@ func (s *P2PServer) Close() error {
 	return nil
 }
 
-// doEcho reads a line of data from a stream and writes it back
+// doEcho reads a line of storage from a stream and writes it back
 func doEcho(s network.Stream) error {
 	for {
 		buf := bufio.NewReader(s)
@@ -64,6 +80,6 @@ func doEcho(s network.Stream) error {
 		}
 
 		log.Printf("read: %s\n", str)
-		//_, err = s.Write([]byte(str))
+		_, err = s.Write([]byte(str))
 	}
 }

@@ -1,8 +1,6 @@
 package com.example.libgovskotlin
 
-import android.os.Build
 import android.os.Bundle
-import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,8 +8,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import gomobile.Gomobile
-import java.net.HttpURLConnection
-import java.net.URL
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.net.SocketException
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,14 +19,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         print("Kotlin\n")
 
-        println("lol")
-        if (Build.VERSION.SDK_INT > 9) {
-            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-        }
-        val jsonStr = URL("http://192.168.0.31:5001/ID").readText()
-//        val jsonStr = URL("http://0.0.0.0:5001/ID").readText()
-        println(jsonStr)
+        println(getIPAddress(true))
+
+//        if (Build.VERSION.SDK_INT > 9) {
+//            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+//            StrictMode.setThreadPolicy(policy)
+//        }
+//        val jsonStr = URL("http://192.168.0.31:5001/ID").readText()
+////        val jsonStr = URL("http://0.0.0.0:5001/ID").readText()
+//        println(jsonStr)
 
 //        val url = URL("http://www.android.com/")
 //        val urlConnection = url.openConnection() as HttpURLConnection
@@ -66,8 +67,10 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-        val ret = Gomobile.getID()
-        print(ret)
+        val ret = Gomobile.getID("192.168.0.31:5001")
+        println(ret)
+        val ret2 = Gomobile.launchP2P( getIPAddress(true),"192.168.0.31", 5000)
+        println(ret2)
 
 //        val str = Gomobile.callString()
 //        print(str)
@@ -127,5 +130,55 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun getIPAddress(useIPv4: Boolean): String {
+        try {
+            val interfaces: List<NetworkInterface> = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (intf in interfaces) {
+                val addrs: List<InetAddress> = Collections.list(intf.inetAddresses)
+                for (addr in addrs) {
+                    if (!addr.isLoopbackAddress) {
+                        val sAddr = addr.hostAddress
+                        val isIPv4 = sAddr.indexOf(':') < 0
+                        if (useIPv4) {
+                            if (isIPv4) return sAddr
+                        } else {
+                            if (!isIPv4) {
+                                val delim = sAddr.indexOf('%')
+                                return if (delim < 0) sAddr.toUpperCase(Locale.ROOT) else sAddr.substring(0, delim).toUpperCase(Locale.ROOT)
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ignored: Exception) {
+        }
+        return ""
+    }
+
+    private fun getIpAddress(): String {
+        var ip = ""
+        try {
+            val enumNetworkInterfaces: Enumeration<NetworkInterface> = NetworkInterface
+                    .getNetworkInterfaces()
+            while (enumNetworkInterfaces.hasMoreElements()) {
+                val networkInterface: NetworkInterface = enumNetworkInterfaces
+                        .nextElement()
+                val enumInetAddress: Enumeration<InetAddress> = networkInterface
+                        .getInetAddresses()
+                while (enumInetAddress.hasMoreElements()) {
+                    val inetAddress: InetAddress = enumInetAddress.nextElement()
+                    if (inetAddress.isSiteLocalAddress()) {
+                        ip += inetAddress.getHostAddress()
+                    }
+                }
+            }
+        } catch (e: SocketException) {
+            // TODO Auto-generated catch block
+            e.printStackTrace()
+            ip += """Something Wrong! $e""".trimIndent()
+        }
+        return ip
     }
 }

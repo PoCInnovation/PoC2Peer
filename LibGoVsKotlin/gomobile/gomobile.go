@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/gomobile"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -18,8 +18,8 @@ func ReadBuffer() []byte {
 
 const httpEndpoint = "http://192.168.0.31:5001/ID"
 
-func GetID() string {
-	res, err := http.Get(httpEndpoint)
+func GetID(ip string) string {
+	res, err := http.Get("http://" + ip + "/ID")
 	if err != nil {
 		return err.Error()
 	} else if res.StatusCode != http.StatusOK {
@@ -32,18 +32,17 @@ func GetID() string {
 	return string(byteID)
 }
 
-func LaunchP2P() int {
-	lib, err := core.NewLibP2p("0.0.0.0")
+func LaunchP2P(localIP, ip string, port int) error {
+	tracker := core.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
+	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos(localIP, 4000))
 	if err != nil {
-		log.Println(err)
-		return 84
+		return err
 	}
 	err = lib.Launch()
 	if err != nil {
-		log.Println(err)
-		return 84
+		return err
 	}
-	return 0
+	return nil
 }
 
 //// callback

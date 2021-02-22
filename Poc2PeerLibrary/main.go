@@ -2,14 +2,18 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
 	"log"
 	"os"
 )
 
 func main() {
-	lib, err := core.NewLibP2p("192.168.0.31:5001")
+	flag.Parse()
+	tracker := core.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
+	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000))
 	if err != nil {
 		log.Fatal(err)
 	}
