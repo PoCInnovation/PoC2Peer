@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 	"log"
 )
 

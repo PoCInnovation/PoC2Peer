@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/core"
+	"github.com/PoCInnovation/PoC2Peer/Server/core"
 	_ "github.com/libp2p/go-libp2p-core"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"

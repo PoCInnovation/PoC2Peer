@@ -4,9 +4,9 @@ import "C"
 import (
 	"errors"
 	"fmt"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/protocol"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/protocol"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 	"io/ioutil"
@@ -140,8 +140,16 @@ func (c *LibP2pCore) Launch() error {
 	//	log.Fatal(err)
 	//}
 	//log.Println(string(data))
+	file := "../Server/tests/testsfile"
+	content, err := ioutil.ReadFile(file)
+	if err != nil {
+		log.Printf("Can't read file %s: %v\n", file, err)
+		return err
+	}
+	hash := storage.NewHashFromFile(content)
 
-	data, err := c.RequestFile(storage.FileHashTmp(1))
+	fmt.Printf("%x\n", hash)
+	data, err := c.RequestFile(hash)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -204,7 +212,7 @@ func (c *LibP2pCore) HandleDatagram(d *protocol.Datagram, pid p2pnetwork.PeerID)
 }
 
 // TODO: TO MODIFY
-func (c *LibP2pCore) RequestFile(fileID storage.FileHashTmp) ([]byte, error) {
+func (c *LibP2pCore) RequestFile(fileID storage.FileHash) ([]byte, error) {
 	datas, err := c.LocalStorage.GetFileDatas(fileID)
 	if err == storage.FILENOTFOUND {
 		log.Println("Requesting files to peers")

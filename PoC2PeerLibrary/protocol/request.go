@@ -2,12 +2,12 @@ package protocol
 
 import (
 	"fmt"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 )
 
 // RequestChunks holds a have message storage payload
 type RequestChunks struct {
-	File storage.FileHashTmp
+	File storage.FileHash
 	IDs  []storage.ChunkID
 }
 

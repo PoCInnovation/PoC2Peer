@@ -2,9 +2,9 @@ package core
 
 import (
 	"fmt"
-	p2pcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/httpHost"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/p2pHost"
+	p2pcore "github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/Server/httpHost"
+	"github.com/PoCInnovation/PoC2Peer/Server/p2pHost"
 	"io/ioutil"
 	"log"
 )
@@ -59,7 +59,7 @@ func (s *P2PServer) Run() error {
 		if err != nil {
 			return err
 		}
-		fmt.Printf("File Hashed: %v\n", hash)
+		fmt.Printf("File Hashed: %x\n", hash)
 	}
 	//s.P2PHost.N.Host.SetStreamHandler(protocol.FileTransferProtocol, func(stream network.Stream) {
 	//	log.Println("Got a new stream!")

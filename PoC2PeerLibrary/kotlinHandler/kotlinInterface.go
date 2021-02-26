@@ -1,9 +1,9 @@
 package kotlinHandler
 
 import (
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 	"log"
 )
 
@@ -14,16 +14,16 @@ type FileDatas struct {
 	Data   []byte
 }
 
-type Storage map[int]FileDatas
+type Storage map[string]FileDatas
 
 type SoundBuffer struct {
 	Storage        Storage
-	CurrentTrackID int
+	CurrentTrackID string
 }
 
 var buffer = SoundBuffer{
 	make(Storage),
-	-1,
+	"",
 }
 
 func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.Tracker) (err error) {
@@ -41,8 +41,8 @@ func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.Tracker
 	return nil
 }
 
-func RequestFile(ID int) []byte {
-	data, err := Lib.RequestFile(storage.FileHashTmp(ID))
+func RequestFile(ID string) []byte {
+	data, err := Lib.RequestFile(storage.FileHash(ID))
 	if err != nil {
 		log.Fatal(err)
 	}

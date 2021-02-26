@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
 	"log"
 	"os"
 	"os/signal"

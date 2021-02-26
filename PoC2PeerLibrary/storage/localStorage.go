@@ -77,8 +77,8 @@ func (s *P2PStorage) Dump() {
 
 // AddFile Add a file to local storage. Return the hashed file when successfull
 func (s *P2PStorage) AddFile(fileData []byte) (FileID, error) {
-	//hash := NewHashFromFile(fileData)
-	hash := tmp
+	hash := NewHashFromFile(fileData)
+	//hash := tmp
 	key := hash.String()
 	s.Lock()
 	if _, ok := s.LocalFiles[key]; ok {

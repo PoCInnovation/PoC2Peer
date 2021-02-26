@@ -1,6 +1,6 @@
 package protocol
 
-import "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+import "github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 
 const (
 	HaveRequest = iota
@@ -9,7 +9,7 @@ const (
 
 // HaveMsg holds a have message storage payload
 type HaveMsg struct {
-	File   storage.FileHashTmp
+	File   storage.FileHash
 	Type   int
 	Chunks []storage.ChunkID
 }

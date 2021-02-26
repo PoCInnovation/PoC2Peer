@@ -1,4 +1,4 @@
-module github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary
+module github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary
 
 go 1.16
 

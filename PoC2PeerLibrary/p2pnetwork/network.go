@@ -5,8 +5,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/protocol"
-	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/protocol"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/crypto"
 	"github.com/libp2p/go-libp2p-core/host"
@@ -54,7 +54,7 @@ type Network interface {
 	// TODO: move in protocol ?
 	// Peers return all connected peers
 	Peers() []PeerID
-	RequestFileToPeers(file storage.FileHashTmp) error
+	RequestFileToPeers(file storage.FileHash) error
 }
 
 // PeerID identifies a peer
@@ -242,7 +242,7 @@ func (n *P2PNetwork) Peers() []PeerID {
 	return ret
 }
 
-func (n *P2PNetwork) RequestFileToPeers(file storage.FileHashTmp) error {
+func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash) error {
 	req := make([]storage.ChunkID, 1000)
 	for i := 0; i < 1000; i += 1 {
 		req[i] = storage.ChunkID(i)
