@@ -1,25 +1,11 @@
 package p2pHost
 
 import (
-	"context"
-	"fmt"
-	libP2Pcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
-	"github.com/libp2p/go-libp2p"
-	"github.com/libp2p/go-libp2p-core/crypto"
-	"github.com/libp2p/go-libp2p-core/host"
+	p2pcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
 )
 
-func NewP2PHost(ip, prot string, listenPort int) (host.Host, error) {
-	priv, _, err := crypto.GenerateKeyPair(crypto.RSA, 2048)
-	if err != nil {
-		return nil, err
-	}
-	opts := []libp2p.Option{
-		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/%s/%s/%d", ip, prot, listenPort)),
-		libp2p.Identity(priv),
-		libp2p.DisableRelay(),
-		libp2p.DefaultTransports,
-		libp2p.NATPortMap(),
-	}
-	return libP2Pcore.MakeBasicHost(context.Background(), opts)
+func NewP2PHost(ip, prot string, listenPort int) (*p2pcore.LibP2pCore, error) {
+	infos := p2pnetwork.NewNetworkInfos(ip, listenPort)
+	return p2pcore.NewLibP2P(infos, prot)
 }

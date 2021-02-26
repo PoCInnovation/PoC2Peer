@@ -11,6 +11,7 @@ import gomobile.Gomobile
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
+import java.nio.file.Paths
 import java.util.*
 
 
@@ -115,7 +116,10 @@ class MainActivity : AppCompatActivity() {
 //        print(packageVarStringified)
 //        print("Print packageVar Stringifies: OK")
 
-        print("Kotlin\n")
+        println("Kotlin\n")
+        println(System.getProperty("user.dir"))
+        println(Paths.get("").toAbsolutePath().toString())
+        println("Kotlin\n")
 
 
         super.onCreate(savedInstanceState)

@@ -1,12 +1,9 @@
 package gomobile
 
 import (
-	"fmt"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/gomobile"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
-	"io/ioutil"
-	"net/http"
 )
 
 var Global = gomobile.SoundBuffer("SALUT JE SUIS UN ARRAY DE BYTES")
@@ -18,23 +15,9 @@ func ReadBuffer() []byte {
 
 const httpEndpoint = "http://192.168.0.31:5001/ID"
 
-func GetID(ip string) string {
-	res, err := http.Get("http://" + ip + "/ID")
-	if err != nil {
-		return err.Error()
-	} else if res.StatusCode != http.StatusOK {
-		return fmt.Sprintf("Http Endpoint returned wrong status: %d\n", res.StatusCode)
-	}
-	byteID, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return err.Error()
-	}
-	return string(byteID)
-}
-
 func LaunchP2P(localIP, ip string, port int) error {
-	tracker := core.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
-	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos(localIP, 4000))
+	tracker := p2pnetwork.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
+	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos(localIP, 4000), "tcp")
 	if err != nil {
 		return err
 	}

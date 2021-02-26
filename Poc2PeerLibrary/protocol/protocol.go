@@ -1,6 +1,8 @@
 package protocol
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Opcode identifies the type of message
 type Opcode uint8
@@ -26,11 +28,13 @@ type Opcode uint8
 //   | 14-254   | Unassigned       |
 //   | 255      | Reserved         |
 //   +----------+------------------+
+
 const (
 	Handshake Opcode = 0
 	Data      Opcode = 1
 	Have      Opcode = 3
 	Request   Opcode = 8
+	Error     Opcode = 255
 )
 
 const (
@@ -43,13 +47,19 @@ type Datagram struct {
 	Msgs []Msg
 }
 
-// PeerID identifies a peer
-type PeerID interface {
-	String() string
-}
+//func HandleDatagram(d *Datagram, pid PeerID, storage storage.LocalStorage) error {
+//	for _, msg := range d.Msgs {
+//		switch msg.Op {
+//		case Data:
+//			log.Println("handling message datagram")
+//			msg.HandleDataExchange(storage)
+//		}
+//	}
+//	return nil
+//}
 
-func NewDataGram(m ...Msg) Datagram {
-	return Datagram{Msgs: m}
+func NewDataGram(m ...Msg) *Datagram {
+	return &Datagram{Msgs: m}
 }
 
 // MsgError is an error that happens while handling an incoming message

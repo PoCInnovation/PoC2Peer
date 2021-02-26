@@ -1,11 +1,28 @@
 package gomobile
 
-//var Lib core.LibP2pCore
+import (
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/p2pnetwork"
+	"log"
+)
+
+var Lib *core.LibP2pCore
 
 type SoundBuffer []byte
 
-func (b SoundBuffer) Read() []byte {
-	return b
+func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.HttpTracker) (err error) {
+	for _, t := range trackers {
+		tracker := p2pnetwork.NewHttpTracker(t.IP(), t.Port(), t.HTTPIP(), t.HTTPPort(), false)
+		Lib, err = core.NewP2PPeer(tracker, infos, "tcp")
+		if err == nil {
+			break
+		}
+		log.Println(err)
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nil
 }
 
 //// callback

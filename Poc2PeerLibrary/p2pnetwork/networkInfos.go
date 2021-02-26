@@ -7,8 +7,8 @@ type NetworkInfos struct {
 	port int
 }
 
-func NewNetworkInfos(ip string, port int) *NetworkInfos {
-	return &NetworkInfos{
+func NewNetworkInfos(ip string, port int) NetworkInfos {
+	return NetworkInfos{
 		ip:   ip,
 		port: port,
 	}

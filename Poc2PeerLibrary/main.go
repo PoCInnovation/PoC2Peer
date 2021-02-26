@@ -12,8 +12,8 @@ import (
 
 func main() {
 	flag.Parse()
-	tracker := core.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
-	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000))
+	tracker := p2pnetwork.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
+	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
 	if err != nil {
 		log.Fatal(err)
 	}

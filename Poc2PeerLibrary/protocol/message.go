@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
+	"log"
 )
 
 // MsgData holds the storage payload of a message
@@ -30,10 +32,13 @@ type msgAux struct {
 // We can't get away with off-the-shelf JSON, because
 // we're using an interface type for MsgData, which causes problems
 // on the decode side.
-func (m *Msg) Decode(b []byte) error {
+func (m *Msg) UnmarshalJSON(b []byte) error {
 	// Use builtin json to unmarshall into aux
 	var aux msgAux
-	json.Unmarshal(b, &aux)
+	err := json.Unmarshal(b, &aux)
+	if err != nil {
+		return err
+	}
 
 	// The Op field in aux is already what we want for m.Op
 	m.Op = aux.Op
@@ -79,7 +84,7 @@ func (m *Msg) Decode(b []byte) error {
 // Encode handles the serializing of a message.
 //
 // See note above Decode for the reason for the custom Encode
-func (m *Msg) Encode() ([]byte, error) {
+func (m *Msg) MarshalJSON() ([]byte, error) {
 	// Encode m.Data into a gob
 	var b bytes.Buffer
 	enc := gob.NewEncoder(&b)
@@ -102,12 +107,12 @@ func (m *Msg) Encode() ([]byte, error) {
 		if err != nil {
 			return nil, fmt.Errorf("Failed to marshal RequestChunks: %v", err)
 		}
-	//case DataExchange:
-	//	gob.Register(DataExchange{})
-	//	err := enc.Encode(m.Data.(DataExchange))
-	//	if err != nil {
-	//		return nil, fmt.Errorf("Failed to marshal DataExchange: %v", err)
-	//	}
+	case DataExchange:
+		gob.Register(DataExchange{})
+		err := enc.Encode(m.Data.(DataExchange))
+		if err != nil {
+			return nil, fmt.Errorf("Failed to marshal DataExchange: %v", err)
+		}
 	default:
 		return nil, errors.New("failed to marshal message storage")
 	}
@@ -115,6 +120,36 @@ func (m *Msg) Encode() ([]byte, error) {
 	// build an aux and marshal using built-in json
 	aux := msgAux{Op: m.Op, Data: b.Bytes()}
 	return json.Marshal(aux)
+}
+
+func (m *Msg) HandleDataExchange(pStorage storage.LocalStorage) error {
+	d, ok := m.Data.(DataExchange)
+	if !ok {
+		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
+	}
+	for _, data := range d.Chunks {
+		log.Printf("Handling Data: %v\n", string(data.B))
+	}
+	return d.AddReceivedDatasToStorage(pStorage)
+}
+
+func (m *Msg) HandleRequest(pStorage storage.LocalStorage) (*Datagram, error) {
+	fmt.Println(m.Data.(RequestChunks))
+	d, ok := m.Data.(RequestChunks)
+	if !ok {
+		return nil, fmt.Errorf("message got DataExchange op Code but could not convert to RequestChunks\nreceived: %v", m)
+	}
+	log.Printf("processing REQUEST: %v\n", d)
+	data, err := pStorage.GetChunks(d.File, d.Start, d.End)
+	if err != nil {
+		log.Printf("HERE: %v\n", err)
+		return NewDataGram(Msg{Op: Error, Data: d}), nil
+	}
+	fmt.Println(data)
+	h := NewDataExchangeFromRequested(d.File, data)
+	nm := Msg{Op: Data, Data: h}
+	fmt.Println(nm)
+	return NewDataGram(nm), nil
 }
 
 //// SendData sends the chunk range in a storage message
