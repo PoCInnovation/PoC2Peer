@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import httpStatus from 'http-status-codes';
 import { PrismaClient } from '@prisma/client';
+import * as jsonfile from './init.json';
 
 const PORT = 3000;
 const server = express();
@@ -11,40 +12,57 @@ const prisma = new PrismaClient();
 server.use(bodyParser.json());
 server.use(cookieParser());
 
-server.get('/health', (req, res) => {
-  prisma.post.findMany().then((data) => {
-    res.status(httpStatus.OK).send(data);
-  });
-  // console.log(allPost);
-});
-
 async function main() {
-  await prisma.post.create({
-    data: {
-      title: 'Intro - The Way Of Waking Up (feat. Alan Watts)',
-      album: 'Wake Up',
-      autor: 'The Kyoto Connection',
-      genre: 'Electronic',
-      source: 'https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/01_-_Intro_-_The_Way_Of_Waking_Up_feat_Alan_Watts.mp3',
-      image: 'https://storage.googleapis.com/uamp/The_Kyoto_Connection_-_Wake_Up/art.jpg',
-      trackNumber: 1,
-      totalTrackCount: 13,
-      duration: 90,
-      site: 'http://freemusicarchive.org/music/The_Kyoto_Connection/Wake_Up_1957/',
-    },
-  });
   const allPost = await prisma.post.findMany();
-  console.log(allPost);
+  if (allPost.length === 0) {
+    jsonfile.music.forEach(async (element) => {
+      // console.log('loop');
+      // console.log(element);
+      await prisma.post.create({
+        data: {
+          title: element.title,
+          album: element.album,
+          artist: element.artist,
+          genre: element.genre,
+          source: element.source,
+          image: element.image,
+          trackNumber: element.trackNumber,
+          totalTrackCount: element.totalTrackCount,
+          duration: element.duration,
+          site: element.site,
+        },
+      });
+    });
+  }
+  // const allPost2 = await prisma.post.findMany();
+  // console.log(allPost2);
 }
 
-server.listen(PORT, () => {
+server.get('/init', (req, res) => {
   main()
     .catch((e) => {
+      console.log('erreur');
+      res.status(httpStatus.EXPECTATION_FAILED);
       throw e;
     })
     .finally(async () => {
+      console.log('fin');
+      res.status(httpStatus.OK).send('Done');
       await prisma.$disconnect();
     });
+  res.status(httpStatus.OK).send('Done');
+  console.log('fin sans catch');
+
+  res.status(httpStatus.OK);
+});
+server.get('/getSong', (req, res) => {
+  prisma.post.findMany().then((data) => {
+    res.status(httpStatus.OK).send(data);
+    // console.log(data);
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);
 });
 

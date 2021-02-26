@@ -3,7 +3,7 @@ CREATE TABLE "Post" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(255) NOT NULL,
     "album" VARCHAR(255) NOT NULL,
-    "autor" VARCHAR(255) NOT NULL,
+    "artist" VARCHAR(255) NOT NULL,
     "genre" VARCHAR(255) NOT NULL,
     "source" VARCHAR(255) NOT NULL,
     "image" VARCHAR(255) NOT NULL,

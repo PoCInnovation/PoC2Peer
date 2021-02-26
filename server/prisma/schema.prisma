@@ -14,7 +14,7 @@ model Post {
   id        Int      @default(autoincrement()) @id
   title     String   @db.VarChar(255)
   album     String   @db.VarChar(255)
-  autor     String   @db.VarChar(255)
+  artist     String   @db.VarChar(255)
   genre     String   @db.VarChar(255)
   source     String   @db.VarChar(255)
   image     String   @db.VarChar(255)
