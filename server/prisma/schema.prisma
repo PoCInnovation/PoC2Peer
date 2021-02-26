@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Post {
+  id        Int      @default(autoincrement()) @id
+  title     String   @db.VarChar(255)
+  album     String   @db.VarChar(255)
+  autor     String   @db.VarChar(255)
+  genre     String   @db.VarChar(255)
+  source     String   @db.VarChar(255)
+  image     String   @db.VarChar(255)
+  trackNumber  Int
+  totalTrackCount Int
+  duration  Int
+  site     String   @db.VarChar(255)
+}
+
+
+// create table Post (
+//   id SERIAL PRIMARY KEY NOT NULL,
+//   title VARCHAR(255) NOT NULL,
+//   album VARCHAR(255) NOT NULL,
+//   autor VARCHAR(255) NOT NULL,
+//   genre VARCHAR(255) NOT NULL,
+//   source VARCHAR(255) NOT NULL,
+//   image VARCHAR(255) NOT NULL,
+//   trackNumber INTEGER NOT NULL,
+//   totalTrackCount INTEGER NOT NULL,
+//   duration INTEGER NOT NULL,
+//   site VARCHAR(255) NOT NULL
+// );
