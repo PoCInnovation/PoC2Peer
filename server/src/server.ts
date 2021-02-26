@@ -37,6 +37,24 @@ async function main() {
   // const allPost2 = await prisma.post.findMany();
   // console.log(allPost2);
 }
+async function addSongInDB(value: Array<any>) {
+  value.forEach(async (element) => {
+    await prisma.post.create({
+      data: {
+        title: element.title,
+        album: element.album,
+        artist: element.artist,
+        genre: element.genre,
+        source: element.source,
+        image: element.image,
+        trackNumber: element.trackNumber,
+        totalTrackCount: element.totalTrackCount,
+        duration: element.duration,
+        site: element.site,
+      },
+    });
+  });
+}
 
 server.get('/init', (req, res) => {
   main()
@@ -62,6 +80,16 @@ server.get('/getSong', (req, res) => {
   });
 });
 
+server.post('/addSong', (req, res) => {
+  if (!req.body.song) {
+    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
+  } else {
+    console.log(req.body.song);
+    addSongInDB(req.body.song);
+    res.status(httpStatus.OK).send('great');
+  }
+});
+
 server.listen(PORT, () => {
   console.log(`server is listening on ${PORT}`);
 });
@@ -76,12 +104,4 @@ server.get('/repeat-my-query', (req, res) => {
 
 server.get('/repeat-my-param/:message', (req, res) => {
   res.status(httpStatus.OK).send(req.params.message);
-});
-
-server.post('/repeat-my-body', (req, res) => {
-  if (!req.body.message) {
-    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
-  } else {
-    res.status(httpStatus.OK).send(req.body.message);
-  }
 });
