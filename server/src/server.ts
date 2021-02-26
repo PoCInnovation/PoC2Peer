@@ -85,19 +85,3 @@ server.post('/repeat-my-body', (req, res) => {
     res.status(httpStatus.OK).send(req.body.message);
   }
 });
-
-server.get('/repeat-my-header', (req, res) => {
-  if (!req.header('X-Message')) {
-    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
-  } else {
-    res.status(httpStatus.OK).send(req.header('X-Message'));
-  }
-});
-
-server.get('/repeat-my-cookie', (req, res) => {
-  if (!req.cookies.message) {
-    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
-  } else {
-    res.status(httpStatus.OK).send(req.cookies.message);
-  }
-});
