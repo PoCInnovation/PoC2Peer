@@ -44,20 +44,8 @@ func main() {
 	//defer cancel()
 	P2PPort := flag.Int("lp", DefaultP2PPort, "wait for incoming connections")
 	HttpPort := flag.Int("lh", DefaultHttpPort, "wait for incoming connections")
-	//
-	//priv, _, err := crypto.GenerateKeyPair(crypto.RSA, 2048)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
-	//opts := []libp2p.Option{
-	//	libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/0.0.0.0/tcp/%d", *P2PPort)),
-	//	libp2p.Identity(priv),
-	//	libp2p.DefaultTransports,
-	//	libp2p.DefaultMuxers,
-	//	libp2p.DefaultSecurity,
-	//	libp2p.NATPortMap(),
-	//}
+	flag.Parse()
+	flag.Parse()
 	s, err := core.NewP2PServer(*HttpPort, *P2PPort)
 	if err != nil {
 		log.Fatal(err)

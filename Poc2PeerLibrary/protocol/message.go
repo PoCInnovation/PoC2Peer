@@ -19,6 +19,70 @@ type Msg struct {
 	Data MsgData
 }
 
+//func (m Msg) HandleMsg(pStorage storage.LocalStorage) error {
+//	switch m.Op {
+//	case Have:
+//		log.Println("handling HAVE message datagram")
+//		//err := msg.HandleDataExchange(c.LocalStorage)
+//		//if err != nil {
+//		//	return err
+//		//}
+//	case Data:
+//		log.Println("handling DATA message datagram")
+//		err := m.HandleDataExchange(pStorage)
+//		if err != nil {
+//			return err
+//		}
+//	case Request:
+//		log.Printf("handling REQUEST message datagram\n")
+//		chunks, err := m.HandleRequest(pStorage
+//		if err != nil {
+//			log.Println("ERROR WHEN HANDLING REQUEST message datagram")
+//			return err
+//		}
+//		log.Println("finished processing REQUEST message datagram")
+// TODO find a way to add protocol (interface ?) to send back datagram
+//		return c.N.SendDatagram(chunks, pid)
+//	}
+//}
+
+func (m *Msg) HandleHave(pStorage storage.LocalStorage) error {
+	exch, ok := m.Data.(DataExchange)
+	if !ok {
+		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
+	}
+	for _, data := range exch.Chunks {
+		log.Printf("Handling Data: %v\n", string(data.B))
+	}
+	return pStorage.AddReceivedFileChunks(exch.File, exch.Chunks)
+}
+
+func (m *Msg) HandleDataExchange(pStorage storage.LocalStorage) error {
+	exch, ok := m.Data.(DataExchange)
+	if !ok {
+		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
+	}
+	for _, data := range exch.Chunks {
+		log.Printf("Handling Data: %v\n", string(data.B))
+	}
+	return pStorage.AddReceivedFileChunks(exch.File, exch.Chunks)
+}
+
+func (m *Msg) HandleRequest(pStorage storage.LocalStorage) (*Datagram, error) {
+	req, ok := m.Data.(RequestChunks)
+	if !ok {
+		return nil, fmt.Errorf("message got DataExchange op Code but could not convert to RequestChunks\nreceived: %v", m)
+	}
+	data, err := pStorage.GetChunks(req.File, req.IDs)
+	if err != nil {
+		log.Printf("HERE: %v\n", err)
+		//TODO: better way to send back error
+		return NewDataGram(Msg{Op: Error, Data: req}), nil
+	}
+	nm := Msg{Op: Data, Data: DataExchange{File: req.File, Chunks: data}}
+	return NewDataGram(nm), nil
+}
+
 // msgAux is an auxiliary struct that looks like Msg except it has
 // a []byte to store the incoming gob for MsgData
 // (see marshal/unmarshal functions on Msg)
@@ -53,23 +117,23 @@ func (m *Msg) UnmarshalJSON(b []byte) error {
 	//		return errors.New("failed to decode HandshakeMsg")
 	//	}
 	//	m.Data = h
-	//case Have:
-	//	var h HaveMsg
-	//	err := dec.Decode(&h)
-	//	if err != nil {
-	//		return errors.New("failed to decode HaveMsg")
-	//	}
-	//	m.Data = h
+	case Have:
+		var h HaveMsg
+		err = dec.Decode(&h)
+		if err != nil {
+			return errors.New("failed to decode HaveMsg")
+		}
+		m.Data = h
 	case Request:
 		var r RequestChunks
-		err := dec.Decode(&r)
+		err = dec.Decode(&r)
 		if err != nil {
 			return errors.New("failed to decode RequestChunks")
 		}
 		m.Data = r
 	case Data:
 		var r DataExchange
-		err := dec.Decode(&r)
+		err = dec.Decode(&r)
 		if err != nil {
 			return errors.New("failed to decode DataExchange")
 		}
@@ -95,12 +159,12 @@ func (m *Msg) MarshalJSON() ([]byte, error) {
 	//	if err != nil {
 	//		return nil, fmt.Errorf("Failed to marshal HandshakeMsg: %v", err)
 	//	}
-	//case HaveMsg:
-	//	gob.Register(HaveMsg{})
-	//	err := enc.Encode(m.Data.(HaveMsg))
-	//	if err != nil {
-	//		return nil, fmt.Errorf("Failed to marshal HaveMsg: %v", err)
-	//	}
+	case HaveMsg:
+		gob.Register(HaveMsg{})
+		err := enc.Encode(m.Data.(HaveMsg))
+		if err != nil {
+			return nil, fmt.Errorf("Failed to marshal HaveMsg: %v", err)
+		}
 	case RequestChunks:
 		gob.Register(RequestChunks{})
 		err := enc.Encode(m.Data.(RequestChunks))
@@ -120,36 +184,6 @@ func (m *Msg) MarshalJSON() ([]byte, error) {
 	// build an aux and marshal using built-in json
 	aux := msgAux{Op: m.Op, Data: b.Bytes()}
 	return json.Marshal(aux)
-}
-
-func (m *Msg) HandleDataExchange(pStorage storage.LocalStorage) error {
-	d, ok := m.Data.(DataExchange)
-	if !ok {
-		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
-	}
-	for _, data := range d.Chunks {
-		log.Printf("Handling Data: %v\n", string(data.B))
-	}
-	return d.AddReceivedDatasToStorage(pStorage)
-}
-
-func (m *Msg) HandleRequest(pStorage storage.LocalStorage) (*Datagram, error) {
-	fmt.Println(m.Data.(RequestChunks))
-	d, ok := m.Data.(RequestChunks)
-	if !ok {
-		return nil, fmt.Errorf("message got DataExchange op Code but could not convert to RequestChunks\nreceived: %v", m)
-	}
-	log.Printf("processing REQUEST: %v\n", d)
-	data, err := pStorage.GetChunks(d.File, d.Start, d.End)
-	if err != nil {
-		log.Printf("HERE: %v\n", err)
-		return NewDataGram(Msg{Op: Error, Data: d}), nil
-	}
-	fmt.Println(data)
-	h := NewDataExchangeFromRequested(d.File, data)
-	nm := Msg{Op: Data, Data: h}
-	fmt.Println(nm)
-	return NewDataGram(nm), nil
 }
 
 //// SendData sends the chunk range in a storage message

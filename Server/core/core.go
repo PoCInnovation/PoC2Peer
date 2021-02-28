@@ -5,6 +5,7 @@ import (
 	p2pcore "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/httpHost"
 	"github.com/PoCInnovation/PoC2Peer/Poc2PeerServer/p2pHost"
+	"io/ioutil"
 	"log"
 )
 
@@ -34,18 +35,32 @@ func (s *P2PServer) Run() error {
 	if err := s.P2PHost.SetStreamHandlers(); err != nil {
 		return err
 	}
-	size := 400
-	chunks := make([]byte, size)
-	for n := 0; n < size; {
-		data := fmt.Sprintf("Chunk: %4d|", n)
-		copy(chunks[n:], data)
-		n += len(data)
+	//size := 400
+	//chunks := make([]byte, size)
+	//for n := 0; n < size; {
+	//	data := fmt.Sprintf("Chunk: %4d|", n)
+	//	copy(chunks[n:], data)
+	//	n += len(data)
+	//}
+	//hash, err := s.P2PHost.LocalStorage.AddFile(chunks)
+	//if err != nil {
+	//	return err
+	//}
+	//fmt.Printf("File Hashed: %v\n", hash)
+	files := []string{
+		"tests/testsfile",
 	}
-	hash, err := s.P2PHost.LocalStorage.AddFile(chunks)
-	if err != nil {
-		return err
+	for _, file := range files {
+		content, err := ioutil.ReadFile(file)
+		if err != nil {
+			log.Printf("Can't read file %s: %v\n", file, err)
+		}
+		hash, err := s.P2PHost.LocalStorage.AddFile(content)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("File Hashed: %v\n", hash)
 	}
-	fmt.Printf("File Hashed: %v\n", hash)
 	//s.P2PHost.N.Host.SetStreamHandler(protocol.FileTransferProtocol, func(stream network.Stream) {
 	//	log.Println("Got a new stream!")
 	//	fmt.Println(stream.ID())
@@ -153,7 +168,7 @@ func (s *P2PServer) Run() error {
 }
 
 func (s *P2PServer) Close() error {
-	if err := s.P2PHost.N.Host.Close(); err != nil {
+	if err := s.P2PHost.N.Close(); err != nil {
 		return err
 	}
 	return nil

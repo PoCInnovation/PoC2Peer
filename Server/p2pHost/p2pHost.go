@@ -7,5 +7,5 @@ import (
 
 func NewP2PHost(ip, prot string, listenPort int) (*p2pcore.LibP2pCore, error) {
 	infos := p2pnetwork.NewNetworkInfos(ip, listenPort)
-	return p2pcore.NewLibP2P(infos, prot)
+	return p2pcore.NewP2PPermanentPeer(nil, infos, prot)
 }

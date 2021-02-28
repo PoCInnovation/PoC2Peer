@@ -7,11 +7,10 @@ import (
 
 // RequestChunks holds a have message storage payload
 type RequestChunks struct {
-	File  storage.FileHashTmp
-	Start storage.ChunkID
-	End   storage.ChunkID
+	File storage.FileHashTmp
+	IDs  []storage.ChunkID
 }
 
 func (c RequestChunks) String() string {
-	return fmt.Sprintf("File: %v, Start: %v, End: %v", c.File, c.Start, c.End)
+	return fmt.Sprintf("File: %v, Id's: %v", c.File, c.IDs)
 }

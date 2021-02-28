@@ -68,10 +68,12 @@ class MainActivity : AppCompatActivity() {
 //        }
 
 
-        val ret = Gomobile.getID("192.168.0.31:5001")
-        println(ret)
+//        val ret = Gomobile.getID("192.168.0.31:5001")
+//        println(ret)
         val ret2 = Gomobile.launchP2P( getIPAddress(true),"192.168.0.31", 5000)
         println(ret2)
+        val ret = Gomobile.read(1)
+        println(ret.toString())
 
 //        val str = Gomobile.callString()
 //        print(str)

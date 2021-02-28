@@ -2,13 +2,14 @@ package protocol
 
 import "github.com/PoCInnovation/PoC2Peer/Poc2PeerLibrary/storage"
 
-// HaveRequest holds a have message storage payload
-type HaveRequest struct {
-	File storage.FileHashTmp
-}
+const (
+	HaveRequest = iota
+	HaveResponse
+)
 
-// HaveResponse holds a have message storage payload
-type HaveResponse struct {
-	HaveRequest
+// HaveMsg holds a have message storage payload
+type HaveMsg struct {
+	File   storage.FileHashTmp
+	Type   int
 	Chunks []storage.ChunkID
 }

@@ -2,13 +2,8 @@ package p2pnetwork
 
 import (
 	"bufio"
-	inet "github.com/libp2p/go-libp2p-core/network"
-
-	//inet "github.com/libp2p/go-libp2p-net"
-	//multicodec "github.com/multiformats/go-multicodec"
-	//json "github.com/multiformats/go-multicodec/json"
 	json "encoding/json"
-	//json "github.com/multiformats/go-multicodec"
+	inet "github.com/libp2p/go-libp2p-core/network"
 )
 
 // WrappedStream wraps a libp2p stream. We encode/decode whenever we
@@ -42,6 +37,6 @@ func WrapStream(s inet.Stream) *WrappedStream {
 	}
 }
 
-func (s WrappedStream) Close() error {
+func (s *WrappedStream) Close() error {
 	return s.Stream.Close()
 }
