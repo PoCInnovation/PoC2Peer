@@ -1,0 +1,453 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+MERGED from [androidx.databinding:databinding-adapters:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/82455b4ca0bc5cb7afef23c913a5287f/databinding-adapters-4.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.databinding:databinding-runtime:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/215268e14865788e110baee26ff7d870/databinding-runtime-4.1.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.databinding:viewbinding:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/30997af4dcd7e88a61fcaca61999f40e/jetified-viewbinding-4.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/678f4d1fda1e574f64a67e6652bb0037/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:1-51:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/89e98f738761edc0aa83412d503e995b/constraintlayout-2.0.1/AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.exoplayer:extension-cast:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c95a579ca9da62ce1814be50b7397080/jetified-extension-cast-2.11.5/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:2:1-22:12
+MERGED from [com.google.android.gms:play-services-cast:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5c79527d28fae2760e28c35b6fc76808/jetified-play-services-cast-18.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.mediarouter:mediarouter:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/60795fb38afc2d4e5bd2d3e5b5e653c0/mediarouter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c6f66d06d926d9ec8a44c358011566/appcompat-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment-ktx:1.2.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/7580c1a338d73267d5bdea25aecde86a/jetified-fragment-ktx-1.2.5/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/505f35369acd59c96df857e4362f7fc7/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/e130306618a803b4b7f80f18931ed57b/lifecycle-extensions-2.2.0/AndroidManifest.xml:17:1-27:12
+MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8ee7b1ef527ac3c3b22957d0fa2bf357/jetified-glide-4.11.0/AndroidManifest.xml:2:1-12:12
+MERGED from [com.google.android.exoplayer:exoplayer-ui:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/aad9a8678e37d4b54304efa0b724e038/jetified-exoplayer-ui-2.11.5/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.exoplayer:extension-mediasession:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c732e82d043b010307b3758d22d631/jetified-extension-mediasession-2.11.5/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media:media:1.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9bac7e2e6e4db35457355a5416bd2ea1/media-1.0.1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9447c699f002a1425f163ac033cb6be5/jetified-exoplayer-core-2.11.5/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/feaffe37773f349a62810ca56eb9ad23/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/b35f3909d068cdd1a117c833f3c02a5d/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a28ef3642331023b42e50bf912fea8d/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-flags:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5e7698972d4a0a14155bc1587b90c888/jetified-play-services-flags-17.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac4b29e88d4b643ee8313d5480118cab/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.fragment:fragment:1.2.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/99fda5c81bc60e09b7058e01b42be8f4/fragment-1.2.5/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity-ktx:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8b77eab8e0c04325e30816488a6bf200/jetified-activity-ktx-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core-ktx:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/029b17a576368b736698a5ee86d0308b/jetified-core-ktx-1.1.0/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/0d35d8617b25bb10fe3af6933550a95d/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/bf13321f7e5f9ced46f98eae7f450a05/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/b4f1f0bb78d680a53091882135d33596/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/7b64e1b9f5322bdd5ec8368299152e27/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.palette:palette:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/a8b87941ccab7921a8d8391d7ab4beb9/palette-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c58a4cbfe3dbc5c2e6ab3ddb40a465f3/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ebca0ecc2ed83eff39726c97c9275243/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/33240d72a4d22aa72cbb262fba8d7419/jetified-activity-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.3.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6538c18514a211dc77c39a9a0384258f/core-1.3.1/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:17:1-32:12
+MERGED from [androidx.lifecycle:lifecycle-service:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/90448f05e06d10214f773cb1000a885e/jetified-lifecycle-service-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/abb711505dba5692864c39a73a2fdf7a/jetified-lifecycle-runtime-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/2c40c9e92fd65a463f31ada0bacabde6/lifecycle-runtime-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/318a26b169bc46f909bef24383627541/lifecycle-livedata-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/a7e5ae49bc3c91d29578aecba71bfebc/jetified-lifecycle-livedata-core-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6b29c93a5415491e81537a2900b99d9a/jetified-lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/378d662d222f50bc2eb38be848d98429/lifecycle-livedata-core-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/157e336037a9891f6e83e1ac390f351a/core-runtime-2.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/761c1870ad77b926c953b4bffc9c817d/jetified-savedstate-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c69bfe333f4857d5359c7e70aeb6cd3a/jetified-lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/85b6736c05fb2ae52735a1ac9128002f/lifecycle-viewmodel-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3c1c85c2d122b803ce150a55e3aac1d4/jetified-gifdecoder-4.11.0/AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.exifinterface:exifinterface:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/847f8b1262fe696b43446823d00f9503/exifinterface-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a63667c95c026d7a40726732e9105af/versionedparcelable-1.1.0/AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:15:1-38:12
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:15:1-41:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/dc6de5f57e12c1f87628d2d76ed2b3a2/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/97d5b18dc499999ffd9cd128590a2e69/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/f20c461f3272daec55503e34564011b8/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c40c29c9fc02520e5dfb907f2a8f1035/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.datatransport:transport-api:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ce55a90cd3b46d095b202c64348b361d/jetified-transport-api-2.1.0/AndroidManifest.xml:15:1-22:12
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+	package
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:20:5-39
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:19:5-51
+	xmlns:dist
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:18:5-61
+	android:versionCode
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:1-97:12
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:17:11-69
+application
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:22:5-95:19
+MERGED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:5-49:19
+MERGED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:29:5-49:19
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/89e98f738761edc0aa83412d503e995b/constraintlayout-2.0.1/AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/89e98f738761edc0aa83412d503e995b/constraintlayout-2.0.1/AndroidManifest.xml:9:5-20
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:9:5-20:19
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:9:5-20:19
+MERGED from [com.google.android.gms:play-services-cast:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5c79527d28fae2760e28c35b6fc76808/jetified-play-services-cast-18.1.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-cast:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5c79527d28fae2760e28c35b6fc76808/jetified-play-services-cast-18.1.0/AndroidManifest.xml:22:5-20
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/e130306618a803b4b7f80f18931ed57b/lifecycle-extensions-2.2.0/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/e130306618a803b4b7f80f18931ed57b/lifecycle-extensions-2.2.0/AndroidManifest.xml:24:5-25:19
+MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8ee7b1ef527ac3c3b22957d0fa2bf357/jetified-glide-4.11.0/AndroidManifest.xml:10:5-20
+MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8ee7b1ef527ac3c3b22957d0fa2bf357/jetified-glide-4.11.0/AndroidManifest.xml:10:5-20
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac4b29e88d4b643ee8313d5480118cab/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac4b29e88d4b643ee8313d5480118cab/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.core:core:1.3.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6538c18514a211dc77c39a9a0384258f/core-1.3.1/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.3.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6538c18514a211dc77c39a9a0384258f/core-1.3.1/AndroidManifest.xml:24:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:24:5-30:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:24:5-30:19
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3c1c85c2d122b803ce150a55e3aac1d4/jetified-gifdecoder-4.11.0/AndroidManifest.xml:9:5-20
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3c1c85c2d122b803ce150a55e3aac1d4/jetified-gifdecoder-4.11.0/AndroidManifest.xml:9:5-20
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a63667c95c026d7a40726732e9105af/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a63667c95c026d7a40726732e9105af/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:28:5-36:19
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:28:5-36:19
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:25:5-39:19
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:25:5-39:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.3.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6538c18514a211dc77c39a9a0384258f/core-1.3.1/AndroidManifest.xml:24:18-86
+	android:supportsRtl
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:27:9-35
+	android:label
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:25:9-41
+	android:roundIcon
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:26:9-54
+	android:targetSandboxVersion
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:28:9-41
+	android:icon
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:24:9-43
+	android:allowBackup
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:23:9-35
+	android:theme
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:29:9-40
+dist:module
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:32:9-44
+	dist:instant
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:32:22-41
+meta-data#com.google.android.gms.car.application
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:35:9-37:59
+	android:resource
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:37:13-56
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:36:13-66
+meta-data#com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:40:9-41:84
+	android:value
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:41:13-82
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:40:20-100
+activity#com.example.android.uamp.MainActivity
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:43:9-78:20
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:43:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:44:13-47:29
+action#android.intent.action.MAIN
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:45:17-69
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:45:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:46:17-77
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:46:27-74
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:example.android.com+data:pathPattern:/uamp+data:scheme:http
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:50:13-60:29
+action#android.intent.action.VIEW
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:51:17-69
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:51:25-66
+category#android.intent.category.DEFAULT
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:53:17-76
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:53:27-73
+category#android.intent.category.BROWSABLE
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:54:17-78
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:54:27-75
+data
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:56:17-59:45
+	android:host
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:57:21-55
+	android:scheme
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:59:21-42
+	android:pathPattern
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:58:21-48
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:example.android.com+data:pathPattern:/uamp+data:scheme:https
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:63:13-73:29
+intent-filter#action:name:android.media.action.MEDIA_PLAY_FROM_SEARCH
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:75:13-77:29
+action#android.media.action.MEDIA_PLAY_FROM_SEARCH
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:76:17-86
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:76:25-83
+service#com.example.android.uamp.media.MusicService
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:84:9-93:19
+	android:enabled
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:86:13-35
+	android:exported
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:87:13-36
+	tools:ignore
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:88:13-43
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:85:13-47
+intent-filter#action:name:android.media.browse.MediaBrowserService
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:90:13-92:29
+action#android.media.browse.MediaBrowserService
+ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:91:17-83
+	android:name
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml:91:25-80
+uses-sdk
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+MERGED from [androidx.databinding:databinding-adapters:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/82455b4ca0bc5cb7afef23c913a5287f/databinding-adapters-4.1.1/AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:databinding-adapters:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/82455b4ca0bc5cb7afef23c913a5287f/databinding-adapters-4.1.1/AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:databinding-runtime:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/215268e14865788e110baee26ff7d870/databinding-runtime-4.1.1/AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:databinding-runtime:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/215268e14865788e110baee26ff7d870/databinding-runtime-4.1.1/AndroidManifest.xml:22:5-44
+MERGED from [androidx.databinding:viewbinding:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/30997af4dcd7e88a61fcaca61999f40e/jetified-viewbinding-4.1.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.databinding:viewbinding:4.1.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/30997af4dcd7e88a61fcaca61999f40e/jetified-viewbinding-4.1.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/678f4d1fda1e574f64a67e6652bb0037/multidex-2.0.0/AndroidManifest.xml:20:5-43
+MERGED from [androidx.multidex:multidex:2.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/678f4d1fda1e574f64a67e6652bb0037/multidex-2.0.0/AndroidManifest.xml:20:5-43
+MERGED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:5-24:41
+MERGED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:22:5-24:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/89e98f738761edc0aa83412d503e995b/constraintlayout-2.0.1/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/89e98f738761edc0aa83412d503e995b/constraintlayout-2.0.1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.exoplayer:extension-cast:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c95a579ca9da62ce1814be50b7397080/jetified-extension-cast-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:extension-cast:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c95a579ca9da62ce1814be50b7397080/jetified-extension-cast-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-cast:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5c79527d28fae2760e28c35b6fc76808/jetified-play-services-cast-18.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-cast:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5c79527d28fae2760e28c35b6fc76808/jetified-play-services-cast-18.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.mediarouter:mediarouter:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/60795fb38afc2d4e5bd2d3e5b5e653c0/mediarouter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.mediarouter:mediarouter:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/60795fb38afc2d4e5bd2d3e5b5e653c0/mediarouter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c6f66d06d926d9ec8a44c358011566/appcompat-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c6f66d06d926d9ec8a44c358011566/appcompat-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment-ktx:1.2.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/7580c1a338d73267d5bdea25aecde86a/jetified-fragment-ktx-1.2.5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment-ktx:1.2.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/7580c1a338d73267d5bdea25aecde86a/jetified-fragment-ktx-1.2.5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/505f35369acd59c96df857e4362f7fc7/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/505f35369acd59c96df857e4362f7fc7/recyclerview-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/e130306618a803b4b7f80f18931ed57b/lifecycle-extensions-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/e130306618a803b4b7f80f18931ed57b/lifecycle-extensions-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8ee7b1ef527ac3c3b22957d0fa2bf357/jetified-glide-4.11.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8ee7b1ef527ac3c3b22957d0fa2bf357/jetified-glide-4.11.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.google.android.exoplayer:exoplayer-ui:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/aad9a8678e37d4b54304efa0b724e038/jetified-exoplayer-ui-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-ui:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/aad9a8678e37d4b54304efa0b724e038/jetified-exoplayer-ui-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:extension-mediasession:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c732e82d043b010307b3758d22d631/jetified-extension-mediasession-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:extension-mediasession:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/16c732e82d043b010307b3758d22d631/jetified-extension-mediasession-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9bac7e2e6e4db35457355a5416bd2ea1/media-1.0.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9bac7e2e6e4db35457355a5416bd2ea1/media-1.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9447c699f002a1425f163ac033cb6be5/jetified-exoplayer-core-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.exoplayer:exoplayer-core:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9447c699f002a1425f163ac033cb6be5/jetified-exoplayer-core-2.11.5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/feaffe37773f349a62810ca56eb9ad23/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/feaffe37773f349a62810ca56eb9ad23/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/b35f3909d068cdd1a117c833f3c02a5d/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/b35f3909d068cdd1a117c833f3c02a5d/jetified-appcompat-resources-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a28ef3642331023b42e50bf912fea8d/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a28ef3642331023b42e50bf912fea8d/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-flags:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5e7698972d4a0a14155bc1587b90c888/jetified-play-services-flags-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-flags:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/5e7698972d4a0a14155bc1587b90c888/jetified-play-services-flags-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac4b29e88d4b643ee8313d5480118cab/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac4b29e88d4b643ee8313d5480118cab/jetified-play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.2.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/99fda5c81bc60e09b7058e01b42be8f4/fragment-1.2.5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.2.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/99fda5c81bc60e09b7058e01b42be8f4/fragment-1.2.5/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-ktx:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8b77eab8e0c04325e30816488a6bf200/jetified-activity-ktx-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity-ktx:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/8b77eab8e0c04325e30816488a6bf200/jetified-activity-ktx-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core-ktx:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/029b17a576368b736698a5ee86d0308b/jetified-core-ktx-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/029b17a576368b736698a5ee86d0308b/jetified-core-ktx-1.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/0d35d8617b25bb10fe3af6933550a95d/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/0d35d8617b25bb10fe3af6933550a95d/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/bf13321f7e5f9ced46f98eae7f450a05/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/bf13321f7e5f9ced46f98eae7f450a05/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/b4f1f0bb78d680a53091882135d33596/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/b4f1f0bb78d680a53091882135d33596/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/7b64e1b9f5322bdd5ec8368299152e27/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/7b64e1b9f5322bdd5ec8368299152e27/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.palette:palette:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/a8b87941ccab7921a8d8391d7ab4beb9/palette-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.palette:palette:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/a8b87941ccab7921a8d8391d7ab4beb9/palette-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c58a4cbfe3dbc5c2e6ab3ddb40a465f3/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c58a4cbfe3dbc5c2e6ab3ddb40a465f3/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ebca0ecc2ed83eff39726c97c9275243/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ebca0ecc2ed83eff39726c97c9275243/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/33240d72a4d22aa72cbb262fba8d7419/jetified-activity-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/33240d72a4d22aa72cbb262fba8d7419/jetified-activity-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.3.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6538c18514a211dc77c39a9a0384258f/core-1.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.3.1] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6538c18514a211dc77c39a9a0384258f/core-1.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-service:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/90448f05e06d10214f773cb1000a885e/jetified-lifecycle-service-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-service:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/90448f05e06d10214f773cb1000a885e/jetified-lifecycle-service-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/abb711505dba5692864c39a73a2fdf7a/jetified-lifecycle-runtime-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/abb711505dba5692864c39a73a2fdf7a/jetified-lifecycle-runtime-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/2c40c9e92fd65a463f31ada0bacabde6/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/2c40c9e92fd65a463f31ada0bacabde6/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/318a26b169bc46f909bef24383627541/lifecycle-livedata-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/318a26b169bc46f909bef24383627541/lifecycle-livedata-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/a7e5ae49bc3c91d29578aecba71bfebc/jetified-lifecycle-livedata-core-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/a7e5ae49bc3c91d29578aecba71bfebc/jetified-lifecycle-livedata-core-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6b29c93a5415491e81537a2900b99d9a/jetified-lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/6b29c93a5415491e81537a2900b99d9a/jetified-lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/378d662d222f50bc2eb38be848d98429/lifecycle-livedata-core-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/378d662d222f50bc2eb38be848d98429/lifecycle-livedata-core-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/157e336037a9891f6e83e1ac390f351a/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/157e336037a9891f6e83e1ac390f351a/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/761c1870ad77b926c953b4bffc9c817d/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/761c1870ad77b926c953b4bffc9c817d/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c69bfe333f4857d5359c7e70aeb6cd3a/jetified-lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c69bfe333f4857d5359c7e70aeb6cd3a/jetified-lifecycle-viewmodel-ktx-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/85b6736c05fb2ae52735a1ac9128002f/lifecycle-viewmodel-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/85b6736c05fb2ae52735a1ac9128002f/lifecycle-viewmodel-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3c1c85c2d122b803ce150a55e3aac1d4/jetified-gifdecoder-4.11.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.bumptech.glide:gifdecoder:4.11.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3c1c85c2d122b803ce150a55e3aac1d4/jetified-gifdecoder-4.11.0/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.exifinterface:exifinterface:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/847f8b1262fe696b43446823d00f9503/exifinterface-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/847f8b1262fe696b43446823d00f9503/exifinterface-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a63667c95c026d7a40726732e9105af/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9a63667c95c026d7a40726732e9105af/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:18:5-20:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/dc6de5f57e12c1f87628d2d76ed2b3a2/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/dc6de5f57e12c1f87628d2d76ed2b3a2/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/97d5b18dc499999ffd9cd128590a2e69/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/97d5b18dc499999ffd9cd128590a2e69/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/f20c461f3272daec55503e34564011b8/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/f20c461f3272daec55503e34564011b8/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c40c29c9fc02520e5dfb907f2a8f1035/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c40c29c9fc02520e5dfb907f2a8f1035/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.datatransport:transport-api:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ce55a90cd3b46d095b202c64348b361d/jetified-transport-api-2.1.0/AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.android.datatransport:transport-api:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ce55a90cd3b46d095b202c64348b361d/jetified-transport-api-2.1.0/AndroidManifest.xml:18:5-20:41
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		ADDED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/gregoirebrasseur/Documents/PoC2Peer/app/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:5-77
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:7:5-77
+MERGED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:7:5-77
+	android:name
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:26:22-74
+uses-permission#android.permission.INTERNET
+ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:5-67
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:26:5-67
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:26:5-67
+	android:name
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:27:22-64
+receiver#androidx.media.session.MediaButtonReceiver
+ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:9-43:20
+	android:name
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:39:19-76
+intent-filter#action:name:android.intent.action.MEDIA_BUTTON
+ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:40:13-42:29
+action#android.intent.action.MEDIA_BUTTON
+ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:17-77
+	android:name
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:41:25-74
+provider#com.example.android.uamp.media.library.AlbumArtContentProvider
+ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:45:9-48:39
+	android:authorities
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:47:13-82
+	android:exported
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:48:13-36
+	android:name
+		ADDED from [:common] /Users/gregoirebrasseur/Documents/PoC2Peer/app/common/build/intermediates/library_manifest/debug/AndroidManifest.xml:46:13-90
+receiver#com.google.android.gms.cast.framework.media.MediaIntentReceiver
+ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:10:9-12:40
+	android:exported
+		ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:12:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:11:13-91
+service#com.google.android.gms.cast.framework.media.MediaNotificationService
+ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:14:9-16:40
+	android:exported
+		ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:16:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:15:13-96
+service#com.google.android.gms.cast.framework.ReconnectionService
+ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:17:9-19:40
+	android:exported
+		ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:19:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-cast-framework:18.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/169ed0165922b0d1e391a17f47c80a4c/jetified-play-services-cast-framework-18.1.0/AndroidManifest.xml:18:13-85
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.exoplayer:exoplayer-core:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9447c699f002a1425f163ac033cb6be5/jetified-exoplayer-core-2.11.5/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:22:5-79
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:22:5-79
+	android:name
+		ADDED from [com.google.android.exoplayer:exoplayer-core:2.11.5] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/9447c699f002a1425f163ac033cb6be5/jetified-exoplayer-core-2.11.5/AndroidManifest.xml:24:22-76
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/ac236f743f0c88d2660e8804cf597baf/jetified-play-services-base-17.1.0/AndroidManifest.xml:24:13-79
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:17.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/3cad49fb6b39b9d943020e9f820a04bf/jetified-play-services-basement-17.1.0/AndroidManifest.xml:24:13-58
+provider#androidx.lifecycle.ProcessLifecycleOwnerInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:25:9-29:43
+	android:authorities
+		ADDED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:27:13-69
+	android:multiprocess
+		ADDED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:29:13-40
+	android:exported
+		ADDED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:28:13-37
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.2.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/35c2d3e1039beb73b8d1eeca36fb9e99/jetified-lifecycle-process-2.2.0/AndroidManifest.xml:26:13-79
+service#com.google.android.datatransport.runtime.backends.TransportBackendDiscovery
+ADDED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:29:9-35:19
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:36:9-38:40
+MERGED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:36:9-38:40
+	android:exported
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:31:13-37
+	android:name
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:30:13-103
+meta-data#backend:com.google.android.datatransport.cct.CctBackendFactory
+ADDED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:32:13-34:39
+	android:value
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:34:17-36
+	android:name
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/c8c8b5461ac604135ccfea2d1cfebbc5/jetified-transport-backend-cct-2.1.0/AndroidManifest.xml:33:17-94
+service#com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService
+ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:26:9-30:19
+	android:exported
+		ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:28:13-37
+	android:permission
+		ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:29:13-69
+	android:name
+		ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:27:13-117
+receiver#com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver
+ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:32:9-34:40
+	android:exported
+		ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:34:13-37
+	android:name
+		ADDED from [com.google.android.datatransport:transport-runtime:2.1.0] /Users/gregoirebrasseur/.gradle/caches/transforms-2/files-2.1/101fed13232cae7c12ca10e200e0f1c1/jetified-transport-runtime-2.1.0/AndroidManifest.xml:33:13-132
