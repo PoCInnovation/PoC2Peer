@@ -1,2 +1,0 @@
-com/example/android/uamp/media/BuildConfig.java
- com.example.android.uamp.media.BuildConfig
