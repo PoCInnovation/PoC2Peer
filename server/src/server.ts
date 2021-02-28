@@ -78,6 +78,7 @@ server.get('/getSong', (req, res) => {
     // eslint-disable-next-line max-len
     id: string; album: string; artist: string; genre: string; source: string; image: string; trackNumber: number; totalTrackCount: number; duration: number; site: string;
   }[] = [];
+
   prisma.post.findMany().then((data) => {
     data.forEach((element) => {
       tmpvalue.push({
@@ -85,7 +86,7 @@ server.get('/getSong', (req, res) => {
         id: element.id.toString(), album: element.album, artist: element.artist, genre: element.genre, source: element.source, image: element.image, trackNumber: element.trackNumber, totalTrackCount: element.trackNumber, duration: element.duration, site: element.site,
       });
     });
-    res.status(httpStatus.OK).send(tmpvalue);
+    res.status(httpStatus.OK).send({ music: tmpvalue });
     // console.log(data);
   });
 });
