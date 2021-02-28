@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="sign_in_button1_top_margin">64dp</dimen>
-    <dimen name="sign_in_button1_top_margin_no_input">116dp</dimen>
-    <dimen name="sign_in_button2_top_margin_no_input">64dp</dimen>
-</resources>

@@ -50,6 +50,7 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     private var rtmpDataSource: DataSource? = null
     private var udpDataSource: DataSource? = null
     private var dataSchemeDataSource: DataSource? = null
+    private var p2pDataSource: DataSource? = null
     private var rawResourceDataSource: DataSource? = null
     private var dataSource: DataSource? = null
 
@@ -114,7 +115,7 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
 
     @Throws(IOException::class)
     override fun open(dataSpec: DataSpec): Long {
-        Log.d("customdatasource", "OPEN")
+        Log.d("customdatasource", "OPEN: $dataSpec")
         Assertions.checkState(dataSource == null)
         // Choose the correct source for the scheme.
         val scheme = dataSpec.uri.scheme
@@ -125,17 +126,19 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
             } else {
                 getFileDataSource()
             }
-        } else if (CustomDataSource.Companion.SCHEME_ASSET == scheme) {
+        } else if (SCHEME_ASSET == scheme) {
             getAssetDataSource()
-        } else if (CustomDataSource.Companion.SCHEME_CONTENT == scheme) {
+        } else if (SCHEME_CONTENT == scheme) {
             getContentDataSource()
-        } else if (CustomDataSource.Companion.SCHEME_RTMP == scheme) {
+        } else if (SCHEME_RTMP == scheme) {
             getRtmpDataSource()
-        } else if (CustomDataSource.Companion.SCHEME_UDP == scheme) {
+        } else if (SCHEME_UDP == scheme) {
             getUdpDataSource()
         } else if (DataSchemeDataSource.SCHEME_DATA == scheme) {
             getDataSchemeDataSource()
-        } else if (CustomDataSource.Companion.SCHEME_RAW == scheme) {
+        } else if (SCHEME_P2P == scheme) {
+            getP2PDataSource()
+        } else if (SCHEME_RAW == scheme) {
             getRawResourceDataSource()
         } else {
             baseDataSource
@@ -146,23 +149,19 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
 
     @Throws(IOException::class)
     override fun read(buffer: ByteArray, offset: Int, readLength: Int): Int {
-        Log.e("customdatasource", "read")
         return Assertions.checkNotNull(dataSource).read(buffer, offset, readLength)
     }
 
     override fun getUri(): Uri? {
-        Log.d("customdatasource", dataSource!!.uri.toString())
         return if (dataSource == null) null else dataSource!!.uri
     }
 
     override fun getResponseHeaders(): Map<String, List<String>> {
-        Log.d("customdatasource", dataSource!!.responseHeaders.toString())
         return if (dataSource == null) emptyMap() else dataSource!!.responseHeaders
     }
 
     @Throws(IOException::class)
     override fun close() {
-        Log.d("customdatasource", "close")
         if (dataSource != null) {
             try {
                 dataSource!!.close()
@@ -173,7 +172,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun getUdpDataSource(): DataSource {
-        Log.d("customdatasource", "getUDP")
         if (udpDataSource == null) {
             udpDataSource = UdpDataSource()
             addListenersToDataSource(udpDataSource)
@@ -182,7 +180,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun getFileDataSource(): DataSource {
-        Log.d("customdatasource", "getFILE")
         if (fileDataSource == null) {
             fileDataSource = FileDataSource()
             addListenersToDataSource(fileDataSource)
@@ -191,7 +188,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun getAssetDataSource(): DataSource {
-        Log.d("customdatasource", "getASSET")
         if (assetDataSource == null) {
             assetDataSource = AssetDataSource(context)
             addListenersToDataSource(assetDataSource)
@@ -200,7 +196,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun getContentDataSource(): DataSource {
-        Log.d("customdatasource", "getCONTENT")
         if (contentDataSource == null) {
             contentDataSource = ContentDataSource(context)
             addListenersToDataSource(contentDataSource)
@@ -209,7 +204,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun getRtmpDataSource(): DataSource? {
-        Log.d("customdatasource", "getRTMP")
         if (rtmpDataSource == null) {
             try {
                 // LINT.IfChange
@@ -235,7 +229,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun getDataSchemeDataSource(): DataSource {
-        Log.d("customdatasource", "getDATASCHEME")
         if (dataSchemeDataSource == null) {
             dataSchemeDataSource = DataSchemeDataSource()
             addListenersToDataSource(dataSchemeDataSource)
@@ -243,8 +236,15 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
         return dataSchemeDataSource as DataSource
     }
 
+    private fun getP2PDataSource(): DataSource {
+        if (p2pDataSource == null) {
+            p2pDataSource = P2PDataSource()
+            addListenersToDataSource(p2pDataSource)
+        }
+        return p2pDataSource as DataSource
+    }
+
     private fun getRawResourceDataSource(): DataSource {
-        Log.d("customdatasource", "getRAWRESOURCE")
         if (rawResourceDataSource == null) {
             rawResourceDataSource = RawResourceDataSource(context)
             addListenersToDataSource(rawResourceDataSource)
@@ -253,7 +253,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     }
 
     private fun addListenersToDataSource(dataSource: DataSource?) {
-        Log.d("customdatasource", "addListeners")
         for (i in transferListeners.indices) {
             dataSource!!.addTransferListener(transferListeners[i])
         }
@@ -262,7 +261,6 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
     private fun maybeAddListenerToDataSource(
         dataSource: DataSource?, listener: TransferListener
     ) {
-        Log.d("customdatasource", "maybeaddListener")
         dataSource?.addTransferListener(listener)
     }
 
@@ -272,6 +270,7 @@ class CustomDataSource(context: Context, baseDataSource: DataSource?) : DataSour
         private const val SCHEME_CONTENT = "content"
         private const val SCHEME_RTMP = "rtmp"
         private const val SCHEME_UDP = "udp"
+        private const val SCHEME_P2P = "p2p"
         private const val SCHEME_RAW = RawResourceDataSource.RAW_RESOURCE_SCHEME
     }
 
