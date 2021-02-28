@@ -76,14 +76,14 @@ server.get('/init', (req, res) => {
 server.get('/getSong', (req, res) => {
   const tmpvalue: {
     // eslint-disable-next-line max-len
-    id: string; album: string; artist: string; genre: string; source: string; image: string; trackNumber: number; totalTrackCount: number; duration: number; site: string;
+    id: string; title: string; album: string; artist: string; genre: string; source: string; image: string; trackNumber: number; totalTrackCount: number; duration: number; site: string;
   }[] = [];
 
   prisma.post.findMany().then((data) => {
     data.forEach((element) => {
       tmpvalue.push({
         // eslint-disable-next-line max-len
-        id: element.id.toString(), album: element.album, artist: element.artist, genre: element.genre, source: element.source, image: element.image, trackNumber: element.trackNumber, totalTrackCount: element.trackNumber, duration: element.duration, site: element.site,
+        id: element.id.toString(), title: element.title, album: element.album, artist: element.artist, genre: element.genre, source: element.source, image: element.image, trackNumber: element.trackNumber, totalTrackCount: element.trackNumber, duration: element.duration, site: element.site,
       });
     });
     res.status(httpStatus.OK).send({ music: tmpvalue });
