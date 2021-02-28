@@ -81,11 +81,11 @@ server.get('/getSong', (req, res) => {
 });
 
 server.post('/addSong', (req, res) => {
-  if (!req.body.song) {
+  if (!req.body.songs) {
     res.status(httpStatus.BAD_REQUEST).send('Bad Request');
   } else {
-    console.log(req.body.song);
-    addSongInDB(req.body.song);
+    console.log(req.body.songs);
+    addSongInDB(req.body.songs);
     res.status(httpStatus.OK).send('great');
   }
 });
