@@ -109,6 +109,21 @@ server.get('/repeat-my-query', (req, res) => {
   }
 });
 
+server.get('/deletePeer', (req, res) => {
+  if (!req.query.peer) {
+    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
+  } else {
+    const tmp = req.query.peer as string;
+    const value = prisma.peer.delete({
+      where: {
+        idpeer: tmp,
+      },
+    }).then(() => {
+      res.status(httpStatus.OK).send(value);
+    });
+  }
+});
+
 server.get('/peerList', (req, res) => {
   prisma.peer.findMany().then((data) => {
     res.status(httpStatus.OK).send(data);
