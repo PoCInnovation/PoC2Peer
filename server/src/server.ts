@@ -101,10 +101,6 @@ server.post('/addSong', (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`server is listening on ${PORT}`);
-});
-
 server.get('/repeat-my-query', (req, res) => {
   if (!req.query.message) {
     res.status(httpStatus.BAD_REQUEST).send('Bad Request');
@@ -113,6 +109,30 @@ server.get('/repeat-my-query', (req, res) => {
   }
 });
 
+server.get('/peerList', (req, res) => {
+  prisma.peer.findMany().then((data) => {
+    res.status(httpStatus.OK).send(data);
+  });
+});
+
+server.get('/addPeer', (req, res) => {
+  if (!req.query.peer) {
+    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
+  } else {
+    prisma.peer.create({
+      data: {
+        idpeer: req.query.peer as string,
+      },
+    }).then(() => {
+      res.status(httpStatus.OK).send(req.query.peer);
+    });
+  }
+});
+
 server.get('/repeat-my-param/:message', (req, res) => {
   res.status(httpStatus.OK).send(req.params.message);
+});
+
+server.listen(PORT, () => {
+  console.log(`server is listening on ${PORT}`);
 });

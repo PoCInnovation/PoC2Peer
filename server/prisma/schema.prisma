@@ -24,6 +24,10 @@ model Post {
   site            String   @db.VarChar(255)
 }
 
+model Peer {
+  id    Int     @default(autoincrement()) @id
+  idpeer  String  @db.VarChar(255)
+}
 
 // create table Post (
 //   id SERIAL PRIMARY KEY NOT NULL,
