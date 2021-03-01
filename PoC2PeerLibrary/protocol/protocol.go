@@ -42,6 +42,18 @@ const (
 	HandshakeProtocol    = "/p2p/handshake/0.0.0"
 )
 
+// PeerID identifies a peer
+// To avoid cycle Import
+// TODO: Remove ?
+type PeerID interface {
+	String() string
+}
+
+type Protocol interface {
+	HandleDatagram(d *Datagram, id PeerID)
+	SetDatagramSender(f func(Datagram, PeerID) error)
+}
+
 // Datagram holds a protocol datagram
 type Datagram struct {
 	Msgs []Msg

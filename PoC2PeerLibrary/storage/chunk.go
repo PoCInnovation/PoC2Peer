@@ -21,27 +21,12 @@ func newChunk(id ChunkID, size int) Chunk {
 }
 
 func NewChunkFromData(id ChunkID, size int, data []byte) Chunk {
-	chunk := newChunk(id, size)
-	copy(chunk.B, data)
-	return chunk
-}
-
-func FileDataToChunks(fileData []byte, chunkSize int) []Chunk {
-	var chunks []Chunk
-	for i := 0; ; i += 1 {
-		if len(fileData) == 0 {
-			break
-		}
-
-		// necessary check to avoid slicing beyond
-		// slice capacity
-		if len(fileData) < chunkSize {
-			chunkSize = len(fileData)
-		}
-
-		chunks = append(chunks, NewChunkFromData(ChunkID(i), chunkSize, fileData[0:chunkSize]))
-		fileData = fileData[chunkSize:]
-	}
-
-	return chunks
+	//chunk := newChunk(id, size)
+	//copy(chunk.B, data)
+	//return chunk
+	var c Chunk
+	c.B = make([]byte, size)
+	c.Id = id
+	copy(c.B, data)
+	return c
 }

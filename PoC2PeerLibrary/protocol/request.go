@@ -12,5 +12,5 @@ type RequestChunks struct {
 }
 
 func (c RequestChunks) String() string {
-	return fmt.Sprintf("File: %v, Id's: %v", c.File, c.IDs)
+	return fmt.Sprintf("P2PFile: %v, Id's: %v", c.File, c.IDs)
 }

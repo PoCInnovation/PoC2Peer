@@ -42,19 +42,30 @@ type Msg struct {
 //		}
 //		log.Println("finished processing REQUEST message datagram")
 // TODO find a way to add protocol (interface ?) to send back datagram
-//		return c.N.SendDatagram(chunks, pid)
+//		return c.network.SendDatagram(chunks, pid)
 //	}
 //}
 
-func (m *Msg) HandleHave(pStorage storage.LocalStorage) error {
-	exch, ok := m.Data.(DataExchange)
+func (m *Msg) HandleHave(pid PeerID, lStorage storage.LocalStorage, pStorage storage.PeerStorage) (*Datagram, error) {
+	log.Println("handling Have Request")
+	have, ok := m.Data.(HaveMsg)
 	if !ok {
-		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
+		return nil, fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
 	}
-	for _, data := range exch.Chunks {
-		log.Printf("Handling Data: %v\n", string(data.B))
+	switch have.Type {
+	case HaveRequest:
+		chunks, err := lStorage.GetChunkIDsInStorage(have.File)
+		if err != nil {
+			//	TODO: do smth
+			return nil, err
+		}
+		return NewDataGram(Msg{Op: Have, Data: HaveMsg{File: have.File, Type: HaveResponse, Chunks: chunks}}), nil
+	case HaveResponse:
+		err := pStorage.AddPeerFileChunks(pid, have.File, have.Chunks)
+		return nil, err
+	default:
+		return nil, fmt.Errorf("Have got Unknown Type: %v", have.Type)
 	}
-	return pStorage.AddReceivedFileChunks(exch.File, exch.Chunks)
 }
 
 func (m *Msg) HandleDataExchange(pStorage storage.LocalStorage) error {
@@ -73,7 +84,7 @@ func (m *Msg) HandleRequest(pStorage storage.LocalStorage) (*Datagram, error) {
 	if !ok {
 		return nil, fmt.Errorf("message got DataExchange op Code but could not convert to RequestChunks\nreceived: %v", m)
 	}
-	data, err := pStorage.GetChunks(req.File, req.IDs)
+	data, err := pStorage.GetRequestedChunks(req.File, req.IDs)
 	if err != nil {
 		log.Printf("HERE: %v\n", err)
 		//TODO: better way to send back error
@@ -160,18 +171,21 @@ func (m *Msg) MarshalJSON() ([]byte, error) {
 	//		return nil, fmt.Errorf("Failed to marshal HandshakeMsg: %v", err)
 	//	}
 	case HaveMsg:
+		// TOdo: Move in init function ?
 		gob.Register(HaveMsg{})
 		err := enc.Encode(m.Data.(HaveMsg))
 		if err != nil {
 			return nil, fmt.Errorf("Failed to marshal HaveMsg: %v", err)
 		}
 	case RequestChunks:
+		// TOdo: Move in init function ?
 		gob.Register(RequestChunks{})
 		err := enc.Encode(m.Data.(RequestChunks))
 		if err != nil {
 			return nil, fmt.Errorf("Failed to marshal RequestChunks: %v", err)
 		}
 	case DataExchange:
+		// TOdo: Move in init function ?
 		gob.Register(DataExchange{})
 		err := enc.Encode(m.Data.(DataExchange))
 		if err != nil {

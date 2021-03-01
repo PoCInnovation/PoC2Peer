@@ -1,41 +1,21 @@
 package storage
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"errors"
 	"fmt"
-	"log"
 	"sync"
 )
 
 type LocalStorage interface {
 	AddFile(fileData []byte) (FileID, error)
 	AddReceivedFileChunks(hash FileID, chunks []Chunk) error
-	GetChunks(hash FileID, ids []ChunkID) ([]Chunk, error)
-	GetFileDatas(hash FileID) ([]byte, error)
+	GetRequestedChunks(hash FileID, ids []ChunkID) ([]Chunk, error)
+	GetChunkIDsInStorage(hash FileID) ([]ChunkID, error)
+	GetFileData(hash FileID) ([]byte, error)
 }
 
 type FileID interface {
 	String() string
-}
-
-type FileHash []byte
-
-func (h FileHash) String() string {
-	return string(h)
-}
-
-func (h FileHash) Decode() FileHash {
-	return []byte(h)
-	he, err := hex.DecodeString(h.String())
-	if err != nil {
-		log.Printf("decoding filehash failed")
-		return []byte("")
-	}
-	fmt.Println(h)
-	return FileHash(he)
-	//return fmt.Sprintf("%x", h)
 }
 
 const LocalStorageSize = 100
@@ -45,15 +25,16 @@ type LocalStorageConfig struct {
 }
 
 type P2PStorage struct {
+	// Map in not thread safe by design, so we have to use a mutex
 	sync.Mutex
 	Config     LocalStorageConfig
-	LocalFiles map[string]map[ChunkID]Chunk
+	LocalFiles map[string]P2PFile
 }
 
 func NewP2PStorage() LocalStorage {
 	return &P2PStorage{
 		Config:     LocalStorageConfig{ChunkSize: LocalStorageSize},
-		LocalFiles: make(map[string]map[ChunkID]Chunk),
+		LocalFiles: make(map[string]P2PFile),
 	}
 }
 
@@ -63,16 +44,14 @@ func (f FileHashTmp) String() string {
 	return fmt.Sprintf("%d", f)
 }
 
-var tmp FileHashTmp = 1
-
 func (s *P2PStorage) Dump() {
-	s.Lock()
-	for _, file := range s.LocalFiles {
-		for _, chunk := range file {
-			log.Println(chunk)
-		}
-	}
-	s.Unlock()
+	//s.Lock()
+	//for _, file := range s.LocalFiles {
+	//	for _, chunk := range file {
+	//		log.Println(chunk)
+	//	}
+	//}
+	//s.Unlock()
 }
 
 // AddFile Add a file to local storage. Return the hashed file when successfull
@@ -85,13 +64,13 @@ func (s *P2PStorage) AddFile(fileData []byte) (FileID, error) {
 		s.Unlock()
 		return nil, errors.New("Trying to add existing file")
 	}
-	file := FileDataToChunks(fileData, s.Config.ChunkSize)
-	s.LocalFiles[key] = make(map[ChunkID]Chunk, len(file))
-	for i, chunk := range file {
-		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
-		s.LocalFiles[key][chunk.ID()] = file[i]
-	}
-	tmp += 1
+	s.LocalFiles[key] = NewFile(hash, Complete, fileData, s.Config.ChunkSize)
+	//file := FileDataToChunks(fileData, s.Config.ChunkSize)
+	//s.LocalFiles[key] = P2PFile{state: Complete, Data: fileData, Chunks: make(map[ChunkID]Chunk, len(file))}
+	//for i, chunk := range file {
+	//	//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
+	//	s.LocalFiles[key].Chunks[chunk.ID()] = file[i]
+	//}
 	//s.LocalFiles[key] = FileDataToChunks(fileData, s.Config.ChunkSize)
 	s.Unlock()
 	//s.Dump()
@@ -103,14 +82,21 @@ func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
 	s.Lock()
 	key := hash.String()
 	if _, ok := s.LocalFiles[key]; !ok {
-		s.LocalFiles[key] = make(map[ChunkID]Chunk)
+		v, ok1 := hash.(FileHash)
+		if !ok1 {
+			return errors.New("FileID is not a file Hash")
+		}
+		s.LocalFiles[key] = NewFile(v, Updated, []byte{}, s.Config.ChunkSize)
 	}
-	for i, chunk := range chunks {
-		//log.Printf("Addind Chunk nb: %v | Data: %s\n", chunk.Id, string(chunk.B))
-		// TODO: Throw error if Chunk already in storage ?
-		s.LocalFiles[key][chunk.Id] = chunks[i]
-		//log.Printf("Added Chunk: %v \n", *s.LocalFiles[key][chunk.Id])
-	}
+	file := s.LocalFiles[key]
+	file.AddChunks(chunks)
+	s.LocalFiles[key] = file
+	//for i, chunk := range chunks {
+	//	//log.Printf("Addind Chunk nb: %v | Data: %s\n", chunk.Id, string(chunk.B))
+	//	// TODO: Throw error if Chunk already in storage ?
+	//	s.LocalFiles[key].Chunks[chunk.Id] = chunks[i]
+	//	//log.Printf("Added Chunk: %v \n", *s.LocalFiles[key][chunk.Id])
+	//}
 	//for key, chunk := range chunks {
 	//	fmt.Printf("in storage: %v with value:%s\n", key, string(chunk.B))
 	//}
@@ -119,8 +105,8 @@ func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
 	return nil
 }
 
-// GetChunks Search for requested chunk with file hash
-func (s *P2PStorage) GetChunks(hash FileID, ids []ChunkID) ([]Chunk, error) {
+// GetChunkIDsInStorage Search for requested chunk with file hash
+func (s *P2PStorage) GetRequestedChunks(hash FileID, ids []ChunkID) ([]Chunk, error) {
 	s.Lock()
 	file, ok := s.LocalFiles[hash.String()]
 	if !ok {
@@ -128,28 +114,26 @@ func (s *P2PStorage) GetChunks(hash FileID, ids []ChunkID) ([]Chunk, error) {
 		//return nil, fmt.Errorf("Requested file is not in storage: {%x}", hash)
 		return nil, fmt.Errorf("Requested file is not in storage: {%s}", hash.String())
 	}
-	n := 0
-	for _, id := range ids {
-		if _, ok := file[id]; !ok {
-			log.Printf("search for requested chunk {%v} but not found in storage\n", id)
-		} else {
-			n += 1
-		}
-	}
-	data := make([]Chunk, n)
-	n = 0
-	for _, id := range ids {
-		if val, ok := file[id]; ok {
-			data[n] = val
-			n += 1
-		}
-	}
+	chunks := file.GetRequestedChunks(ids)
 	s.Unlock()
-	return data, nil
+	return chunks, nil
 }
 
-//// GetChunks Search for requested chunk with file hash
-//func (s *P2PStorage) GetChunks(hash FileID, start, end ChunkID) ([]Chunk, error) {
+func (s *P2PStorage) GetChunkIDsInStorage(hash FileID) ([]ChunkID, error) {
+	s.Lock()
+	file, ok := s.LocalFiles[hash.String()]
+	if !ok {
+		s.Unlock()
+		//return nil, fmt.Errorf("Requested file is not in storage: {%x}", hash)
+		return nil, fmt.Errorf("Requested file is not in storage: {%s}", hash.String())
+	}
+	chunks := file.GetChunksIDs()
+	s.Unlock()
+	return chunks, nil
+}
+
+//// GetRequestedChunks Search for requested chunk with file hash
+//func (s *P2PStorage) GetRequestedChunks(hash FileID, start, end ChunkID) ([]Chunk, error) {
 //	s.Lock()
 //	file, ok := s.LocalFiles[hash.String()]
 //	if !ok {
@@ -176,43 +160,17 @@ func (s *P2PStorage) GetChunks(hash FileID, ids []ChunkID) ([]Chunk, error) {
 //	return data, nil
 //}
 
-var FILENOTFOUND = errors.New("File not in storage")
+var FILENOTFOUND = errors.New("P2PFile not in storage")
 
-// GetChunks Search for requested chunk with file hash
-func (s *P2PStorage) GetFileDatas(hash FileID) ([]byte, error) {
-	var dataLen int
-
+// GetChunkIDsInStorage Search for requested chunk with file hash
+func (s *P2PStorage) GetFileData(hash FileID) ([]byte, error) {
 	s.Lock()
-	chunks, ok := s.LocalFiles[hash.String()]
+	file, ok := s.LocalFiles[hash.String()]
 	if !ok {
 		s.Unlock()
 		return nil, FILENOTFOUND
 	}
-	for i := 0; ; i += 1 {
-		chunk, ok1 := chunks[ChunkID(i)]
-		if !ok1 {
-			break
-		}
-		if chunkLen := len(chunk.B); chunkLen == 0 {
-			break
-		} else {
-			dataLen += chunkLen
-		}
-	}
-	data := make([]byte, dataLen)
-	dataLen = 0
-	for i := 0; ; i += 1 {
-		chunk, ok1 := chunks[ChunkID(i)]
-		if !ok1 {
-			break
-		}
-		if chunkLen := len(chunk.B); chunkLen == 0 {
-			break
-		} else {
-			copy(data[dataLen:], chunk.B)
-			dataLen += chunkLen
-		}
-	}
+	data := file.GetData()
 	s.Unlock()
 	return data, nil
 }
@@ -220,7 +178,7 @@ func (s *P2PStorage) GetFileDatas(hash FileID) ([]byte, error) {
 //// GetDataFromLocalChunks Search for requested chunks with file hash and aggregate them in bytes
 //func (s *P2PStorage) GetDataFromLocalChunks(hash FileHash, ids []ChunkID) ([]byte, error) {
 //	var dataLen int
-//	chunks, err := s.GetChunks(hash, start, end)
+//	chunks, err := s.GetRequestedChunks(hash, start, end)
 //	if err != nil {
 //		return nil, err
 //	}
@@ -235,8 +193,3 @@ func (s *P2PStorage) GetFileDatas(hash FileID) ([]byte, error) {
 //	}
 //	return data, nil
 //}
-
-func NewHashFromFile(data []byte) FileHash {
-	hash := sha256.Sum256(data)
-	return hash[:]
-}

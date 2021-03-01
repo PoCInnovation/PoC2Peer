@@ -13,21 +13,27 @@ import (
 
 func main() {
 	flag.Parse()
-	tracker := p2pnetwork.NewHttpTracker("192.168.0.31", 5000, "192.168.0.31", 5001, false)
-	lib, err := core.NewP2PPeer(tracker, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
+	//tracker := p2pnetwork.NewHttpTracker("192.168.0.31", 5001, false)
+	//lib, err := core.NewP2PPeer([]p2pnetwork.Tracker{tracker}, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
+	//lib, err := core.NewP2PPeer([]p2pnetwork.Tracker{tracker}, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
+	trackers, err := p2pnetwork.ParseTrackerInfos(".")
+	if err != nil {
+		log.Fatal(err)
+	}
+	lib, err := core.NewP2PPeer(trackers, p2pnetwork.NewNetworkInfos("192.168.0.31", 4000), "tcp")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	err = lib.Launch()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 	<-ch
 	fmt.Println("Received signal, shutting down...")
-	lib.N.Close()
+	lib.Close()
 	// shut the node down
 	//if err := s.Close(); err != nil {
 	//	panic(err)

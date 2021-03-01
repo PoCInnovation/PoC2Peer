@@ -1,7 +1,6 @@
 package p2pnetwork
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -13,6 +12,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/network"
 	libp2ppeer "github.com/libp2p/go-libp2p-core/peer"
 	ps "github.com/libp2p/go-libp2p-core/peerstore"
+	libp2pprot "github.com/libp2p/go-libp2p-core/protocol"
 	ma "github.com/multiformats/go-multiaddr"
 	"io"
 	"log"
@@ -26,7 +26,8 @@ type Network interface {
 
 	// Connect connects to the remote peer and creates any io resources necessary for the connection
 	//Connect(remote PeerID) error
-	Connect(remote PeerID) (*WrappedStream, error)
+	//Connect(remote PeerID) (*WrappedStream, error)
+	Connect(remote PeerID, protocol string) (*WrappedStream, error)
 
 	// Disconnect disconnects from the remote peer and destroys any io resources created for the connection
 	Disconnect(remote PeerID) error
@@ -34,9 +35,9 @@ type Network interface {
 	// ID returns the ID of this peer
 	ID() PeerID
 
-	// TODO: Remove when swarm functionnal
-	// ID returns the ID of this peer
-	FirstPeer() (PeerID, error)
+	//// TODO: Remove when swarm functionnal
+	//// ID returns the ID of this peer
+	//FirstPeer() (PeerID, error)
 
 	// SetDatagramHandler sets the function that will be called on receipt of a new datagram
 	// f gets called every time a new Datagram is received.
@@ -60,6 +61,12 @@ type Network interface {
 // PeerID identifies a peer
 type PeerID interface {
 	String() string
+}
+
+type P2PPeerID string
+
+func (id P2PPeerID) String() string {
+	return string(id)
 }
 
 type P2PNetwork struct {
@@ -87,21 +94,7 @@ func basicPeerOptions(infos NetworkInfos, prot string) []libp2p.Option {
 		log.Fatal(err)
 	}
 	return []libp2p.Option{
-		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/%s/%s/%d", infos.ip, prot, infos.Port())),
-		libp2p.Identity(priv),
-		libp2p.DefaultTransports,
-		libp2p.NATPortMap(),
-	}
-}
-
-func permanentPeerOptions(infos NetworkInfos, prot string) []libp2p.Option {
-	priv, _, err := crypto.GenerateKeyPairWithReader(crypto.Secp256k1, 3, bytes.NewBufferString(infos.URL()))
-	if err != nil {
-		log.Fatal(err)
-	}
-	return []libp2p.Option{
-		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/%s/%s/%d", infos.ip, prot, infos.Port())),
-		//libp2p.Identity(priv),
+		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/%s/%s/%d", infos.IP(), prot, infos.Port())),
 		libp2p.Identity(priv),
 		libp2p.DefaultTransports,
 		libp2p.NATPortMap(),
@@ -123,16 +116,16 @@ func NewLibp2pNetwork(infos NetworkInfos, prot string) (*P2PNetwork, error) {
 }
 
 // Connect creates a stream from p to the peer at id and sets a stream handler
-func (n *P2PNetwork) Connect(id PeerID) (*WrappedStream, error) {
+//func (n *P2PNetwork) Connect(id PeerID) (*WrappedStream, error) {
+func (n *P2PNetwork) Connect(id PeerID, protocol string) (*WrappedStream, error) {
 	// Start a stream with the destination.
 	// Multiaddress of the destination peer is fetched from the peerstore using 'peerid'.
-	stream, err := n.Host.NewStream(n.ctx, id.(libp2ppeer.ID), protocol.FileTransferProtocol)
+	stream, err := n.Host.NewStream(n.ctx, id.(libp2ppeer.ID), libp2pprot.ID(protocol))
 	if err != nil {
 		return nil, err
 	}
 	ws := WrapStream(stream)
 	n.streams[id] = ws
-	//n.SetDatagramHandler(protocol.HandleDatagram)
 	return ws, nil
 }
 
@@ -159,15 +152,16 @@ func (n *P2PNetwork) SetDatagramHandler(handler func(*protocol.Datagram, PeerID)
 				break
 			}
 			if err != nil {
+				//TODO: Manage error diffently
 				log.Fatal(err)
 			}
 			if err = handler(d, remote); err != nil {
+				//TODO: Manage error diffently
 				log.Fatal("Datagram Handler err", err)
 			}
 		}
 		log.Printf("%v handled stream\n", n.ID())
 	})
-
 }
 
 // receiveDatagram reads and decodes a datagram from the stream
@@ -180,14 +174,16 @@ func (n *P2PNetwork) receiveDatagram(ws *WrappedStream) (*protocol.Datagram, err
 	if err := ws.Dec.Decode(&d); err != nil {
 		return nil, err
 	}
-	log.Printf("%v decoded datagram %v\n", n.ID(), d)
+	//log.Printf("%v decoded datagram %v\n", n.ID(), d)
+	log.Printf("%v decoded datagram\n", n.ID())
 	return &d, nil
 }
 
 func (n *P2PNetwork) SendDatagram(d *protocol.Datagram, pid PeerID) (err error) {
+	// TODO: Check Protocol State ?
 	s, ok := n.streams[pid]
 	if !ok {
-		s, err = n.Connect(pid)
+		s, err = n.Connect(pid, protocol.FileTransferProtocol)
 	}
 	if err != nil {
 		return err
@@ -222,7 +218,7 @@ func (n *P2PNetwork) FirstPeer() (PeerID, error) {
 			return addr, nil
 		}
 	}
-	return libp2ppeer.ID(""), errors.New("No Peers yet")
+	return nil, errors.New("No Peers yet")
 }
 
 func (n *P2PNetwork) AddAddrs(remote PeerID, addrs []ma.Multiaddr) {
@@ -243,13 +239,33 @@ func (n *P2PNetwork) Peers() []PeerID {
 }
 
 func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash) error {
-	req := make([]storage.ChunkID, 1000)
-	for i := 0; i < 1000; i += 1 {
+	d1 := protocol.NewDataGram(protocol.Msg{Op: protocol.Have, Data: protocol.HaveMsg{File: file, Type: protocol.HaveRequest}})
+	for _, peer := range n.Peers() {
+		if peer.String() == n.ID().String() {
+			continue
+		}
+		log.Println("Sending HAVE REQUEST: ", peer)
+		err := n.SendDatagram(d1, peer)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	sz := 20
+	req := make([]storage.ChunkID, sz)
+	for i := 0; i < sz; i += 1 {
 		req[i] = storage.ChunkID(i)
 	}
-	d := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: req}})
+	d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: req}})
+	//for _, peer := range n.Peers() {
 	for _, peer := range n.Peers() {
-		n.SendDatagram(d, peer)
+		if peer.String() == n.ID().String() {
+			continue
+		}
+		log.Println("Requesting to peer: ", peer)
+		err := n.SendDatagram(d2, peer)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	return nil
 }

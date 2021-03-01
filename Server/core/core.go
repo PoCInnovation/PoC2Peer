@@ -15,7 +15,7 @@ type P2PServer struct {
 }
 
 func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
-	p2pServer, err := p2pHost.NewP2PHost("0.0.0.0", "tcp", P2PPort)
+	p2pServer, err := p2pHost.NewP2PHost("192.168.0.31", "tcp", P2PPort)
 	if err != nil {
 		return nil, err
 	}
@@ -23,6 +23,7 @@ func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
 	if err != nil {
 		return nil, err
 	}
+	httpServer.AddNewPeer(p2pServer.ID(), "192.168.0.31", P2PPort)
 	return &P2PServer{P2PHost: p2pServer, HTTPHost: httpServer}, nil
 }
 
@@ -32,21 +33,9 @@ func (s *P2PServer) Run() error {
 			log.Fatal(err)
 		}
 	}()
-	if err := s.P2PHost.SetStreamHandlers(); err != nil {
+	if err := s.P2PHost.SetDefaultStreamHandlers(); err != nil {
 		return err
 	}
-	//size := 400
-	//chunks := make([]byte, size)
-	//for n := 0; n < size; {
-	//	data := fmt.Sprintf("Chunk: %4d|", n)
-	//	copy(chunks[n:], data)
-	//	n += len(data)
-	//}
-	//hash, err := s.P2PHost.LocalStorage.AddFile(chunks)
-	//if err != nil {
-	//	return err
-	//}
-	//fmt.Printf("File Hashed: %v\n", hash)
 	files := []string{
 		"tests/testsfile",
 	}
@@ -61,10 +50,10 @@ func (s *P2PServer) Run() error {
 		}
 		fmt.Printf("File Hashed: %x\n", hash)
 	}
-	//s.P2PHost.N.Host.SetStreamHandler(protocol.FileTransferProtocol, func(stream network.Stream) {
+	//s.P2PHost.network.Host.SetStreamHandler(protocol.FileTransferProtocol, func(stream network.Stream) {
 	//	log.Println("Got a new stream!")
 	//	fmt.Println(stream.ID())
-	//	s1, err := s.P2PHost.N.Connect(stream.Conn().RemotePeer())
+	//	s1, err := s.P2PHost.network.Connect(stream.Conn().RemotePeer())
 	//	if err != nil {
 	//		return
 	//	}
@@ -100,10 +89,10 @@ func (s *P2PServer) Run() error {
 	//	log.Printf("stream served: %v\n", stream.ID())
 	//	stream.Close()
 	//})
-	//s.P2PHost.N.Host.SetStreamHandler(protocol.FileTransferProtocol, func(stream network.Stream) {
+	//s.P2PHost.network.Host.SetStreamHandler(protocol.FileTransferProtocol, func(stream network.Stream) {
 	//	log.Println("Got a new stream!")
 	//	fmt.Println(stream.ID())
-	//	s1, err := s.P2PHost.N.Connect(stream.Conn().RemotePeer())
+	//	s1, err := s.P2PHost.network.Connect(stream.Conn().RemotePeer())
 	//	if err != nil {
 	//		return
 	//	}
@@ -168,7 +157,7 @@ func (s *P2PServer) Run() error {
 }
 
 func (s *P2PServer) Close() error {
-	if err := s.P2PHost.N.Close(); err != nil {
+	if err := s.P2PHost.Close(); err != nil {
 		return err
 	}
 	return nil
