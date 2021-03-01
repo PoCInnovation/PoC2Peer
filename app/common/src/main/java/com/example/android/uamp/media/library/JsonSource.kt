@@ -21,6 +21,7 @@ import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat.MediaItem
 import android.support.v4.media.MediaDescriptionCompat.STATUS_NOT_DOWNLOADED
 import android.support.v4.media.MediaMetadataCompat
+import android.util.Log
 import com.example.android.uamp.media.extensions.album
 import com.example.android.uamp.media.extensions.albumArtUri
 import com.example.android.uamp.media.extensions.artist
@@ -68,6 +69,7 @@ class JsonSource(private val source: Uri) : AbstractMusicSource() {
             state = STATE_INITIALIZED
         } ?: run {
             catalog = emptyList()
+            Log.e("jsonsource", "error loading catalog")
             state = STATE_ERROR
         }
     }
@@ -81,6 +83,7 @@ class JsonSource(private val source: Uri) : AbstractMusicSource() {
             val musicCat = try {
                 downloadJson(catalogUri)
             } catch (ioException: IOException) {
+                Log.d("jsonsource", ioException.toString())
                 return@withContext null
             }
 
@@ -91,13 +94,16 @@ class JsonSource(private val source: Uri) : AbstractMusicSource() {
                 // The JSON may have paths that are relative to the source of the JSON
                 // itself. We need to fix them up here to turn them into absolute paths.
                 catalogUri.scheme?.let { scheme ->
-                    if (!song.source.startsWith(scheme)) {
+                    Log.d("jsonsource", scheme)
+                    if (!song.source.startsWith(scheme) && !song.source.startsWith("p2p")) {
                         song.source = baseUri + song.source
                     }
                     if (!song.image.startsWith(scheme)) {
                         song.image = baseUri + song.image
                     }
                 }
+
+                Log.d("jsonsource", song.source)
 
                 MediaMetadataCompat.Builder()
                     .from(song)
@@ -123,6 +129,7 @@ class JsonSource(private val source: Uri) : AbstractMusicSource() {
      */
     @Throws(IOException::class)
     private fun downloadJson(catalogUri: Uri): JsonCatalog {
+        Log.d("jsonsource", catalogUri.toString())
         val catalogConn = URL(catalogUri.toString())
         val reader = BufferedReader(InputStreamReader(catalogConn.openStream()))
         return Gson().fromJson(reader, JsonCatalog::class.java)
