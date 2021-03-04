@@ -27,6 +27,7 @@ model Post {
 model Peer {
   id    Int     @default(autoincrement()) @id
   idpeer  String  @db.VarChar(255) @unique
+  ippeer  String @db.VarChar(255) 
 }
 
 // create table Post (

@@ -137,6 +137,7 @@ server.get('/addPeer', (req, res) => {
     prisma.peer.create({
       data: {
         idpeer: req.query.peer as string,
+        ippeer: req.query.peer as string,
       },
     }).then(() => {
       res.status(httpStatus.OK).send(req.query.peer);
