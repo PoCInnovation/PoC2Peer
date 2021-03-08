@@ -156,13 +156,13 @@ server.get('/peerList', (req, res) => {
 });
 
 server.get('/addPeer', (req, res) => {
-  if (!req.query.peer) {
+  if (!req.query.idpeer) {
     res.status(httpStatus.BAD_REQUEST).send('Bad Request');
   } else {
     prisma.peer.create({
       data: {
-        idpeer: req.query.peer as string,
-        ippeer: req.query.peer as string,
+        idpeer: req.query.idpeer as string,
+        ippeer: req.query.ippeer as string,
       },
     }).then(() => {
       res.status(httpStatus.OK).send(req.query.peer);
