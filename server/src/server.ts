@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import httpStatus from 'http-status-codes';
-import { Post, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
 import * as jsonfile from './init.json';
 
 const PORT = 3000;
@@ -11,6 +12,10 @@ const prisma = new PrismaClient();
 
 server.use(bodyParser.json());
 server.use(cookieParser());
+server.use(cors());
+
+// server.options('*', cors(options));
+// options for cors midddleware
 
 async function main() {
   const allPost = await prisma.post.findMany();
@@ -36,6 +41,14 @@ async function main() {
   }
   // const allPost2 = await prisma.post.findMany();
   // console.log(allPost2);
+}
+
+async function deleteSong(value: number) {
+  await prisma.post.delete({
+    where: {
+      id: value,
+    },
+  });
 }
 async function addSongInDB(value: Array<any>) {
   value.forEach(async (element) => {
@@ -73,6 +86,7 @@ server.get('/init', (req, res) => {
 
   res.status(httpStatus.OK);
 });
+
 server.get('/getSong', (req, res) => {
   const tmpvalue: {
     // eslint-disable-next-line max-len
@@ -89,6 +103,17 @@ server.get('/getSong', (req, res) => {
     res.status(httpStatus.OK).send({ music: tmpvalue });
     // console.log(data);
   });
+});
+
+server.post('/deletSong', (req, res) => {
+  console.log('delete');
+  if (!req.query.id) {
+    res.status(httpStatus.BAD_REQUEST).send('Bad Request');
+  } else {
+    const tmp = req.query.id;
+    deleteSong(+tmp);
+    res.status(httpStatus.OK).send('great');
+  }
 });
 
 server.post('/addSong', (req, res) => {
