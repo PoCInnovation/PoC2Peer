@@ -60,27 +60,6 @@ class CardItem extends StatelessWidget {
           ),
         ],
       ),
-      // child: Column(
-      //   mainAxisSize: MainAxisSize.min,
-      //   mainAxisAlignment: MainAxisAlignment.end,
-      //   children: [
-      //     Text(
-      //       title,
-      //       style: TextStyle(
-      //         fontWeight: FontWeight.bold,
-      //       ),
-      //     ),
-      //     Container(
-      //       child: IconButton(
-      //         icon: Icon(Icons.volume_up),
-      //         tooltip: 'Increase volume by 10',
-      //         onPressed: () {
-      //           print('clic');
-      //         },
-      //       ),
-      //     ),
-      //   ],
-      // )),
     ));
   }
 }
