@@ -31,7 +31,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      body: BodyPage(),
+      body: Container(
+        child: BodyPage(),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('./titan.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }

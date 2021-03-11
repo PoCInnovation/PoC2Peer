@@ -63,7 +63,7 @@ class ActionList extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          height: 30,
+          height: 35,
           width: 100,
           child: ElevatedButton(
             onPressed: () => initDB(),

@@ -35,9 +35,9 @@ class _BodyPageState extends State<BodyPage> {
         TrackList(),
         Row(
           children: [
-            Container(
-              width: 800,
+            Card(
               child: PeerList(),
+              color: Colors.white,
             ),
             Container(width: 10),
             Flexible(
