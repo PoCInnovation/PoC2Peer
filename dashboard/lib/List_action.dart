@@ -27,6 +27,7 @@ popPeerDialog(BuildContext context) {
                 labelText: 'IdPeer',
               ),
             ),
+            Container(height: 10),
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -38,7 +39,7 @@ popPeerDialog(BuildContext context) {
         ),
       ),
       actions: <Widget>[
-        TextButton(
+        ElevatedButton(
           child: Text('Add'),
           onPressed: () {
             addPeer(idpeercontroler.text, ippeercontroler.text);

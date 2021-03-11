@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'tracklist.dart';
 import 'PeerTab.dart';
@@ -11,6 +13,20 @@ class BodyPage extends StatefulWidget {
 }
 
 class _BodyPageState extends State<BodyPage> {
+  Timer timer;
+
+  void tmp() {
+    setState(() {
+      print('loop');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => {tmp()});
+  }
+
   @override
   Widget build(BuildContext context) {
     return (ListView(
