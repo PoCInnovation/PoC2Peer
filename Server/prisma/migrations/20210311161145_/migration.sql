@@ -19,6 +19,10 @@ CREATE TABLE "Post" (
 CREATE TABLE "Peer" (
     "id" SERIAL NOT NULL,
     "idpeer" VARCHAR(255) NOT NULL,
+    "ippeer" VARCHAR(255) NOT NULL,
 
     PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Peer.idpeer_unique" ON "Peer"("idpeer");

@@ -135,13 +135,14 @@ server.get('/repeat-my-query', (req, res) => {
 });
 
 server.get('/deletePeer', (req, res) => {
-  if (!req.query.peer) {
+  if (!req.query.idpeer) {
     res.status(httpStatus.BAD_REQUEST).send('Bad Request');
   } else {
-    const tmp = req.query.peer as string;
-    const value = prisma.peer.delete({
+    const tmp = req.query.idpeer;
+    const tmpvalue = tmp!.toString();
+    const value = prisma.peer.delete({ // ici
       where: {
-        idpeer: tmp,
+        idpeer: tmpvalue,
       },
     }).then(() => {
       res.status(httpStatus.OK).send(value);
@@ -164,9 +165,7 @@ server.get('/addPeer', (req, res) => {
         idpeer: req.query.idpeer as string,
         ippeer: req.query.ippeer as string,
       },
-    }).then(() => {
-      res.status(httpStatus.OK).send(req.query.peer);
-    });
+    }).then(() => res.status(httpStatus.OK).send(req.query.idpeer)); // ici
   }
 });
 

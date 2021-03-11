@@ -15,6 +15,19 @@ void initDB() async {
   );
 }
 
+void deletePeer(String id) async {
+  // http://localhost:3000/deletePeer?idpeer=hello1
+
+  final _url = new Uri.http("localhost:3000", "/deletePeer", {"idpeer": id});
+  final http.Response response = await http.get(
+    _url,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  );
+}
+
 void addPeer(String id, String ip) async {
   //http://localhost:3000/addPeer?idpeer=hello3&ippeer=world3
   final _url = new Uri.http("localhost:3000", "/addPeer", {"idpeer": id, "ippeer": ip});
@@ -62,6 +75,8 @@ Future<List<Map<String, dynamic>>> fetchTracks() async {
 }
 
 Future<List<DataRow>> fetchPeer() async {
+  List<Map<String, dynamic>> peerlist = [];
+
   final _url = new Uri.http("localhost:3000", "/peerList");
 
   final http.Response response = await http.get(
@@ -84,6 +99,12 @@ Future<List<DataRow>> fetchPeer() async {
   List<DataRow> tmprow = [];
   for (var item in peerlist) {
     tmprow.add(DataRow(cells: <DataCell>[
+      DataCell(IconButton(
+        onPressed: () {
+          deletePeer(item['idpeer']);
+        },
+        icon: Icon(Icons.delete),
+      )),
       DataCell(Text(item['idpeer'])),
       DataCell(Text(item['ippeer'])),
     ]));

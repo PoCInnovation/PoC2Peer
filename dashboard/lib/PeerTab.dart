@@ -15,14 +15,6 @@ class PeerList extends StatefulWidget {
 }
 
 class _PeerListState extends State<PeerList> {
-  List<Map<String, dynamic>> peerlist = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchPeer();
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<DataRow>>(
@@ -31,6 +23,12 @@ class _PeerListState extends State<PeerList> {
         if (snapshot.hasData) {
           return DataTable(
             columns: const <DataColumn>[
+              DataColumn(
+                label: Text(
+                  'delete',
+                  style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
               DataColumn(
                 label: Text(
                   'IdPeer',
