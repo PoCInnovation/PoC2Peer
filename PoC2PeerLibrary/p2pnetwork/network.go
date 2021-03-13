@@ -95,7 +95,7 @@ func basicPeerOptions(infos NetworkInfos, prot string) []libp2p.Option {
 		log.Fatal(err)
 	}
 	return []libp2p.Option{
-		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/%s/%s/%d", infos.IP(), prot, infos.Port())),
+		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/0.0.0.0/%s/%d", prot, infos.Port())),
 		libp2p.Identity(priv),
 		libp2p.DefaultTransports,
 		libp2p.NATPortMap(),
