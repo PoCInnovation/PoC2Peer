@@ -7,7 +7,7 @@ import (
 
 const (
 	httpEndpoint = "http://192.168.0.31:5001/ID"
-	TrackerIP    = "192.168.0.6"
+	TrackerIP    = "127.0.0.1"
 	TrackerPort  = 5000
 )
 
