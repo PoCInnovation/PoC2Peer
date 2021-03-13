@@ -66,9 +66,11 @@ func NewFile(hash FileHash, state FileState, fileData []byte, chunkSize int) P2P
 		Chunks: make(map[ChunkID]Chunk, len(chunks)),
 	}
 	for i, chunk := range chunks {
-		log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
+		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
+		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 		newFile.Chunks[chunk.ID()] = chunks[i]
 	}
+	log.Printf("Adding File %x whith chunks from %v to %v", newFile.Hash, chunks[0], chunks[len(chunks)-1])
 	return newFile
 }
 
