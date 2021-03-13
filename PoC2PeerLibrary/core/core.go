@@ -9,12 +9,10 @@ import (
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
+	"io/ioutil"
 	"os"
 	"sync"
 
-	//"github.com/libp2p/go-libp2p-core/peer"
-	//ma "github.com/multiformats/go-multiaddr"
-	"io/ioutil"
 	"log"
 	//"net/http"
 	"time"
@@ -98,7 +96,7 @@ func (c *LibP2pCore) getPeerList() []p2pnetwork.PeerInfos {
 				wg.Done()
 				return
 			}
-			err = tracker.AddPeer(pid, c.infos.URL())
+			err = tracker.AddPeer(pid, c.infos.PubURL())
 			if err != nil {
 				log.Println(fmt.Errorf("AddRemotePeer for tracker {%s} failed: %v", tracker.URL(), err))
 			}
@@ -124,11 +122,11 @@ func removeDuplicates(s []p2pnetwork.PeerInfos, self p2pnetwork.PeerID) []p2pnet
 	seen := make(map[string]struct{}, len(s))
 	j := 0
 	for _, v := range s {
-		if _, ok := seen[v.ID]; ok || v.ID == self.String() {
-			log.Println("Removed: ", v.ID)
+		if _, ok := seen[v.ID()]; ok || v.ID() == self.String() {
+			log.Println("Removed: ", v.ID())
 			continue
 		}
-		seen[v.ID] = struct{}{}
+		seen[v.ID()] = struct{}{}
 		s[j] = v
 		j++
 	}
@@ -213,8 +211,10 @@ func (c *LibP2pCore) Close() error {
 // TODO: Add Interface for RemotePeer (GetMultiAddr() ?)
 func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {
 	// The following extracts target's the peer ID from the given multiaddress
+	// TODO: Modify after Greg's modifs
 	p2paddr, err := ma.NewMultiaddr(
-		fmt.Sprintf("/ip4/%s/%s/%d/p2p/%s", remotePeer.IP, remotePeer.Transport, remotePeer.Port, remotePeer.ID),
+		fmt.Sprintf("/ip4/%s/tcp/%s/p2p/%s", remotePeer.IP(), remotePeer.Port(), remotePeer.ID()),
+		//fmt.Sprintf("/ip4/%s/%s/%d/p2p/%s", remotePeer.IP, remotePeer.Transport, remotePeer.Port, remotePeer.ID),
 	)
 	if err != nil {
 		return err
@@ -238,72 +238,24 @@ func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {
 	return nil
 }
 
-func (c *LibP2pCore) Launch(file string) error {
-	log.Println("Launching peer: ", c.ID())
+func (c *LibP2pCore) UpdatePeers() error {
+	log.Println("Updating Peers ...")
 	lst := c.getPeerList()
 	log.Println(lst)
 	for _, peer := range lst {
 		if err := c.AddRemotePeer(peer); err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
-	//p, err := c.network.FirstPeer()
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//c.SetDefaultStreamHandlers()
-	//c.network.SetDatagramHandler(c.HandleDatagram)
+	log.Println("Peers Updated !")
+	return nil
+}
 
-	//s, err := c.network.Connect(p)
-	////_, err = c.network.Connect(p)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//reqFile := storage.FileHashTmp(1)
-	//h := protocol.RequestChunks{
-	//	P2PFile: reqFile,
-	//	IDs:  []storage.ChunkID{0, 1, 2, 3},
-	//}
-	//// log.Printf("Sending DataExchange : %v", h)
-	//m := protocol.Msg{Op: protocol.Request, Data: h}
-	//d := protocol.NewDataGram(m)
-	//if err = c.network.SendDatagram(d, s.Stream.Conn().RemotePeer()); err != nil {
-	//	return err
-	//}
-	//time.Sleep(time.Second * 5)
-	//data, err := c.LocalStorage.GetFileData(reqFile)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//log.Println(string(data))
-	content, err := ioutil.ReadFile(file)
-	if err != nil {
-		log.Printf("Can't read file %s: %v\n", file, err)
-		return err
+func (c *LibP2pCore) Launch() error {
+	log.Println("Launching peer: ", c.ID())
+	if err := c.UpdatePeers(); err != nil {
+		log.Fatal(err)
 	}
-	hash := storage.NewHashFromFile(content)
-
-	fmt.Printf("%x\n", hash)
-	data, err := c.RequestFile(hash)
-	if err != nil {
-		return err
-	}
-	if err != nil {
-		return err
-	}
-	err = ioutil.WriteFile("test_file.mp3", data, os.ModePerm)
-	//log.Println(string(data))
-
-	//c.Receive(s)
-
-	//// Start a stream with the destination.
-	//// Multiaddress of the destination peer is fetched from the peerstore using 'peerid'.
-	//s, err := c.network.Host.NewStream(context.Background(), p.(peer.ID), protocol.FileTransferProtocol)
-	//if err != nil {
-	//	glog.Error(err)
-	//	return err
-	//}
-	//writeRandomStrings(bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s)))
 	return nil
 }
 
@@ -355,6 +307,29 @@ func (c *LibP2pCore) HandleDatagram(d *protocol.Datagram, pid p2pnetwork.PeerID)
 }
 
 // TODO: TO MODIFY
+func (c *LibP2pCore) TestFile(file string) error {
+	content, err := ioutil.ReadFile(file)
+	if err != nil {
+		log.Printf("Can't read file %s: %v\n", file, err)
+		return err
+	}
+	hash := storage.NewHashFromFile(content)
+
+	fmt.Printf("%x\n", hash)
+	data, err := c.RequestFile(hash)
+	if err != nil {
+		return err
+	}
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile("test_file.mp3", data, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *LibP2pCore) RequestFile(fileID storage.FileHash) ([]byte, error) {
 	datas, err := c.LocalStorage.GetFileData(fileID)
 	if err == storage.FILENOTFOUND {

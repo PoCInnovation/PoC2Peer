@@ -20,20 +20,21 @@ func NewP2PServer(tracker []p2pnetwork.Tracker, HttpPort, P2PPort int) (*P2PServ
 	if err != nil {
 		return nil, err
 	}
-	httpServer, err := httpHost.NewHttpProvider(HttpPort, p2pServer.ID())
-	if err != nil {
-		return nil, err
-	}
-	httpServer.AddNewPeer(p2pServer.ID(), "127.0.0.1", P2PPort)
-	return &P2PServer{P2PHost: p2pServer, HTTPHost: httpServer}, nil
+	//httpServer, err := httpHost.NewHttpProvider(HttpPort, p2pServer.ID())
+	//if err != nil {
+	//	return nil, err
+	//}
+	//httpServer.AddNewPeer(p2pServer.ID(), "127.0.0.1", P2PPort)
+	//return &P2PServer{P2PHost: p2pServer, HTTPHost: httpServer}, nil
+	return &P2PServer{P2PHost: p2pServer, HTTPHost: nil}, nil
 }
 
 func (s *P2PServer) Run(file_ string) error {
-	go func() {
-		if err := s.HTTPHost.Run("0.0.0.0:5001"); err != nil {
-			log.Fatal(err)
-		}
-	}()
+	//go func() {
+	//	if err := s.HTTPHost.Run("0.0.0.0:5001"); err != nil {
+	//		log.Fatal(err)
+	//	}
+	//}()
 	if err := s.P2PHost.SetDefaultStreamHandlers(); err != nil {
 		return err
 	}

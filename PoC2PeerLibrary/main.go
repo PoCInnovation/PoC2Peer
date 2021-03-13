@@ -1,42 +1,136 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
+	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 )
 
+type prompt struct {
+	interrupt chan os.Signal
+	msg       chan string
+	reader    *bufio.Reader
+}
+
+func NewPrompt() *prompt {
+	p := new(prompt)
+	p.reader = bufio.NewReader(os.Stdin)
+
+	go p.readInput()
+	p.interrupt = make(chan os.Signal)
+	p.msg = make(chan string)
+	signal.Notify(p.interrupt, syscall.SIGINT)
+	return p
+}
+
+func (p *prompt) readInput() {
+	for {
+		if in, err := p.reader.ReadString('\n'); err != nil {
+			if err == io.EOF {
+				p.msg <- "exit"
+			} else {
+				p.msg <- ""
+			}
+		} else {
+			p.msg <- in
+		}
+	}
+}
+
+func (p *prompt) GetInput() string {
+	select {
+	case in := <-p.msg:
+		return in
+	case <-p.interrupt:
+		fmt.Println("")
+		return ""
+	}
+}
+
+func (p *prompt) Close() {
+	close(p.interrupt)
+	close(p.msg)
+	signal.Reset()
+	fmt.Println("Stopping Shell.")
+}
+
+const (
+	defaultPort = 5000
+	//defaultIP = "78.197.6.119"
+	defaultIP = "192.168.0.6"
+)
+
 func main() {
+
+	port := flag.Int("p", defaultPort, "Port for P2P server")
+	ip := flag.String("i", defaultIP, "Port for P2P server")
 	file := flag.String("f", "", "file to request at lib init")
 	flag.Parse()
-	//tracker := p2pnetwork.NewHttpTracker("192.168.0.31", 5001, false)
-	//lib, err := core.NewP2PPeer([]p2pnetwork.Tracker{tracker}, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
-	//lib, err := core.NewP2PPeer([]p2pnetwork.Tracker{tracker}, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
-	if *file == "" {
-		log.Fatal("No file to request, use -f (will change later)")
-	}
 
 	trackers, err := p2pnetwork.ParseTrackerInfos(".")
 	if err != nil {
 		log.Fatal(err)
 	}
-	lib, err := core.NewP2PPeer(trackers, p2pnetwork.NewNetworkInfos("192.168.0.6", 4000), "tcp")
+	lib, err := core.NewP2PPeer(trackers, p2pnetwork.NewNetworkInfos(*ip, *port), "tcp")
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	err = lib.Launch(*file)
-	if err != nil {
+	defer lib.Close()
+	if err = lib.Launch(); err != nil {
 		log.Println(err)
+		return
 	}
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
-	<-ch
-	fmt.Println("Received signal, shutting down...")
-	lib.Close()
+	if *file != "" {
+		if err = lib.TestFile(*file); err != nil {
+			log.Println(err)
+			return
+		}
+	}
+
+	p := NewPrompt()
+	defer p.Close()
+
+	for {
+		fmt.Printf("→ ")
+		input := strings.TrimSuffix(p.GetInput(), "\n")
+		cmd := strings.Fields(input)
+
+		switch {
+		case len(cmd) == 0 || cmd[0] == "exit":
+			return
+		case cmd[0] == "continue":
+		case cmd[0] == "load":
+			if err = loadfiles(lib, cmd[1:]); err != nil {
+				log.Println(err)
+			}
+		default:
+			if err = lib.TestFile(input); err != nil {
+				log.Println(err)
+			}
+		}
+	}
+}
+
+func loadfiles(lib *core.LibP2pCore, files []string) error {
+	for _, file := range files {
+		content, err := ioutil.ReadFile(file)
+		if err != nil {
+			log.Printf("Can't read file %s: %v\n", file, err)
+		}
+		hash, err := lib.LocalStorage.AddFile(content)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("File Hashed: %x\n", hash)
+	}
+	return nil
 }
