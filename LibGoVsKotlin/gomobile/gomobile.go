@@ -17,6 +17,14 @@ func LaunchP2P(localIP, ip string, port int) error {
 	return err
 }
 
-func Read(ID string) []byte {
-	return kotlinHandler.RequestFile(ID)
+func Open(ID string) error {
+	return kotlinHandler.Open(ID)
 }
+
+func Read(buf []byte, offset int, readLength int, ID string) int {
+	return kotlinHandler.Read(buf, offset, readLength, ID)
+}
+
+//func Read(ID string) []byte {
+//	return kotlinHandler.RequestFile(ID)
+//}

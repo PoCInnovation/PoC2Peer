@@ -31,6 +31,31 @@ func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.Tracker
 	return err
 }
 
+func Open(ID string) error {
+	go func() {
+		_, err := Lib.RequestFile(storage.FileHash(ID))
+		if err != nil {
+			log.Println(err)
+		}
+	}()
+	return nil
+}
+
+func Read(buf []byte, offset int, readLength int, ID string) int {
+	data, err := Lib.RequestFile(storage.FileHash(ID))
+	if err != nil {
+		return 0
+	}
+	var endOffset int
+	if offset+readLength > len(data) {
+		endOffset = len(data)
+	} else {
+		endOffset = offset + readLength
+	}
+	copy(buf, data[offset:endOffset])
+	return len(buf)
+}
+
 func RequestFile(ID string) []byte {
 	data, err := Lib.RequestFile(storage.FileHash(ID))
 	if err != nil {
