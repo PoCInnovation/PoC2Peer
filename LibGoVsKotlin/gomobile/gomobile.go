@@ -7,8 +7,8 @@ import (
 
 const (
 	httpEndpoint = "http://192.168.0.31:5001/ID"
-	TrackerIP    = "127.0.0.1"
-	TrackerPort  = 5000
+	TrackerIP    = "163.172.143.105"
+	TrackerPort  = 3000
 )
 
 func LaunchP2P(localIP, ip string, port int) error {
