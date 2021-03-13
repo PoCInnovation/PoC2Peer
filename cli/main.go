@@ -99,7 +99,7 @@ type File struct {
 }
 
 type Upload struct {
-	Songs []File
+	Songs []File `json:"songs,omitempty"`
 }
 
 func main() {
@@ -110,8 +110,8 @@ func main() {
 		return
 	}
 	fmt.Println(err, file)
-
-	buf, err := json.Marshal(file)
+	up := Upload{Songs: []File{file}}
+	buf, err := json.Marshal(up)
 	if err != nil {
 		log.Println("error marshalling file")
 		return
