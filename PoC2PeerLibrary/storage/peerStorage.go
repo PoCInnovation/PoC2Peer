@@ -1,12 +1,15 @@
 package storage
 
+import "errors"
+
 // PeerID identifies a peer
 type PeerID interface {
 	String() string
 }
 
 type PeerStorage interface {
-	AddPeerFileChunks(peer PeerID, hash FileID, chunkIDS []ChunkID) error
+	AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID) error
+	GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID, error)
 }
 
 //type P2PRemoteStorage map[PeerID]P2PFileStorage
@@ -37,7 +40,7 @@ func NewP2PRemoteStorage() *P2PRemoteStorage {
 	return &ret
 }
 
-func (s P2PRemoteStorage) AddPeerFileChunks(peer PeerID, hash FileID, chunkIDS []ChunkID) error {
+func (s P2PRemoteStorage) AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID) error {
 	peerStorage, ok := s[hash.String()]
 	if !ok {
 		peerStorage = make(P2PFileStorage)
@@ -50,6 +53,23 @@ func (s P2PRemoteStorage) AddPeerFileChunks(peer PeerID, hash FileID, chunkIDS [
 	}
 	s[hash.String()] = peerStorage
 	return nil
+}
+
+func (s P2PRemoteStorage) GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID, error) {
+	file, ok := s[hash.String()]
+	if !ok {
+		return nil, errors.New("File not remote Peer Storage")
+	}
+	// Create the target map
+	targetMap := make(map[PeerID][]ChunkID, len(file))
+
+	// Copy from the original map to the target map
+	for key, value := range file {
+		newValue := make([]ChunkID, len(value))
+		copy(newValue, value)
+		targetMap[key] = newValue
+	}
+	return targetMap, nil
 }
 
 func removeDuplicates(s []ChunkID) []ChunkID {

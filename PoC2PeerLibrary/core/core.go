@@ -9,6 +9,7 @@ import (
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
+	"os"
 	"sync"
 
 	//"github.com/libp2p/go-libp2p-core/peer"
@@ -44,7 +45,7 @@ func NewLibP2P(infos p2pnetwork.NetworkInfos, prot string) (core *LibP2pCore, er
 	}, nil
 }
 
-// MakeBasicHost creates a LibP2P host with a random peer ID listening on the
+// NewP2PPeer: creates a LibP2P host with a random peer ID listening on the
 // given multiaddress.
 // TODO: remove once Tracker functionnal
 func NewP2PPeer(trackers []p2pnetwork.Tracker, infos p2pnetwork.NetworkInfos, prot string) (*LibP2pCore, error) {
@@ -54,7 +55,7 @@ func NewP2PPeer(trackers []p2pnetwork.Tracker, infos p2pnetwork.NetworkInfos, pr
 	}
 
 	libCore.trackers = trackers
-	libCore.PeerStorage = storage.NewP2PRemoteStorage()
+	//libCore.PeerStorage = storage.NewP2PRemoteStorage()
 
 	//Request Peer Id from Http Endpoint
 	//err = libCore.getPeerList()
@@ -78,7 +79,7 @@ func NewP2PPermanentPeer(trackers []p2pnetwork.Tracker, infos p2pnetwork.Network
 	return libCore, nil
 }
 
-// ID return a string representin the ID of this Peer
+// ID: return a string representin the ID of this Peer
 func (c *LibP2pCore) ID() string {
 	return c.network.ID().String()
 }
@@ -237,7 +238,7 @@ func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {
 	return nil
 }
 
-func (c *LibP2pCore) Launch() error {
+func (c *LibP2pCore) Launch(file string) error {
 	log.Println("Launching peer: ", c.ID())
 	lst := c.getPeerList()
 	log.Println(lst)
@@ -275,7 +276,6 @@ func (c *LibP2pCore) Launch() error {
 	//	log.Fatal(err)
 	//}
 	//log.Println(string(data))
-	file := "../Server/tests/testsfile"
 	content, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Printf("Can't read file %s: %v\n", file, err)
@@ -288,7 +288,11 @@ func (c *LibP2pCore) Launch() error {
 	if err != nil {
 		return err
 	}
-	log.Println(string(data))
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile("test_file.mp3", data, os.ModePerm)
+	//log.Println(string(data))
 
 	//c.Receive(s)
 
@@ -355,8 +359,8 @@ func (c *LibP2pCore) RequestFile(fileID storage.FileHash) ([]byte, error) {
 	datas, err := c.LocalStorage.GetFileData(fileID)
 	if err == storage.FILENOTFOUND {
 		log.Println("Requesting files to peers")
-		c.network.RequestFileToPeers(fileID)
-		time.Sleep(time.Second * 1)
+		c.network.RequestFileToPeers(fileID, c.PeerStorage)
+		time.Sleep(time.Second * 2)
 		datas, err = c.LocalStorage.GetFileData(fileID)
 	}
 	if err != nil {

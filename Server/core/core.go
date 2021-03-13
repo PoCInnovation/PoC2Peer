@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	p2pcore "github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
 	"github.com/PoCInnovation/PoC2Peer/Server/httpHost"
 	"github.com/PoCInnovation/PoC2Peer/Server/p2pHost"
 	"io/ioutil"
@@ -14,8 +15,8 @@ type P2PServer struct {
 	HTTPHost *httpHost.Host
 }
 
-func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
-	p2pServer, err := p2pHost.NewP2PHost("192.168.0.31", "tcp", P2PPort)
+func NewP2PServer(tracker []p2pnetwork.Tracker, HttpPort, P2PPort int) (*P2PServer, error) {
+	p2pServer, err := p2pHost.NewP2PHost("192.168.0.6", "tcp", P2PPort)
 	if err != nil {
 		return nil, err
 	}
@@ -23,11 +24,11 @@ func NewP2PServer(HttpPort, P2PPort int) (*P2PServer, error) {
 	if err != nil {
 		return nil, err
 	}
-	httpServer.AddNewPeer(p2pServer.ID(), "192.168.0.31", P2PPort)
+	httpServer.AddNewPeer(p2pServer.ID(), "192.168.0.6", P2PPort)
 	return &P2PServer{P2PHost: p2pServer, HTTPHost: httpServer}, nil
 }
 
-func (s *P2PServer) Run() error {
+func (s *P2PServer) Run(file_ string) error {
 	go func() {
 		if err := s.HTTPHost.Run("0.0.0.0:5001"); err != nil {
 			log.Fatal(err)
@@ -37,7 +38,7 @@ func (s *P2PServer) Run() error {
 		return err
 	}
 	files := []string{
-		"tests/testsfile",
+		file_,
 	}
 	for _, file := range files {
 		content, err := ioutil.ReadFile(file)

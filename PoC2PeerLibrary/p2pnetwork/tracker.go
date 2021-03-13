@@ -20,7 +20,7 @@ type Tracker interface {
 }
 
 const (
-	trackerFileName           = "trackers.p2p"
+	TrackerFileName           = "trackers.p2p"
 	trackerPingEndpoint       = "health"
 	trackerAddPeerEndpoint    = "peers/add"
 	trackerRemovePeerEndpoint = "peers/del"
@@ -50,7 +50,7 @@ func NewHttpTracker(trackerIP string, trackerPort int, secure bool) Tracker {
 }
 
 func ParseTrackerInfos(strorageDir string) ([]Tracker, error) {
-	bytes, err := ioutil.ReadFile(strorageDir + "/" + trackerFileName)
+	bytes, err := ioutil.ReadFile(strorageDir + "/" + TrackerFileName)
 	if err != nil {
 		return nil, err
 	}
@@ -65,17 +65,17 @@ func ParseTrackerInfos(strorageDir string) ([]Tracker, error) {
 	return trackers, nil
 }
 
-// IP Return Tracker NetworkInfos.Ip (Ex: <192.168.0.31>)
+// IP: Return Tracker NetworkInfos.Ip (Ex: <192.168.0.31>)
 func (t HttpTracker) IP() string {
 	return t.Tracker.IP()
 }
 
-// Port Return Tracker NetworkInfos.NWPort (Ex: <5001>)
+// Port: Return Tracker NetworkInfos.NWPort (Ex: <5001>)
 func (t HttpTracker) Port() int {
 	return t.Tracker.Port()
 }
 
-// URL Return Tracker URL like (Ex: <192.168.0.31:5001>)
+// URL: Return Tracker URL like (Ex: <192.168.0.31:5001>)
 func (t HttpTracker) URL() string {
 	if t.Secure {
 		return fmt.Sprintf("https://%s", t.Tracker.URL())
@@ -83,7 +83,7 @@ func (t HttpTracker) URL() string {
 	return fmt.Sprintf("http://%s", t.Tracker.URL())
 }
 
-// Ping Check if Tracker is alive
+// Ping: Check if Tracker is alive
 func (t HttpTracker) Ping() error {
 	url := fmt.Sprintf("%s/%s", t.URL(), trackerPingEndpoint)
 	req, err := http.Get(url)
@@ -100,7 +100,7 @@ func (t HttpTracker) Ping() error {
 	return nil
 }
 
-// AddPeer Request Tracker to add a peer
+// AddPeer: Request Tracker to add a peer
 func (t HttpTracker) AddPeer(pid, peerURL string) error {
 	url := fmt.Sprintf("%s/%s", t.URL(), trackerAddPeerEndpoint)
 	b, err := json.Marshal(&PeerInfos{IP: peerURL, ID: pid})
@@ -122,7 +122,7 @@ func (t HttpTracker) AddPeer(pid, peerURL string) error {
 	return nil
 }
 
-// Peers Get peers from Tracker.
+// Peers: Get peers from Tracker.
 func (t HttpTracker) Peers() ([]PeerInfos, error) {
 	url := fmt.Sprintf("%s/%s", t.URL(), trackerListPeersEndpoint)
 	req, err := http.Get(url)
@@ -149,7 +149,8 @@ func (t HttpTracker) Peers() ([]PeerInfos, error) {
 	return peers, nil
 }
 
-// AddPeer Request Tracker to remove a peer
+// TODO: Modify
+// AddPeer: Request Tracker to remove a peer
 func (t HttpTracker) RemovePeer(id string) error {
 	url := fmt.Sprintf("%s/%s/%s", t.URL(), trackerRemovePeerEndpoint, id)
 	req, err := http.Post(url, "", nil)

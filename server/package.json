@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "init" : "docker run  --name my_database -e POSTGRES_PASSWORD=password -e POSTGRES_USER=root -e POSTGRES_DB=my_database -p 7000:5432 -d postgres:alpine && npx prisma migrate dev --preview-feature",
+    "init": "docker run  --name my_database -e POSTGRES_PASSWORD=password -e POSTGRES_USER=root -e POSTGRES_DB=my_database -p 7000:5432 -d postgres:alpine && npx prisma migrate dev --preview-feature",
     "start": "ts-node src/server.ts",
     "lint": "eslint src/**/*",
     "lint:format": "eslint --fix src/**/*",

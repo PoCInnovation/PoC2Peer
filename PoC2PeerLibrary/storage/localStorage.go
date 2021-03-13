@@ -3,6 +3,7 @@ package storage
 import (
 	"errors"
 	"fmt"
+	"sort"
 	"sync"
 )
 
@@ -64,9 +65,9 @@ func (s *P2PStorage) AddFile(fileData []byte) (FileID, error) {
 		s.Unlock()
 		return nil, errors.New("Trying to add existing file")
 	}
-	s.LocalFiles[key] = NewFile(hash, Complete, fileData, s.Config.ChunkSize)
+	s.LocalFiles[key] = NewFile(hash, FSComplete, fileData, s.Config.ChunkSize)
 	//file := FileDataToChunks(fileData, s.Config.ChunkSize)
-	//s.LocalFiles[key] = P2PFile{state: Complete, Data: fileData, Chunks: make(map[ChunkID]Chunk, len(file))}
+	//s.LocalFiles[key] = P2PFile{state: FSComplete, Data: fileData, Chunks: make(map[ChunkID]Chunk, len(file))}
 	//for i, chunk := range file {
 	//	//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 	//	s.LocalFiles[key].Chunks[chunk.ID()] = file[i]
@@ -86,10 +87,11 @@ func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
 		if !ok1 {
 			return errors.New("FileID is not a file Hash")
 		}
-		s.LocalFiles[key] = NewFile(v, Updated, []byte{}, s.Config.ChunkSize)
+		s.LocalFiles[key] = NewFile(v, FSUpdated, []byte{}, s.Config.ChunkSize)
 	}
 	file := s.LocalFiles[key]
 	file.AddChunks(chunks)
+	file.UpdateData()
 	s.LocalFiles[key] = file
 	//for i, chunk := range chunks {
 	//	//log.Printf("Addind Chunk nb: %v | Data: %s\n", chunk.Id, string(chunk.B))
@@ -105,7 +107,7 @@ func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
 	return nil
 }
 
-// GetChunkIDsInStorage Search for requested chunk with file hash
+// GetChunkIDsInStorage Search for requested chunk with file Hash
 func (s *P2PStorage) GetRequestedChunks(hash FileID, ids []ChunkID) ([]Chunk, error) {
 	s.Lock()
 	file, ok := s.LocalFiles[hash.String()]
@@ -129,17 +131,25 @@ func (s *P2PStorage) GetChunkIDsInStorage(hash FileID) ([]ChunkID, error) {
 	}
 	chunks := file.GetChunksIDs()
 	s.Unlock()
+	//log.Println(chunks)
+	sort.Sort(ChunkIDs(chunks))
 	return chunks, nil
 }
 
-//// GetRequestedChunks Search for requested chunk with file hash
-//func (s *P2PStorage) GetRequestedChunks(hash FileID, start, end ChunkID) ([]Chunk, error) {
+type ChunkIDs []ChunkID
+
+func (a ChunkIDs) Len() int           { return len(a) }
+func (a ChunkIDs) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ChunkIDs) Less(i, j int) bool { return a[i] < a[j] }
+
+//// GetRequestedChunks Search for requested chunk with file Hash
+//func (s *P2PStorage) GetRequestedChunks(Hash FileID, start, end ChunkID) ([]Chunk, error) {
 //	s.Lock()
-//	file, ok := s.LocalFiles[hash.String()]
+//	file, ok := s.LocalFiles[Hash.String()]
 //	if !ok {
 //		s.Unlock()
-//		//return nil, fmt.Errorf("Requested file is not in storage: {%x}", hash)
-//		return nil, fmt.Errorf("Requested file is not in storage: {%s}", hash.String())
+//		//return nil, fmt.Errorf("Requested file is not in storage: {%x}", Hash)
+//		return nil, fmt.Errorf("Requested file is not in storage: {%s}", Hash.String())
 //	}
 //	if start > end {
 //		s.Unlock()
@@ -162,7 +172,7 @@ func (s *P2PStorage) GetChunkIDsInStorage(hash FileID) ([]ChunkID, error) {
 
 var FILENOTFOUND = errors.New("P2PFile not in storage")
 
-// GetChunkIDsInStorage Search for requested chunk with file hash
+// GetChunkIDsInStorage Search for requested chunk with file Hash
 func (s *P2PStorage) GetFileData(hash FileID) ([]byte, error) {
 	s.Lock()
 	file, ok := s.LocalFiles[hash.String()]
@@ -175,10 +185,10 @@ func (s *P2PStorage) GetFileData(hash FileID) ([]byte, error) {
 	return data, nil
 }
 
-//// GetDataFromLocalChunks Search for requested chunks with file hash and aggregate them in bytes
-//func (s *P2PStorage) GetDataFromLocalChunks(hash FileHash, ids []ChunkID) ([]byte, error) {
+//// GetDataFromLocalChunks Search for requested chunks with file Hash and aggregate them in bytes
+//func (s *P2PStorage) GetDataFromLocalChunks(Hash FileHash, ids []ChunkID) ([]byte, error) {
 //	var dataLen int
-//	chunks, err := s.GetRequestedChunks(hash, start, end)
+//	chunks, err := s.GetRequestedChunks(Hash, start, end)
 //	if err != nil {
 //		return nil, err
 //	}

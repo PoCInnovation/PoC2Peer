@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
 	"github.com/PoCInnovation/PoC2Peer/Server/core"
 	_ "github.com/libp2p/go-libp2p-core"
 	"github.com/libp2p/go-libp2p-core/peer"
@@ -42,15 +43,24 @@ const (
 func main() {
 	//ctx, cancel := context.WithCancel(context.Background())
 	//defer cancel()
-	P2PPort := flag.Int("lp", DefaultP2PPort, "wait for incoming connections")
-	HttpPort := flag.Int("lh", DefaultHttpPort, "wait for incoming connections")
+	P2PPort := flag.Int("lp", DefaultP2PPort, "Port for P2P server")
+	HttpPort := flag.Int("lh", DefaultHttpPort, "Port for http server")
+	file := flag.String("f", "", "file to parse at server init")
+	trackerPath := flag.String("tp", ".", fmt.Sprintf("Path of tracker file (%s)", p2pnetwork.TrackerFileName))
 	flag.Parse()
-	flag.Parse()
-	s, err := core.NewP2PServer(*HttpPort, *P2PPort)
+	trackers, err := p2pnetwork.ParseTrackerInfos(*trackerPath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err = s.Run(); err != nil {
+	if *file == "" {
+		log.Fatal("No input file, use -f (will change later)")
+	}
+
+	s, err := core.NewP2PServer(trackers, *HttpPort, *P2PPort)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err = s.Run(*file); err != nil {
 		log.Fatal(err)
 	}
 

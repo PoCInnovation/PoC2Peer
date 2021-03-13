@@ -16,6 +16,7 @@ import (
 	ma "github.com/multiformats/go-multiaddr"
 	"io"
 	"log"
+	"time"
 )
 
 // Network handles interactions with the underlying protocol
@@ -55,7 +56,7 @@ type Network interface {
 	// TODO: move in protocol ?
 	// Peers return all connected peers
 	Peers() []PeerID
-	RequestFileToPeers(file storage.FileHash) error
+	RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) error
 }
 
 // PeerID identifies a peer
@@ -238,7 +239,7 @@ func (n *P2PNetwork) Peers() []PeerID {
 	return ret
 }
 
-func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash) error {
+func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) error {
 	d1 := protocol.NewDataGram(protocol.Msg{Op: protocol.Have, Data: protocol.HaveMsg{File: file, Type: protocol.HaveRequest}})
 	for _, peer := range n.Peers() {
 		if peer.String() == n.ID().String() {
@@ -250,22 +251,39 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash) error {
 			log.Fatal(err)
 		}
 	}
-	sz := 20
-	req := make([]storage.ChunkID, sz)
-	for i := 0; i < sz; i += 1 {
-		req[i] = storage.ChunkID(i)
+	time.Sleep(time.Second)
+	ls, err := remoteStorage.GetPeersFileChunks(file)
+	if err != nil {
+		return err
 	}
-	d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: req}})
-	//for _, peer := range n.Peers() {
-	for _, peer := range n.Peers() {
-		if peer.String() == n.ID().String() {
-			continue
-		}
+	//log.Println(ls)
+	//for peer, chunks := range ls {
+	//	log.Printf("peer {%v} has chunk: from %v to %v", peer, chunks[0], chunks[len(chunks) - 1])
+	//}
+	for peer, chunks := range ls {
+		d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: chunks}})
 		log.Println("Requesting to peer: ", peer)
 		err := n.SendDatagram(d2, peer)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
+	//sz := 100160
+	//req := make([]storage.ChunkID, sz)
+	//for i := 0; i < sz; i += 1 {
+	//	req[i] = storage.ChunkID(i)
+	//}
+	//d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: req}})
+	////for _, peer := range n.Peers() {
+	//for _, peer := range n.Peers() {
+	//	if peer.String() == n.ID().String() {
+	//		continue
+	//	}
+	//	log.Println("Requesting to peer: ", peer)
+	//	err := n.SendDatagram(d2, peer)
+	//	if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//}
 	return nil
 }

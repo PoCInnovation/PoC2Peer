@@ -12,20 +12,25 @@ import (
 )
 
 func main() {
+	file := flag.String("f", "", "file to request at lib init")
 	flag.Parse()
 	//tracker := p2pnetwork.NewHttpTracker("192.168.0.31", 5001, false)
 	//lib, err := core.NewP2PPeer([]p2pnetwork.Tracker{tracker}, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
 	//lib, err := core.NewP2PPeer([]p2pnetwork.Tracker{tracker}, p2pnetwork.NewNetworkInfos("0.0.0.0", 4000), "tcp")
+	if *file == "" {
+		log.Fatal("No file to request, use -f (will change later)")
+	}
+
 	trackers, err := p2pnetwork.ParseTrackerInfos(".")
 	if err != nil {
 		log.Fatal(err)
 	}
-	lib, err := core.NewP2PPeer(trackers, p2pnetwork.NewNetworkInfos("192.168.0.31", 4000), "tcp")
+	lib, err := core.NewP2PPeer(trackers, p2pnetwork.NewNetworkInfos("192.168.0.6", 4000), "tcp")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = lib.Launch()
+	err = lib.Launch(*file)
 	if err != nil {
 		log.Println(err)
 	}
@@ -34,10 +39,4 @@ func main() {
 	<-ch
 	fmt.Println("Received signal, shutting down...")
 	lib.Close()
-	// shut the node down
-	//if err := s.Close(); err != nil {
-	//	panic(err)
-	//}
-	//makeRoutedHost(*P2PPort, convertPeers([]string{"/ip4/0.0.0.0/tcp/5000"}))
-
 }

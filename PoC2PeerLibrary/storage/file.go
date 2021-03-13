@@ -3,51 +3,68 @@ package storage
 import (
 	"bytes"
 	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"log"
 )
 
+// FileHash:
 type FileHash []byte
 
+// String: Return string representation from FileHash
 func (h FileHash) String() string {
 	return string(h)
+	//return fmt.Sprintf("%x", h)
 }
 
+// Eq: Compare two FileHash
 func (h FileHash) Eq(lhs FileHash) bool {
 	return bytes.Compare(h, lhs) == 0
 }
 
+// TODO
 func (h FileHash) Decode() FileHash {
-	return []byte(h)
-	he, err := hex.DecodeString(h.String())
-	if err != nil {
-		log.Printf("decoding filehash failed")
-		return []byte("")
-	}
-	fmt.Println(h)
-	return FileHash(he)
-	//return fmt.Sprintf("%x", h)
+	//return []byte(h)
+	//he, err := hex.DecodeString(h.String())
+	//if err != nil {
+	//	log.Printf("decoding filehash failed")
+	//	return []byte("")
+	//}
+	//fmt.Println(h)
+	//return FileHash(he)
+	return []byte(fmt.Sprintf("%x", h))
 }
 
+// FileState: State of a file, representing if it's complete, updated or unchanged
 type FileState int
 
+// TODO
 const (
-	Complete  FileState = 0
-	Updated   FileState = 1
-	Unchanged FileState = 2
+	FSComplete  FileState = 0
+	FSUpdated   FileState = 1
+	FSUnchanged FileState = 2
 )
 
+// P2PFile: Represent a P2PFile with all basic file infos.
+//  - Hash: unique ID for the file based on file content
+//  - state: FileState representing if the file is complete, updated or unchanged.
+//  - Data: File content formed with chunks' data. Used to avoid excess data merging when requesting data.
+//  - Chunks: All stored Chunks accesible by ChunkID.
 type P2PFile struct {
-	hash   FileHash
-	state  FileState
+	Hash   FileHash
+	State  FileState
 	Data   []byte
 	Chunks map[ChunkID]Chunk
 }
 
+// TODO
 func NewFile(hash FileHash, state FileState, fileData []byte, chunkSize int) P2PFile {
 	chunks := FileDataToChunks(fileData, chunkSize)
-	newFile := P2PFile{hash: hash, state: state, Data: fileData, Chunks: make(map[ChunkID]Chunk, len(chunks))}
+	newFile := P2PFile{
+		Hash:   hash,
+		State:  state,
+		Data:   fileData,
+		Chunks: make(map[ChunkID]Chunk, len(chunks)),
+	}
 	for i, chunk := range chunks {
 		log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 		newFile.Chunks[chunk.ID()] = chunks[i]
@@ -75,6 +92,7 @@ func (f P2PFile) GetRequestedChunks(ids []ChunkID) []Chunk {
 	return chunks
 }
 
+// TODO
 func (f *P2PFile) AddChunks(chunks []Chunk) error {
 	for i, chunk := range chunks {
 		// TODO: keep ??
@@ -82,32 +100,39 @@ func (f *P2PFile) AddChunks(chunks []Chunk) error {
 			log.Println("Adding Chunk but was already there")
 		}
 		f.Chunks[chunk.Id] = chunks[i]
-		f.state = Updated
+		f.State = FSUpdated
 	}
 	return nil
 }
 
+// Complete: Check P2PFile state, return true if file is completed.
 func (f P2PFile) Complete() bool {
-	return f.state == Complete
+	return f.State == FSComplete
 }
 
+// GetChunksIDs: Return all ChunkID's in a P2PFile.
 func (f P2PFile) GetChunksIDs() []ChunkID {
 	ids := make([]ChunkID, len(f.Chunks))
 	i := 0
 	for id, _ := range f.Chunks {
 		ids[i] = id
+		i += 1
 	}
 	return ids
 }
 
+// GetData: Return stored data in a P2PFile.
+// if the file is completed or unchanged since last call to GetData, directly return stored data.
+// otherwise (FileState = FSUpdated), call UpdateData to reform data from received Chunk.
 func (f *P2PFile) GetData() []byte {
-	if f.Complete() || f.state == Unchanged {
+	if f.Complete() || f.State == FSUnchanged {
 		return f.Data
 	}
 	f.UpdateData()
 	return f.Data
 }
 
+// TODO:
 func (f *P2PFile) UpdateData() {
 	dataLen := 0
 	for i := 0; ; i += 1 {
@@ -136,13 +161,15 @@ func (f *P2PFile) UpdateData() {
 		}
 	}
 	f.Data = data
-	if f.hash.Eq(NewHashFromFile(data)) {
-		f.state = Complete
+	if f.Hash.Eq(NewHashFromFile(data)) {
+		f.State = FSComplete
 	}
 }
 
+// FileDataToChunks: Transform array of bytes (content of a file) into Chunk's array with 'chunkSize' size.
 func FileDataToChunks(fileData []byte, chunkSize int) (chunks []Chunk) {
 	for i := 0; ; i += 1 {
+		// Break if
 		if len(fileData) == 0 {
 			break
 		}
@@ -159,6 +186,7 @@ func FileDataToChunks(fileData []byte, chunkSize int) (chunks []Chunk) {
 	return
 }
 
+// NewHashFromFile: Create a New Hashfrom file's content with SHA256
 func NewHashFromFile(data []byte) FileHash {
 	hash := sha256.Sum256(data)
 	return hash[:]

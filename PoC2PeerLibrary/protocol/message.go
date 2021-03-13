@@ -61,7 +61,8 @@ func (m *Msg) HandleHave(pid PeerID, lStorage storage.LocalStorage, pStorage sto
 		}
 		return NewDataGram(Msg{Op: Have, Data: HaveMsg{File: have.File, Type: HaveResponse, Chunks: chunks}}), nil
 	case HaveResponse:
-		err := pStorage.AddPeerFileChunks(pid, have.File, have.Chunks)
+		//log.Println(have.Chunks)
+		err := pStorage.AddFileChunksForPeer(pid, have.File, have.Chunks)
 		return nil, err
 	default:
 		return nil, fmt.Errorf("Have got Unknown Type: %v", have.Type)
@@ -74,7 +75,7 @@ func (m *Msg) HandleDataExchange(pStorage storage.LocalStorage) error {
 		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
 	}
 	for _, data := range exch.Chunks {
-		log.Printf("Handling Data: %v\n", string(data.B))
+		log.Printf("Handling Data for file {%v} -> Chunk : %v\n", exch.File.Decode(), data.Id)
 	}
 	return pStorage.AddReceivedFileChunks(exch.File, exch.Chunks)
 }
