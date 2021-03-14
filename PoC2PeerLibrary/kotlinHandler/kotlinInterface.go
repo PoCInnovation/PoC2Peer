@@ -75,6 +75,7 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int64 {
 
 	var inBuf = bytes.NewBuffer(data[sourcePos:endOffset])
 	var outBuf = bytes.NewBuffer(buf[destPos:])
+	log.Println(inBuf.String())
 	l, err := io.Copy(outBuf, inBuf)
 	if err != nil {
 		log.Println(err)
