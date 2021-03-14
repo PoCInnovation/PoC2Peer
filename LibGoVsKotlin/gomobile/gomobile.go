@@ -25,6 +25,6 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int {
 	return kotlinHandler.Read(buf, sourcePos, destPos, readLength, ID)
 }
 
-//func Read(ID string) []byte {
-//	return kotlinHandler.RequestFile(ID)
-//}
+func Close(ID string) {
+	kotlinHandler.Close(ID)
+}
