@@ -171,7 +171,7 @@ server.get('/addPeer', (req, res) => {
 });
 
 server.get('/health', (req, res) => {
-  res.status(httpStatus.OK);
+  res.status(httpStatus.OK).send("ok");
 });
 
 server.listen(PORT, () => {

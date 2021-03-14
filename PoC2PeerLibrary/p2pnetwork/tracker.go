@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 )
@@ -115,16 +114,13 @@ func (t HttpTracker) Ping() error {
 	if err != nil {
 		return err
 	}
-	log.Println("Pring finished: ", t.URL())
 	if req.StatusCode != http.StatusOK {
-		log.Println("Pring finished: ", t.URL())
 		response, err := ioutil.ReadAll(req.Body)
 		if err != nil {
 			return err
 		}
 		return errors.New(string(response))
 	}
-	log.Println("Pring finished: ", t.URL())
 	return nil
 }
 

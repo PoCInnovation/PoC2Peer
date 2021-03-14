@@ -87,36 +87,32 @@ func (c *LibP2pCore) getPeerList() []p2pnetwork.PeerInfos {
 	var peers []p2pnetwork.PeerInfos
 	pid := c.ID()
 	wg := sync.WaitGroup{}
-	log.Println(c.trackers)
 	for _, tracker := range c.trackers {
 		wg.Add(1)
 		go func() {
-			log.Println("pinging : ", tracker.URL())
 			err := tracker.Ping()
 			if err != nil {
 				log.Println(fmt.Errorf("Ping tracker {%s} failed: %v", tracker.URL(), err))
 				wg.Done()
 				return
 			}
-			log.Println("adding peers : ", tracker.URL())
 			err = tracker.AddPeer(pid, c.infos.PubIP(), c.infos.Port())
 			if err != nil {
 				log.Println(fmt.Errorf("AddRemotePeer for tracker {%s} failed: %v", tracker.URL(), err))
 			}
-			log.Println("geeting peers : ", tracker.URL())
 			newPeers, err := tracker.Peers()
 			if err != nil {
 				wg.Done()
 				log.Println(fmt.Errorf("Peers for tracker {%s} failed: %v", tracker.URL(), err))
 				return
 			}
+			log.Printf("Peer {%v} Added and Other Peers requested from {%v}", pid, tracker.URL())
 			peers = append(peers, newPeers...)
 			wg.Done()
 		}()
 	}
 	wg.Wait()
 	log.Println("Peers Requested from tracker !")
-	//log.Println("Peers Requested from tracker !", peers)
 	return removeDuplicates(peers, c.network.ID())
 }
 
