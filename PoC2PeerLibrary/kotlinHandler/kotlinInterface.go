@@ -28,6 +28,7 @@ var Lib *core.LibP2pCore
 
 func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.Tracker) (err error) {
 	Lib, err = core.NewP2PPeer(trackers, infos, "tcp")
+	Lib.Launch()
 	return err
 }
 

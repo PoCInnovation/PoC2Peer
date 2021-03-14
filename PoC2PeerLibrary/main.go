@@ -69,8 +69,26 @@ const (
 	defaultIP = "192.168.0.6"
 )
 
-func main() {
+//func main() {
+//
+//	tracker := p2pnetwork.NewHttpTracker(TrackerIP, TrackerPort, false)
+//	err := kotlinHandler.InitP2PLibrary(p2pnetwork.NewNetworkInfos(localIP, port), []p2pnetwork.Tracker{tracker})
+//
+//	func Open(ID string) int {
+//		return kotlinHandler.Open(ID)
+//	}
+//
+//	func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int {
+//		return kotlinHandler.Read(buf, sourcePos, destPos, readLength, ID)
+//	}
+//
+//	func Close(ID string) {
+//		kotlinHandler.Close(ID)
+//	}
+//
+//}
 
+func main() {
 	port := flag.Int("p", defaultPort, "Port for P2P server")
 	ip := flag.String("i", defaultIP, "Port for P2P server")
 	file := flag.String("f", "", "file to request at lib init")
