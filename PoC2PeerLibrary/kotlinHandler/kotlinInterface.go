@@ -69,6 +69,8 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) ([]byte, er
 	} else {
 		endOffset = sourcePos + readLength
 	}
+	log.Printf("Reading from {%d} to {%d}\n", sourcePos, endOffset)
+	log.Println(data[sourcePos:endOffset])
 
 	return data[sourcePos:endOffset], nil
 

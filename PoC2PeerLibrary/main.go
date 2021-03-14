@@ -88,7 +88,7 @@ const (
 func main() {
 	port := flag.Int("p", defaultPort, "Port for P2P server")
 	ip := flag.String("i", defaultIP, "Port for P2P server")
-	file := flag.String("f", "", "file to request at lib init")
+	file := flag.String("f", "", "file to request at peer init")
 	flag.Parse()
 
 	trackers, err := p2pnetwork.ParseTrackerInfos(".")
@@ -135,17 +135,29 @@ func main() {
 	}
 }
 
-func loadfiles(lib *core.LibP2pCore, files []string) error {
-	for _, file := range files {
-		content, err := ioutil.ReadFile(file)
+func loadfiles(lib *core.LibP2pCore, dirs []string) error {
+	for _, dirPath := range dirs {
+		dir, err := os.Open(dirPath)
 		if err != nil {
-			log.Printf("Can't read file %s: %v\n", file, err)
+			log.Println(err)
+			continue
 		}
-		hash, err := lib.LocalStorage.AddFile(content)
-		if err != nil {
-			return err
+		files, err := dir.Readdir(0)
+		for _, file := range files {
+			if file.IsDir() {
+				continue
+			}
+			file.Name()
+			content, err := ioutil.ReadFile(dirPath + "/" + file.Name())
+			if err != nil {
+				log.Printf("Can't read file %s: %v\n", file, err)
+			}
+			hash, err := lib.LocalStorage.AddFile(content)
+			if err != nil {
+				return err
+			}
+			fmt.Printf("File Hashed: %x\n", hash)
 		}
-		fmt.Printf("File Hashed: %x\n", hash)
 	}
 	return nil
 }

@@ -153,12 +153,12 @@ func (n *P2PNetwork) SetDatagramHandler(handler func(*protocol.Datagram, PeerID)
 				break
 			}
 			if err != nil {
-				//TODO: Manage error diffently
-				log.Fatal(err)
+				log.Println(err)
+				break
 			}
 			if err = handler(d, remote); err != nil {
-				//TODO: Manage error diffently
 				log.Fatal("Datagram Handler err", err)
+				break
 			}
 		}
 		log.Printf("%v handled stream\n", n.ID())
