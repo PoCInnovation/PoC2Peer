@@ -137,9 +137,10 @@ func (c LibP2pCore) RemovePeerFromTrackers() error {
 	log.Println("Removing peer from trackers...")
 	pid := c.ID()
 	wg := sync.WaitGroup{}
+	log.Println(c.trackers)
 	for _, tracker := range c.trackers {
+		wg.Add(1)
 		go func() {
-			wg.Add(1)
 			err := tracker.Ping()
 			if err != nil {
 				log.Println(fmt.Errorf("Ping tracker {%s} failed: %v", tracker.URL(), err))
@@ -150,6 +151,7 @@ func (c LibP2pCore) RemovePeerFromTrackers() error {
 			if err != nil {
 				log.Println(fmt.Errorf("AddRemotePeer for tracker {%s} failed: %v", tracker.URL(), err))
 			}
+			log.Printf("Peer %v removed from tracker %v\n", pid, tracker.URL())
 			wg.Done()
 		}()
 	}

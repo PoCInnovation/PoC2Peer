@@ -105,7 +105,7 @@ server.get('/getSong', (req, res) => {
   });
 });
 
-server.post('/deletSong', (req, res) => {
+server.post('/deleteSong', (req, res) => {
   console.log('delete');
   if (!req.query.id) {
     res.status(httpStatus.BAD_REQUEST).send('Bad Request');
@@ -169,8 +169,8 @@ server.get('/addPeer', (req, res) => {
   }
 });
 
-server.get('/repeat-my-param/:message', (req, res) => {
-  res.status(httpStatus.OK).send(req.params.message);
+server.get('/health', (req, res) => {
+  res.status(httpStatus.OK);
 });
 
 server.listen(PORT, () => {
