@@ -45,8 +45,8 @@ func (n *NetworkInfos) URL() string {
 	return fmt.Sprintf("%s:%d", n.Ip, n.NWPort)
 }
 
-func (n *NetworkInfos) PubURL() string {
-	return fmt.Sprintf("%s:%d", n.IpPub, n.NWPort)
+func (n *NetworkInfos) PubIP() string {
+	return n.IpPub
 }
 
 func (n *NetworkInfos) Port() int {

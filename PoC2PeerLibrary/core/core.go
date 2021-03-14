@@ -87,19 +87,23 @@ func (c *LibP2pCore) getPeerList() []p2pnetwork.PeerInfos {
 	var peers []p2pnetwork.PeerInfos
 	pid := c.ID()
 	wg := sync.WaitGroup{}
+	log.Println(c.trackers)
 	for _, tracker := range c.trackers {
 		wg.Add(1)
 		go func() {
+			log.Println("pinging : ", tracker.URL())
 			err := tracker.Ping()
 			if err != nil {
 				log.Println(fmt.Errorf("Ping tracker {%s} failed: %v", tracker.URL(), err))
 				wg.Done()
 				return
 			}
-			err = tracker.AddPeer(pid, c.infos.PubURL())
+			log.Println("adding peers : ", tracker.URL())
+			err = tracker.AddPeer(pid, c.infos.PubIP(), c.infos.Port())
 			if err != nil {
 				log.Println(fmt.Errorf("AddRemotePeer for tracker {%s} failed: %v", tracker.URL(), err))
 			}
+			log.Println("geeting peers : ", tracker.URL())
 			newPeers, err := tracker.Peers()
 			if err != nil {
 				wg.Done()
@@ -111,8 +115,8 @@ func (c *LibP2pCore) getPeerList() []p2pnetwork.PeerInfos {
 		}()
 	}
 	wg.Wait()
-	//log.Println("Peers Requested from tracker !")
-	log.Println("Peers Requested from tracker !", peers)
+	log.Println("Peers Requested from tracker !")
+	//log.Println("Peers Requested from tracker !", peers)
 	return removeDuplicates(peers, c.network.ID())
 }
 
@@ -166,49 +170,6 @@ func (c *LibP2pCore) Close() error {
 	}
 	return c.network.Close()
 }
-
-//func (c *LibP2pCore) getPeerList() error {
-//	res, err := http.Get(c.trackers.HTTPURL() + "/ID")
-//	if err != nil {
-//		return err
-//	} else if res.StatusCode != http.StatusOK {
-//		return fmt.Errorf("Http Endpoint returned wrong status: %d", res.StatusCode)
-//	}
-//	byteID, err := ioutil.ReadAll(res.Body)
-//	if err != nil {
-//		return err
-//	}
-//	return c.AddRemotePeer(string(byteID))
-//}
-//
-//func (c *LibP2pCore) AddRemotePeer(requestedPeerId string) error {
-//	// The following extracts target's the peer ID from the given multiaddress
-//	p2paddr, err := ma.NewMultiaddr(
-//		fmt.Sprintf("/ip4/%s/tcp/%d/p2p/%s", c.trackers.IP(), c.trackers.Port(), requestedPeerId),
-//	)
-//	if err != nil {
-//		return nil
-//	}
-//	pid, err := p2paddr.ValueForProtocol(ma.P_P2P)
-//	if err != nil {
-//		return nil
-//	}
-//	peerid, err := peer.Decode(pid)
-//	if err != nil {
-//		return nil
-//	}
-//	log.Println("pid : ", pid)
-//	log.Println("peer: ", peerid)
-//	// Decapsulate the /p2p/<peerID> part from the target
-//	// /ip4/<a.b.c.d>/p2p/<peer> becomes /ip4/<a.b.c.d>
-//	targetPeerAddr, _ := ma.NewMultiaddr(fmt.Sprintf("/p2p/%s", pid))
-//	targetAddr := p2paddr.Decapsulate(targetPeerAddr)
-//
-//	// We have a peer ID and a targetAddr so we add it to the peerstore
-//	// so LibP2P knows how to contact it
-//	c.network.AddAddrs(peerid, []ma.Multiaddr{targetAddr})
-//	return nil
-//}
 
 // TODO: Add Interface for RemotePeer (GetMultiAddr() ?)
 func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {

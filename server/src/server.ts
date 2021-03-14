@@ -164,6 +164,7 @@ server.get('/addPeer', (req, res) => {
       data: {
         idpeer: req.query.idpeer as string,
         ippeer: req.query.ippeer as string,
+        port: Number(req.query.port),
       },
     }).then(() => res.status(httpStatus.OK).send(req.query.idpeer)); // ici
   }

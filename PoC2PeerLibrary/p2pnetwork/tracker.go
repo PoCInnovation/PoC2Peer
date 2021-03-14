@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 type Tracker interface {
@@ -15,7 +15,7 @@ type Tracker interface {
 	URL() string
 	Port() int
 	Ping() error
-	AddPeer(pid, peerURL string) error
+	AddPeer(peerID, peerIP string, peerPort int) error
 	Peers() ([]PeerInfos, error)
 	RemovePeer(id string) error
 }
@@ -26,7 +26,7 @@ const (
 	//trackerAddPeerEndpoint    = "peers/add"
 	//trackerRemovePeerEndpoint = "peers/del"
 	//trackerListPeersEndpoint  = "peers"
-	trackerPingEndpoint       = "repeat-my-param/ok"
+	trackerPingEndpoint       = "health"
 	trackerAddPeerEndpoint    = "addPeer"
 	trackerRemovePeerEndpoint = "deletePeer"
 	trackerListPeersEndpoint  = "peerList"
@@ -34,8 +34,9 @@ const (
 
 // TODO: Modify after Greg's modifs
 type PeerInfos struct {
-	Idpeer string
-	Ippeer string
+	Idpeer   string
+	Ippeer   string
+	Portpeer int
 }
 
 //type PeerInfos struct {
@@ -50,13 +51,11 @@ func (i PeerInfos) ID() string {
 }
 
 func (i PeerInfos) IP() string {
-	s := strings.Split(i.Ippeer, ":")
-	return s[0]
+	return i.Ippeer
 }
 
 func (i PeerInfos) Port() string {
-	s := strings.Split(i.Ippeer, ":")
-	return s[1]
+	return fmt.Sprintf("%d", i.Portpeer)
 }
 
 type HttpTracker struct {
@@ -86,6 +85,7 @@ func ParseTrackerInfos(strorageDir string) ([]Tracker, error) {
 	trackers := make([]Tracker, len(httptrackers))
 	for i := range httptrackers {
 		trackers[i] = httptrackers[i]
+		i += 1
 	}
 	return trackers, nil
 }
@@ -115,18 +115,21 @@ func (t HttpTracker) Ping() error {
 	if err != nil {
 		return err
 	}
+	log.Println("Pring finished: ", t.URL())
 	if req.StatusCode != http.StatusOK {
+		log.Println("Pring finished: ", t.URL())
 		response, err := ioutil.ReadAll(req.Body)
 		if err != nil {
 			return err
 		}
 		return errors.New(string(response))
 	}
+	log.Println("Pring finished: ", t.URL())
 	return nil
 }
 
 // AddPeer: Request Tracker to add a peer
-func (t HttpTracker) AddPeer(pid, peerURL string) error {
+func (t HttpTracker) AddPeer(peerID, peerIP string, peerPort int) error {
 	// TODO: Modify after Greg's modifs
 	url1 := fmt.Sprintf("%s/%s", t.URL(), trackerAddPeerEndpoint)
 	u, err := url.Parse(url1)
@@ -137,8 +140,9 @@ func (t HttpTracker) AddPeer(pid, peerURL string) error {
 	if err != nil {
 		return err
 	}
-	values.Set("idpeer", pid)
-	values.Set("ippeer", peerURL)
+	values.Set("idpeer", peerID)
+	values.Set("ippeer", peerIP)
+	values.Set("port", fmt.Sprintf("%d", peerPort))
 	u.RawQuery = values.Encode()
 	req, err := http.Get(fmt.Sprintf("%v", u))
 	if err != nil {
@@ -154,7 +158,7 @@ func (t HttpTracker) AddPeer(pid, peerURL string) error {
 	return nil
 
 	//url := fmt.Sprintf("%s/%s", t.URL(), trackerAddPeerEndpoint)
-	//b, err := json.Marshal(&PeerInfos{IP: peerURL, ID: pid})
+	//b, err := json.Marshal(&PeerInfos{IP: peerIP, ID: peerID})
 	//if err != nil {
 	//	return err
 	//}
