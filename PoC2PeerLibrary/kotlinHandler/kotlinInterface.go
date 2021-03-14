@@ -1,6 +1,7 @@
 package kotlinHandler
 
 import (
+	"encoding/hex"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
@@ -33,7 +34,12 @@ func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.Tracker
 }
 
 func Open(ID string) int {
-	dataLength, err := Lib.InitRequestFile(storage.FileHash(ID))
+	he, err := hex.DecodeString(ID)
+	if err != nil {
+		log.Printf("decoding filehash failed")
+		return -1
+	}
+	dataLength, err := Lib.InitRequestFile(storage.FileHash(he))
 	if err != nil {
 		log.Println(err)
 		return 0
@@ -42,7 +48,12 @@ func Open(ID string) int {
 }
 
 func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int {
-	data, err := Lib.RequestFile(storage.FileHash(ID))
+	he, err := hex.DecodeString(ID)
+	if err != nil {
+		log.Printf("decoding filehash failed")
+		return -1
+	}
+	data, err := Lib.RequestFile(storage.FileHash(he))
 	if err != nil {
 		return 0
 	}
@@ -57,5 +68,10 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int {
 }
 
 func Close(ID string) {
-	Lib.LocalStorage.DeleteData(storage.FileHash(ID))
+	he, err := hex.DecodeString(ID)
+	if err != nil {
+		log.Printf("decoding filehash failed")
+		return
+	}
+	Lib.LocalStorage.DeleteData(storage.FileHash(he))
 }
