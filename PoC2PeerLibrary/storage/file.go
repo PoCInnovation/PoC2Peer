@@ -67,7 +67,6 @@ func NewFile(hash FileHash, state FileState, fileData []byte, chunkSize int) P2P
 	}
 	for i, chunk := range chunks {
 		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
-		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 		newFile.Chunks[chunk.ID()] = chunks[i]
 	}
 	if len(chunks) > 0 {
@@ -172,10 +171,15 @@ func (f *P2PFile) UpdateData() {
 	}
 }
 
+//DeleteData: Delete file Data to free ressources
+func (f *P2PFile) DeleteData() {
+	f.Data = []byte{}
+}
+
 // FileDataToChunks: Transform array of bytes (content of a file) into Chunk's array with 'chunkSize' size.
 func FileDataToChunks(fileData []byte, chunkSize int) (chunks []Chunk) {
 	for i := 0; ; i += 1 {
-		// Break if
+		// Break if we are at the end of Data
 		if len(fileData) == 0 {
 			break
 		}

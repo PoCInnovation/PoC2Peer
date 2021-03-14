@@ -175,7 +175,6 @@ func (n *P2PNetwork) receiveDatagram(ws *WrappedStream) (*protocol.Datagram, err
 	if err := ws.Dec.Decode(&d); err != nil {
 		return nil, err
 	}
-	//log.Printf("%v decoded datagram %v\n", n.ID(), d)
 	log.Printf("%v decoded datagram\n", n.ID())
 	return &d, nil
 }
@@ -256,10 +255,6 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 	if err != nil {
 		return 0, err
 	}
-	//log.Println(ls)
-	//for peer, chunks := range ls {
-	//	log.Printf("peer {%v} has chunk: from %v to %v", peer, chunks[0], chunks[len(chunks) - 1])
-	//}
 	var nbChunk int
 	for _, chunks := range ls {
 		if len(chunks) > nbChunk {
@@ -274,23 +269,5 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 			log.Fatal(err)
 		}
 	}
-	//sz := 100160
-	//req := make([]storage.ChunkID, sz)
-	//for i := 0; i < sz; i += 1 {
-	//	req[i] = storage.ChunkID(i)
-	//}
-	//d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: req}})
-	////for _, peer := range n.Peers() {
-	//for _, peer := range n.Peers() {
-	//	if peer.String() == n.ID().String() {
-	//		continue
-	//	}
-	//	log.Println("Requesting to peer: ", peer)
-	//	err := n.SendDatagram(d2, peer)
-	//	if err != nil {
-	//		log.Fatal(err)
-	//	}
-	//}
-	//LocalStorageSize
 	return nbChunk * storage.LocalStorageSize, nil
 }

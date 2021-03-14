@@ -12,25 +12,6 @@ type PeerStorage interface {
 	GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID, error)
 }
 
-//type P2PRemoteStorage map[PeerID]P2PFileStorage
-//
-//type P2PFileStorage map[FileID][]ChunkID
-//
-//func (s P2PRemoteStorage) AddPeerFileChunks(peer PeerID, hash FileID, chunkIDS []ChunkID) error {
-//	peerStorage, ok := s[peer]
-//	if !ok {
-//		peerStorage = make(P2PFileStorage)
-//	}
-//	fileChunks, ok := peerStorage[hash]
-//	if !ok {
-//		peerStorage[hash] = chunkIDS
-//	} else {
-//		peerStorage[hash] = removeDuplicates(append(fileChunks, chunkIDS...))
-//	}
-//	s[peer] = peerStorage
-//	return nil
-//}
-
 type P2PRemoteStorage map[string]P2PFileStorage
 
 type P2PFileStorage map[PeerID][]ChunkID

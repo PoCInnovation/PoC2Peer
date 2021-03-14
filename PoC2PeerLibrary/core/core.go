@@ -45,7 +45,6 @@ func NewLibP2P(infos p2pnetwork.NetworkInfos, prot string) (core *LibP2pCore, er
 
 // NewP2PPeer: creates a LibP2P host with a random peer ID listening on the
 // given multiaddress.
-// TODO: remove once Tracker functionnal
 func NewP2PPeer(trackers []p2pnetwork.Tracker, infos p2pnetwork.NetworkInfos, prot string) (*LibP2pCore, error) {
 	libCore, err := NewLibP2P(infos, prot)
 	if err != nil {
@@ -53,27 +52,7 @@ func NewP2PPeer(trackers []p2pnetwork.Tracker, infos p2pnetwork.NetworkInfos, pr
 	}
 
 	libCore.trackers = trackers
-	//libCore.PeerStorage = storage.NewP2PRemoteStorage()
-
-	//Request Peer Id from Http Endpoint
-	//err = libCore.getPeerList()
-	//if err != nil {
-	//	return nil, err
-	//}
 	libCore.SetDefaultStreamHandlers()
-	return libCore, nil
-}
-
-// MakeBasicHost creates a LibP2P host with a random peer ID listening on the
-// given multiaddress.
-func NewP2PPermanentPeer(trackers []p2pnetwork.Tracker, infos p2pnetwork.NetworkInfos, prot string) (*LibP2pCore, error) {
-	libCore, err := NewLibP2P(infos, prot)
-	if err != nil {
-		return nil, err
-	}
-	libCore.trackers = trackers
-	libCore.SetDefaultStreamHandlers()
-	fmt.Println(libCore.ID())
 	return libCore, nil
 }
 
@@ -137,7 +116,6 @@ func (c LibP2pCore) RemovePeerFromTrackers() error {
 	log.Println("Removing peer from trackers...")
 	pid := c.ID()
 	wg := sync.WaitGroup{}
-	log.Println(c.trackers)
 	for _, tracker := range c.trackers {
 		wg.Add(1)
 		go func() {
@@ -169,15 +147,15 @@ func (c *LibP2pCore) Close() error {
 
 // TODO: Add Interface for RemotePeer (GetMultiAddr() ?)
 func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {
+
 	// The following extracts target's the peer ID from the given multiaddress
-	// TODO: Modify after Greg's modifs
 	p2paddr, err := ma.NewMultiaddr(
 		fmt.Sprintf("/ip4/%s/tcp/%s/p2p/%s", remotePeer.IP(), remotePeer.Port(), remotePeer.ID()),
-		//fmt.Sprintf("/ip4/%s/%s/%d/p2p/%s", remotePeer.IP, remotePeer.Transport, remotePeer.Port, remotePeer.ID),
 	)
 	if err != nil {
 		return err
 	}
+
 	pid, err := p2paddr.ValueForProtocol(ma.P_P2P)
 	if err != nil {
 		return err
@@ -186,6 +164,7 @@ func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {
 	if err != nil {
 		return err
 	}
+
 	// Decapsulate the /p2p/<peerID> part from the target
 	// /ip4/<a.b.c.d>/p2p/<peer> becomes /ip4/<a.b.c.d>
 	targetPeerAddr, _ := ma.NewMultiaddr(fmt.Sprintf("/p2p/%s", pid))
@@ -200,7 +179,6 @@ func (c *LibP2pCore) AddRemotePeer(remotePeer p2pnetwork.PeerInfos) error {
 func (c *LibP2pCore) UpdatePeers() error {
 	log.Println("Updating Peers ...")
 	lst := c.getPeerList()
-	log.Println(lst)
 	for _, peer := range lst {
 		if err := c.AddRemotePeer(peer); err != nil {
 			return err
@@ -303,12 +281,6 @@ func (c *LibP2pCore) InitRequestFile(fileID storage.FileHash) (int, error) {
 		return 0, err
 	}
 	return l, nil
-	//time.Sleep(time.Second * 2)
-	//datas, err := c.LocalStorage.GetFileData(fileID)
-	//if err != nil {
-	//	return 0, err
-	//}
-	//return len(datas), err
 }
 
 func (c *LibP2pCore) RequestFile(fileID storage.FileHash) ([]byte, error) {

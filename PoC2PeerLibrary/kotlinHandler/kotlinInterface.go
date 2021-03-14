@@ -9,22 +9,22 @@ import (
 
 var Lib *core.LibP2pCore
 
-type FileDatas struct {
-	Cursor int
-	Data   []byte
-}
-
-type Storage map[string]FileDatas
-
-type SoundBuffer struct {
-	Storage        Storage
-	CurrentTrackID string
-}
-
-var buffer = SoundBuffer{
-	make(Storage),
-	"",
-}
+//type FileDatas struct {
+//	Cursor int
+//	Data   []byte
+//}
+//
+//type Storage map[string]FileDatas
+//
+//type SoundBuffer struct {
+//	Storage        Storage
+//	CurrentTrackID string
+//}
+//
+//var buffer = SoundBuffer{
+//	make(Storage),
+//	"",
+//}
 
 func InitP2PLibrary(infos p2pnetwork.NetworkInfos, trackers []p2pnetwork.Tracker) (err error) {
 	Lib, err = core.NewP2PPeer(trackers, infos, "tcp")
@@ -53,4 +53,8 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int {
 	}
 	copy(buf, data[sourcePos:endOffset])
 	return len(buf)
+}
+
+func Close(ID string) {
+	Lib.LocalStorage.DeleteData(storage.FileHash(ID))
 }

@@ -21,9 +21,6 @@ func newChunk(id ChunkID, size int) Chunk {
 }
 
 func NewChunkFromData(id ChunkID, size int, data []byte) Chunk {
-	//chunk := newChunk(id, size)
-	//copy(chunk.B, data)
-	//return chunk
 	var c Chunk
 	c.B = make([]byte, size)
 	c.Id = id

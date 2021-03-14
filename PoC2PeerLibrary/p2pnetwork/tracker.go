@@ -20,11 +20,7 @@ type Tracker interface {
 }
 
 const (
-	TrackerFileName = "trackers.p2p"
-	//trackerPingEndpoint       = "health"
-	//trackerAddPeerEndpoint    = "peers/add"
-	//trackerRemovePeerEndpoint = "peers/del"
-	//trackerListPeersEndpoint  = "peers"
+	TrackerFileName           = "trackers.p2p"
 	trackerPingEndpoint       = "health"
 	trackerAddPeerEndpoint    = "addPeer"
 	trackerRemovePeerEndpoint = "deletePeer"
@@ -37,13 +33,6 @@ type PeerInfos struct {
 	Ippeer   string
 	Portpeer int
 }
-
-//type PeerInfos struct {
-//	IP        string
-//	Port      int
-//	ID        string
-//	Transport string
-//}
 
 func (i PeerInfos) ID() string {
 	return i.Idpeer
@@ -152,25 +141,6 @@ func (t HttpTracker) AddPeer(peerID, peerIP string, peerPort int) error {
 		return errors.New(string(response))
 	}
 	return nil
-
-	//url := fmt.Sprintf("%s/%s", t.URL(), trackerAddPeerEndpoint)
-	//b, err := json.Marshal(&PeerInfos{IP: peerIP, ID: peerID})
-	//if err != nil {
-	//	return err
-	//}
-	//buf := bytes.NewBuffer(b)
-	//req, err := http.Post(url, "application/json", buf)
-	//if err != nil {
-	//	return err
-	//}
-	//if req.StatusCode != http.StatusOK {
-	//	response, err := ioutil.ReadAll(req.Body)
-	//	if err != nil {
-	//		return err
-	//	}
-	//	return errors.New(string(response))
-	//}
-	//return nil
 }
 
 // Peers: Get peers from Tracker.
@@ -196,7 +166,6 @@ func (t HttpTracker) Peers() ([]PeerInfos, error) {
 	if err != nil {
 		return nil, err
 	}
-	//log.Println(peers)
 	return peers, nil
 }
 
@@ -227,18 +196,4 @@ func (t HttpTracker) RemovePeer(pid string) error {
 		return errors.New(string(response))
 	}
 	return nil
-
-	//url := fmt.Sprintf("%s/%s/%s", t.URL(), trackerRemovePeerEndpoint, id)
-	//req, err := http.Post(url, "", nil)
-	//if err != nil {
-	//	return err
-	//}
-	//if req.StatusCode != http.StatusOK {
-	//	response, err := ioutil.ReadAll(req.Body)
-	//	if err != nil {
-	//		return err
-	//	}
-	//	return errors.New(string(response))
-	//}
-	//return nil
 }
