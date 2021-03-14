@@ -70,7 +70,11 @@ func NewFile(hash FileHash, state FileState, fileData []byte, chunkSize int) P2P
 		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 		newFile.Chunks[chunk.ID()] = chunks[i]
 	}
-	log.Printf("Adding File %x whith chunks from %v to %v", newFile.Hash, chunks[0], chunks[len(chunks)-1])
+	if len(chunks) > 0 {
+		log.Printf("Adding File %x whith chunks from %v to %v", newFile.Hash, chunks[0], chunks[len(chunks)-1])
+	} else {
+		log.Printf("Adding File %x whith no chunks", newFile.Hash)
+	}
 	return newFile
 }
 

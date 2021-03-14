@@ -315,7 +315,13 @@ func (c *LibP2pCore) TestFile(file string) error {
 	}
 	hash := storage.NewHashFromFile(content)
 
-	fmt.Printf("%x\n", hash)
+	fmt.Printf("File Hash: %x\n", hash)
+	l, err := c.InitRequestFile(hash)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("File has approximative size: %d\n", l)
+	time.Sleep(time.Second * 10)
 	data, err := c.RequestFile(hash)
 	if err != nil {
 		return err
@@ -328,6 +334,22 @@ func (c *LibP2pCore) TestFile(file string) error {
 		return err
 	}
 	return nil
+}
+
+func (c *LibP2pCore) InitRequestFile(fileID storage.FileHash) (int, error) {
+	// TODO: remove once tracker ready.
+	log.Println("Requesting files to peers")
+	l, err := c.network.RequestFileToPeers(fileID, c.PeerStorage)
+	if err != nil {
+		return 0, err
+	}
+	return l, nil
+	//time.Sleep(time.Second * 2)
+	//datas, err := c.LocalStorage.GetFileData(fileID)
+	//if err != nil {
+	//	return 0, err
+	//}
+	//return len(datas), err
 }
 
 func (c *LibP2pCore) RequestFile(fileID storage.FileHash) ([]byte, error) {

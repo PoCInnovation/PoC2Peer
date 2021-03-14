@@ -56,7 +56,7 @@ type Network interface {
 	// TODO: move in protocol ?
 	// Peers return all connected peers
 	Peers() []PeerID
-	RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) error
+	RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) (int, error)
 }
 
 // PeerID identifies a peer
@@ -239,7 +239,7 @@ func (n *P2PNetwork) Peers() []PeerID {
 	return ret
 }
 
-func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) error {
+func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) (int, error) {
 	d1 := protocol.NewDataGram(protocol.Msg{Op: protocol.Have, Data: protocol.HaveMsg{File: file, Type: protocol.HaveRequest}})
 	for _, peer := range n.Peers() {
 		if peer.String() == n.ID().String() {
@@ -251,15 +251,21 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 			log.Fatal(err)
 		}
 	}
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 2)
 	ls, err := remoteStorage.GetPeersFileChunks(file)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	//log.Println(ls)
 	//for peer, chunks := range ls {
 	//	log.Printf("peer {%v} has chunk: from %v to %v", peer, chunks[0], chunks[len(chunks) - 1])
 	//}
+	var nbChunk int
+	for _, chunks := range ls {
+		if len(chunks) > nbChunk {
+			nbChunk = len(chunks)
+		}
+	}
 	for peer, chunks := range ls {
 		d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: chunks}})
 		log.Println("Requesting to peer: ", peer)
@@ -285,5 +291,6 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 	//		log.Fatal(err)
 	//	}
 	//}
-	return nil
+	//LocalStorageSize
+	return nbChunk * storage.LocalStorageSize, nil
 }
