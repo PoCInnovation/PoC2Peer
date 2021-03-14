@@ -74,9 +74,11 @@ func (m *Msg) HandleDataExchange(pStorage storage.LocalStorage) error {
 	if !ok {
 		return fmt.Errorf("message got DataExchange op Code but could not convert to DataExchange\nreceived: %v", m)
 	}
-	//for _, data := range exch.Chunks {
-	//	log.Printf("Handling Data for file {%v} -> Chunk : %v\n", exch.File.Decode(), data.Id)
-	//}
+	if len(exch.Chunks) > 0 {
+		log.Printf("Received Data for file {%v} -> Chunk : %v to %v\n", exch.File, exch.Chunks[0].Id, exch.Chunks[len(exch.Chunks)-1].Id)
+	} else {
+		log.Printf("Received Data for file {%v} -> But no chunks requested\n", exch.File)
+	}
 	return pStorage.AddReceivedFileChunks(exch.File, exch.Chunks)
 }
 

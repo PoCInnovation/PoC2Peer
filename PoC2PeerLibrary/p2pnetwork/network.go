@@ -81,9 +81,6 @@ func InitPeer(infos NetworkInfos, prot string, ctx context.Context) (host.Host, 
 	opts := basicPeerOptions(infos, prot)
 	node, err := libp2p.New(ctx, opts...)
 	if err != nil {
-		log.Fatal(err)
-	}
-	if err != nil {
 		return nil, err
 	}
 	return node, nil
@@ -157,7 +154,7 @@ func (n *P2PNetwork) SetDatagramHandler(handler func(*protocol.Datagram, PeerID)
 				break
 			}
 			if err = handler(d, remote); err != nil {
-				log.Fatal("Datagram Handler err", err)
+				log.Println("Datagram Handler err", err)
 				break
 			}
 		}
@@ -247,7 +244,8 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 		log.Println("Sending HAVE REQUEST: ", peer)
 		err := n.SendDatagram(d1, peer)
 		if err != nil {
-			log.Fatal(err)
+			log.Printf("Could not send HAVE REQUEST to {%v} : %w\n", peer)
+			return -1, err
 		}
 	}
 	time.Sleep(time.Second * 2)
@@ -264,9 +262,10 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 	for peer, chunks := range ls {
 		d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: chunks}})
 		log.Println("Requesting to peer: ", peer)
-		err := n.SendDatagram(d2, peer)
+		err = n.SendDatagram(d2, peer)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
+			return -1, err
 		}
 	}
 	return nbChunk * storage.LocalStorageSize, nil

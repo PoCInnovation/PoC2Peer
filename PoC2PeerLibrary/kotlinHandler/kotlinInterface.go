@@ -69,39 +69,7 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) ([]byte, er
 	} else {
 		endOffset = sourcePos + readLength
 	}
-	log.Printf("Reading from {%d} to {%d}\n", sourcePos, endOffset)
-	log.Println(data[sourcePos:endOffset])
-
 	return data[sourcePos:endOffset], nil
-
-	//
-	//var endOffset int
-	//if sourcePos+readLength > len(data) {
-	//	endOffset = len(data)
-	//} else {
-	//	endOffset = sourcePos + readLength
-	//}
-	//log.Printf("Reading from {%d} to {%d}\n", sourcePos, endOffset)
-	//
-	//var inBuf = bytes.NewBuffer(data[sourcePos:endOffset])
-	//var outBuf = bytes.NewBuffer(buf[destPos:])
-	//log.Println(inBuf.String())
-	//l, err := io.Copy(outBuf, inBuf)
-	//if err != nil {
-	//	log.Println(err)
-	//	return -1
-	//}
-	//return l
-
-	//var endOffset int
-	//if sourcePos+readLength > len(data) {
-	//	endOffset = len(data)
-	//} else {
-	//	endOffset = sourcePos + readLength
-	//}
-	//copy(buf, data[sourcePos:endOffset])
-	//return len(buf)
-
 }
 
 func Close(ID string) {

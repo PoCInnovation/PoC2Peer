@@ -191,7 +191,8 @@ func (c *LibP2pCore) UpdatePeers() error {
 func (c *LibP2pCore) Launch() error {
 	log.Println("Launching peer: ", c.ID())
 	if err := c.UpdatePeers(); err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return err
 	}
 	return nil
 }
