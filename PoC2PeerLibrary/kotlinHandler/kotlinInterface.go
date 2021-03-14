@@ -1,12 +1,10 @@
 package kotlinHandler
 
 import (
-	"bytes"
 	"encoding/hex"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/core"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/p2pnetwork"
 	"github.com/PoCInnovation/PoC2Peer/PoC2PeerLibrary/storage"
-	"io"
 	"log"
 )
 
@@ -53,16 +51,16 @@ func Open(ID string) int {
 	return dataLength
 }
 
-func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int64 {
+func Read(buf []byte, sourcePos, destPos, readLength int, ID string) ([]byte, error) {
 	he, err := hex.DecodeString(ID)
 	if err != nil {
 		log.Println("decoding filehash failed")
-		return -1
+		return nil, err
 	}
 	data, err := Lib.RequestFile(storage.FileHash(he))
 	if err != nil {
 		log.Println(err)
-		return -1
+		return nil, err
 	}
 
 	var endOffset int
@@ -71,17 +69,27 @@ func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int64 {
 	} else {
 		endOffset = sourcePos + readLength
 	}
-	log.Printf("Reading from {%d} to {%d}\n", sourcePos, endOffset)
 
-	var inBuf = bytes.NewBuffer(data[sourcePos:endOffset])
-	var outBuf = bytes.NewBuffer(buf[destPos:])
-	log.Println(inBuf.String())
-	l, err := io.Copy(outBuf, inBuf)
-	if err != nil {
-		log.Println(err)
-		return -1
-	}
-	return l
+	return data[sourcePos:endOffset], nil
+
+	//
+	//var endOffset int
+	//if sourcePos+readLength > len(data) {
+	//	endOffset = len(data)
+	//} else {
+	//	endOffset = sourcePos + readLength
+	//}
+	//log.Printf("Reading from {%d} to {%d}\n", sourcePos, endOffset)
+	//
+	//var inBuf = bytes.NewBuffer(data[sourcePos:endOffset])
+	//var outBuf = bytes.NewBuffer(buf[destPos:])
+	//log.Println(inBuf.String())
+	//l, err := io.Copy(outBuf, inBuf)
+	//if err != nil {
+	//	log.Println(err)
+	//	return -1
+	//}
+	//return l
 
 	//var endOffset int
 	//if sourcePos+readLength > len(data) {

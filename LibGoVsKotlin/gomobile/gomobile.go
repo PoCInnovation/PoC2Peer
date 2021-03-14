@@ -21,7 +21,7 @@ func Open(ID string) int {
 	return kotlinHandler.Open(ID)
 }
 
-func Read(buf []byte, sourcePos, destPos, readLength int, ID string) int64 {
+func Read(buf []byte, sourcePos, destPos, readLength int, ID string) ([]byte, error) {
 	return kotlinHandler.Read(buf, sourcePos, destPos, readLength, ID)
 }
 
