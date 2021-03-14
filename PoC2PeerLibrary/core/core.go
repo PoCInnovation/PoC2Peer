@@ -237,6 +237,8 @@ func (c *LibP2pCore) HandleDatagram(d *protocol.Datagram, pid p2pnetwork.PeerID)
 			}
 			log.Println("finished processing REQUEST message datagram")
 			return c.network.SendDatagram(chunks, pid)
+		default:
+			log.Println("Unknown Datagram: ", d)
 		}
 		//log.Println(msg)
 	}
@@ -258,7 +260,7 @@ func (c *LibP2pCore) TestFile(file string) error {
 		return err
 	}
 	fmt.Printf("File has approximative size: %d\n", l)
-	time.Sleep(time.Second * 10)
+	time.Sleep(time.Second * 2)
 	data, err := c.RequestFile(hash)
 	if err != nil {
 		return err

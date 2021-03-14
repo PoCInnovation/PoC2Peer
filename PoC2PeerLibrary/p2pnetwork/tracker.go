@@ -31,7 +31,7 @@ const (
 type PeerInfos struct {
 	Idpeer   string
 	Ippeer   string
-	Portpeer int
+	Portpeer int `json:"port"`
 }
 
 func (i PeerInfos) ID() string {

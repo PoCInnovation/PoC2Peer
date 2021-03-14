@@ -1,6 +1,11 @@
 SHELL := /bin/bash
 
+re: clean init
+
 run:
+	npm start
+
+init:
 	@npm run init && npm start
 
 clean:

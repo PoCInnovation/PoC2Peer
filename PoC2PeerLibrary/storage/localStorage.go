@@ -3,6 +3,7 @@ package storage
 import (
 	"errors"
 	"fmt"
+	"log"
 	"sort"
 	"sync"
 )
@@ -70,6 +71,11 @@ func (s *P2PStorage) AddFile(fileData []byte) (FileID, error) {
 
 // AddFile Add a file to local storage. Return the hashed file when successfull
 func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
+	if len(chunks) < 1 {
+		// TODO: Return Err ?
+		log.Printf("AddReceivedFileChunks received an empty chunks List for File %x, nothing to do ...")
+		return nil
+	}
 	s.Lock()
 	key := hash.String()
 	if _, ok := s.LocalFiles[key]; !ok {
@@ -80,9 +86,10 @@ func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
 		s.LocalFiles[key] = NewFile(v, FSUpdated, []byte{}, s.Config.ChunkSize)
 	}
 	file := s.LocalFiles[key]
-	file.AddChunks(chunks)
+	log.Printf("Adding File %x whith chunks from %v to %v", hash, chunks[0].Id, chunks[len(chunks)-1].Id)
 	file.UpdateData()
 	s.LocalFiles[key] = file
+	file.AddChunks(chunks)
 	s.Unlock()
 	return nil
 }

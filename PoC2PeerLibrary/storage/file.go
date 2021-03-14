@@ -22,7 +22,8 @@ func (h FileHash) Eq(lhs FileHash) bool {
 }
 
 // TODO
-func (h FileHash) Decode() FileHash {
+//func (h FileHash) Decode() FileHash{
+func (h FileHash) Decode() string {
 	//return []byte(h)
 	//he, err := hex.DecodeString(h.String())
 	//if err != nil {
@@ -31,7 +32,8 @@ func (h FileHash) Decode() FileHash {
 	//}
 	//fmt.Println(h)
 	//return FileHash(he)
-	return []byte(fmt.Sprintf("%x", h))
+	//return []byte(fmt.Sprintf("%x", h))
+	return fmt.Sprintf("%x", h)
 }
 
 // FileState: State of a file, representing if it's complete, updated or unchanged
@@ -69,11 +71,7 @@ func NewFile(hash FileHash, state FileState, fileData []byte, chunkSize int) P2P
 		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 		newFile.Chunks[chunk.ID()] = chunks[i]
 	}
-	if len(chunks) > 0 {
-		log.Printf("Adding File %x whith chunks from %v to %v", newFile.Hash, chunks[0], chunks[len(chunks)-1])
-	} else {
-		log.Printf("Adding File %x whith no chunks", newFile.Hash)
-	}
+	log.Printf("Creating New file %s with %v bytes.\n", newFile.Hash.Decode(), len(fileData))
 	return newFile
 }
 
