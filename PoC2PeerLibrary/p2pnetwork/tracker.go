@@ -27,7 +27,6 @@ const (
 	trackerListPeersEndpoint  = "peerList"
 )
 
-// TODO: Modify after Greg's modifs
 type PeerInfos struct {
 	Idpeer   string
 	Ippeer   string
@@ -169,10 +168,8 @@ func (t HttpTracker) Peers() ([]PeerInfos, error) {
 	return peers, nil
 }
 
-// TODO: Modify
 // AddPeer: Request Tracker to remove a peer
 func (t HttpTracker) RemovePeer(pid string) error {
-	// TODO: Modify after Greg's modifs
 	url1 := fmt.Sprintf("%s/%s", t.URL(), trackerRemovePeerEndpoint)
 	u, err := url.Parse(url1)
 	if err != nil {

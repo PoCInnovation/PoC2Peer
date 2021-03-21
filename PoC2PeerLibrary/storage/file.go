@@ -21,18 +21,7 @@ func (h FileHash) Eq(lhs FileHash) bool {
 	return bytes.Compare(h, lhs) == 0
 }
 
-// TODO
-//func (h FileHash) Decode() FileHash{
 func (h FileHash) Decode() string {
-	//return []byte(h)
-	//he, err := hex.DecodeString(h.String())
-	//if err != nil {
-	//	log.Printf("decoding filehash failed")
-	//	return []byte("")
-	//}
-	//fmt.Println(h)
-	//return FileHash(he)
-	//return []byte(fmt.Sprintf("%x", h))
 	return fmt.Sprintf("%x", h)
 }
 

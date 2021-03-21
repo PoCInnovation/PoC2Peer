@@ -10,11 +10,9 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	ma "github.com/multiformats/go-multiaddr"
 	"io/ioutil"
+	"log"
 	"os"
 	"sync"
-
-	"log"
-	//"net/http"
 	"time"
 )
 
@@ -200,7 +198,6 @@ func (c *LibP2pCore) Launch() error {
 // SetDefaultStreamHandlers initailise p2p lib with defaults function to send and handle datagrams
 func (c *LibP2pCore) SetDefaultStreamHandlers() error {
 	c.network.SetDatagramHandler(c.HandleDatagram)
-	//c.network.SetDatagramSender(c.HandleDatagram)
 	return nil
 }
 
@@ -241,7 +238,6 @@ func (c *LibP2pCore) HandleDatagram(d *protocol.Datagram, pid p2pnetwork.PeerID)
 		default:
 			log.Println("Unknown Datagram: ", d)
 		}
-		//log.Println(msg)
 	}
 	return nil
 }
@@ -277,7 +273,6 @@ func (c *LibP2pCore) TestFile(file string) error {
 }
 
 func (c *LibP2pCore) InitRequestFile(fileID storage.FileHash) (int, error) {
-	// TODO: remove once tracker ready.
 	log.Println("Requesting files to peers")
 	l, err := c.network.RequestFileToPeers(fileID, c.PeerStorage)
 	if err != nil {

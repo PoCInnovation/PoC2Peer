@@ -9,7 +9,8 @@ const (
 
 // HaveMsg holds a have message storage payload
 type HaveMsg struct {
-	File   storage.FileHash
-	Type   int
-	Chunks []storage.ChunkID
+	File     storage.FileHash
+	Type     int
+	FileSize int
+	Chunks   []storage.ChunkID
 }

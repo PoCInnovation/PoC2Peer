@@ -44,7 +44,6 @@ const (
 
 // PeerID identifies a peer
 // To avoid cycle Import
-// TODO: Remove ?
 type PeerID interface {
 	String() string
 }
@@ -58,17 +57,6 @@ type Protocol interface {
 type Datagram struct {
 	Msgs []Msg
 }
-
-//func HandleDatagram(d *Datagram, pid PeerID, storage storage.LocalStorage) error {
-//	for _, msg := range d.Msgs {
-//		switch msg.Op {
-//		case Data:
-//			log.Println("handling message datagram")
-//			msg.HandleDataExchange(storage)
-//		}
-//	}
-//	return nil
-//}
 
 func NewDataGram(m ...Msg) *Datagram {
 	return &Datagram{Msgs: m}

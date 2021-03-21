@@ -19,33 +19,6 @@ type Msg struct {
 	Data MsgData
 }
 
-//func (m Msg) HandleMsg(pStorage storage.LocalStorage) error {
-//	switch m.Op {
-//	case Have:
-//		log.Println("handling HAVE message datagram")
-//		//err := msg.HandleDataExchange(c.LocalStorage)
-//		//if err != nil {
-//		//	return err
-//		//}
-//	case Data:
-//		log.Println("handling DATA message datagram")
-//		err := m.HandleDataExchange(pStorage)
-//		if err != nil {
-//			return err
-//		}
-//	case Request:
-//		log.Printf("handling REQUEST message datagram\n")
-//		chunks, err := m.HandleRequest(pStorage
-//		if err != nil {
-//			log.Println("ERROR WHEN HANDLING REQUEST message datagram")
-//			return err
-//		}
-//		log.Println("finished processing REQUEST message datagram")
-// TODO find a way to add protocol (interface ?) to send back datagram
-//		return c.network.SendDatagram(chunks, pid)
-//	}
-//}
-
 func (m *Msg) HandleHave(pid PeerID, lStorage storage.LocalStorage, pStorage storage.PeerStorage) (*Datagram, error) {
 	log.Println("handling Have Request")
 	have, ok := m.Data.(HaveMsg)
@@ -59,10 +32,14 @@ func (m *Msg) HandleHave(pid PeerID, lStorage storage.LocalStorage, pStorage sto
 			//	TODO: do smth
 			return nil, err
 		}
-		return NewDataGram(Msg{Op: Have, Data: HaveMsg{File: have.File, Type: HaveResponse, Chunks: chunks}}), nil
+		data, err := lStorage.GetFileData(have.File)
+		if err != nil {
+			return nil, err
+		}
+		return NewDataGram(Msg{Op: Have, Data: HaveMsg{File: have.File, Type: HaveResponse, Chunks: chunks, FileSize: len(data)}}), nil
 	case HaveResponse:
 		//log.Println(have.Chunks)
-		err := pStorage.AddFileChunksForPeer(pid, have.File, have.Chunks)
+		err := pStorage.AddFileChunksForPeer(pid, have.File, have.Chunks, have.FileSize)
 		return nil, err
 	default:
 		return nil, fmt.Errorf("Have got Unknown Type: %v", have.Type)
@@ -124,13 +101,6 @@ func (m *Msg) UnmarshalJSON(b []byte) error {
 	// decode the gob in aux.Data and put it in m.Data
 	dec := gob.NewDecoder(bytes.NewBuffer(aux.Data))
 	switch aux.Op {
-	//case Handshake:
-	//	var h HandshakeMsg
-	//	err := dec.Decode(&h)
-	//	if err != nil {
-	//		return errors.New("failed to decode HandshakeMsg")
-	//	}
-	//	m.Data = h
 	case Have:
 		var h HaveMsg
 		err = dec.Decode(&h)
@@ -167,12 +137,6 @@ func (m *Msg) MarshalJSON() ([]byte, error) {
 	var b bytes.Buffer
 	enc := gob.NewEncoder(&b)
 	switch m.Data.(type) {
-	//case HandshakeMsg:
-	//	gob.Register(HandshakeMsg{})
-	//	err := enc.Encode(m.Data.(HandshakeMsg))
-	//	if err != nil {
-	//		return nil, fmt.Errorf("Failed to marshal HandshakeMsg: %v", err)
-	//	}
 	case HaveMsg:
 		// TOdo: Move in init function ?
 		gob.Register(HaveMsg{})
@@ -202,49 +166,3 @@ func (m *Msg) MarshalJSON() ([]byte, error) {
 	aux := msgAux{Op: m.Op, Data: b.Bytes()}
 	return json.Marshal(aux)
 }
-
-//// SendData sends the chunk range in a storage message
-//func SendData(start storage.ChunkID, end storage.ChunkID, remote PeerID, sid SwarmID) error {
-//	glog.Infof("SendData Chunks %d-%d, to %v, on %v", start, end, remote)
-//	storage, err := swarm.DataFromLocalChunks(start, end)
-//	if err != nil {
-//		return err
-//	}
-//	h := storage.DataExchange{Start: start, End: end, Data: storage}
-//	m := Msg{Op: Data, Data: h}
-//	d := Datagram{ChanID: c.theirs, Msgs: []Msg{m}}
-//	return p.sendDatagram(d, ours)
-//}
-//
-//func (p *Ppspp) handleData(cid ChanID, m Msg, remote PeerID) error {
-//	glog.Infof("handleData from %v", remote)
-//	c, ok1 := p.chans[cid]
-//	if !ok1 {
-//		return fmt.Errorf("handleData could not find chan %v", cid)
-//	}
-//	sid := c.sw
-//	swarm, ok2 := p.swarms[sid]
-//	if !ok2 {
-//		return fmt.Errorf("handleData could not find %v", sid)
-//	}
-//	d, ok3 := m.Data.(storage.DataExchange)
-//	if !ok3 {
-//		return MsgError{c: cid, m: m, info: "could not convert to DataExchange"}
-//	}
-//	glog.Infof("recvd storage %d-%d from %v on %v", d.Start, d.End, remote, sid)
-//	// TODO: skipping integrity check
-//	if err := swarm.AddLocalChunks(d.Start, d.End, d.Data); err != nil {
-//		return err
-//	}
-//	// Invoke the storage handler if we have one
-//	if swarm.dataHandler != nil {
-//		go swarm.dataHandler(d)
-//	}
-//	// Send haves to all peers in the swarm
-//	for r := range swarm.chans {
-//		if err := p.SendHave(d.Start, d.End, r, sid); err != nil {
-//			return err
-//		}
-//	}
-//	return nil
-//}

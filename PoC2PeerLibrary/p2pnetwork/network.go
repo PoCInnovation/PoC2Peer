@@ -26,8 +26,6 @@ type Network interface {
 	SendDatagram(d *protocol.Datagram, remote PeerID) error
 
 	// Connect connects to the remote peer and creates any io resources necessary for the connection
-	//Connect(remote PeerID) error
-	//Connect(remote PeerID) (*WrappedStream, error)
 	Connect(remote PeerID, protocol string) (*WrappedStream, error)
 
 	// Disconnect disconnects from the remote peer and destroys any io resources created for the connection
@@ -36,13 +34,9 @@ type Network interface {
 	// ID returns the ID of this peer
 	ID() PeerID
 
-	//// TODO: Remove when swarm functionnal
-	//// ID returns the ID of this peer
-	//FirstPeer() (PeerID, error)
-
 	// SetDatagramHandler sets the function that will be called on receipt of a new datagram
 	// f gets called every time a new Datagram is received.
-	SetDatagramHandler(func(*protocol.Datagram, PeerID) error)
+	SetDatagramHandler(f func(*protocol.Datagram, PeerID) error)
 
 	// AddAddrs adds multiaddresses for the remote peer to this peer's store
 	AddAddrs(id PeerID, addrs []ma.Multiaddr)
@@ -53,9 +47,10 @@ type Network interface {
 	// Close close the network
 	Close() error
 
-	// TODO: move in protocol ?
 	// Peers return all connected peers
 	Peers() []PeerID
+
+	// RequestFileToPeers launch Have request to connected peers and return file size.
 	RequestFileToPeers(file storage.FileHash, remoteStorage storage.PeerStorage) (int, error)
 }
 
@@ -251,13 +246,7 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 	time.Sleep(time.Second * 2)
 	ls, err := remoteStorage.GetPeersFileChunks(file)
 	if err != nil {
-		return 0, err
-	}
-	var nbChunk int
-	for _, chunks := range ls {
-		if len(chunks) > nbChunk {
-			nbChunk = len(chunks)
-		}
+		return -1, err
 	}
 	for peer, chunks := range ls {
 		d2 := protocol.NewDataGram(protocol.Msg{Op: protocol.Request, Data: protocol.RequestChunks{File: file, IDs: chunks}})
@@ -268,5 +257,9 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 			return -1, err
 		}
 	}
-	return nbChunk * storage.LocalStorageSize, nil
+	size, err := remoteStorage.GetFileSize(file)
+	if err != nil {
+		return -1, err
+	}
+	return size, nil
 }
