@@ -30,8 +30,13 @@ import com.example.android.uamp.utils.InjectorUtils
 import com.example.android.uamp.viewmodels.MainActivityViewModel
 import com.google.android.gms.cast.framework.CastButtonFactory
 import com.google.android.gms.cast.framework.CastContext
+import gomobile.Gomobile
 
 class MainActivity : AppCompatActivity() {
+
+    init {
+        Gomobile.launchP2P("0.0.0.0", "127.0.0.1", 5000);
+    }
 
     private val viewModel by viewModels<MainActivityViewModel> {
         InjectorUtils.provideMainActivityViewModel(this)

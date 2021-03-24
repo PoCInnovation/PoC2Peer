@@ -26,61 +26,46 @@ import com.google.android.exoplayer2.upstream.DataSourceException
 import com.google.android.exoplayer2.upstream.DataSpec
 import java.io.IOException
 import java.net.URLDecoder
+import gomobile.Gomobile
+import java.util.*
 
 /** A [DataSource] for reading P2P urls, via Bittorrent.  */
 class P2PDataSource
     : BaseDataSource( /* isNetwork= */true) {
     private var dataSpec: DataSpec? = null
     private var data: ByteArray? = null
-    private var endPosition = 0
-    private var readPosition = 0
+    private var endPosition = 0L
+    private var readPosition = 0L
+    private var ID = ""
 
     @Throws(IOException::class)
     override fun open(dataSpec: DataSpec): Long {
         transferInitializing(dataSpec)
         Log.d("p2psource", dataSpec.toString())
         this.dataSpec = dataSpec
-        readPosition = dataSpec.position.toInt()
+        readPosition = dataSpec.position
         val uri = dataSpec.uri
-        val uriParts = Util.split(uri.schemeSpecificPart, ",")
-        if (uriParts.size != 2) {
-            throw ParserException("Unexpected URI format: $uri")
-        }
-        val dataString = uriParts[1]
-        data = if (uriParts[0].contains(";base64")) {
-            try {
-                Base64.decode(dataString, 0)
-            } catch (e: IllegalArgumentException) {
-                throw ParserException("Error while parsing Base64 encoded string: $dataString", e)
-            }
-        } else {
-            // TODO: Add support for other charsets.
-            Util.getUtf8Bytes(URLDecoder.decode(dataString, C.ASCII_NAME))
-        }
-        endPosition =
-            if (dataSpec.length != C.LENGTH_UNSET.toLong()) dataSpec.length.toInt() + readPosition else data!!.size
-        if (endPosition > data!!.size || readPosition > endPosition) {
-            data = null
-            throw DataSourceException(DataSourceException.POSITION_OUT_OF_RANGE)
-        }
+        ID = uri.schemeSpecificPart.removePrefix("//")
+        endPosition = Gomobile.open(ID)
         transferStarted(dataSpec)
-        return endPosition.toLong() - readPosition
+        return endPosition - readPosition
     }
 
     override fun read(buffer: ByteArray, offset: Int, readLength: Int): Int {
-        var readLength = readLength
-        if (readLength == 0) {
+        var readLength = readLength.toLong()
+        if (readLength == 0L) {
             return 0
         }
         val remainingBytes = endPosition - readPosition
-        if (remainingBytes == 0) {
+        if (remainingBytes == 0L) {
             return C.RESULT_END_OF_INPUT
         }
-        readLength = Math.min(readLength, remainingBytes)
-        System.arraycopy(Util.castNonNull(data), readPosition, buffer, offset, readLength)
-        readPosition += readLength
-        bytesTransferred(readLength)
-        return readLength
+        readLength = readLength.coerceAtMost(remainingBytes)
+        val data = Gomobile.read(buffer, readPosition, offset.toLong(), readLength, ID);
+        System.arraycopy(Util.castNonNull(data), 0, buffer, offset, readLength.toInt())
+        readPosition += data.size
+        bytesTransferred(data.size)
+        return data.size
     }
 
     override fun getUri(): Uri? {

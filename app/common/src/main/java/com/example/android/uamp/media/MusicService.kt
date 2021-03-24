@@ -124,7 +124,7 @@ open class MusicService : MediaBrowserServiceCompat() {
     private var isForegroundService = false
 
     private val remoteJsonSource: Uri =
-        Uri.parse("http://192.168.1.15:8000/data.json") // TODO change this and we're pretty much done
+        Uri.parse("http://tracker.oursin.eu:3000/getSong") // TODO change this and we're pretty much done
 
     private val uAmpAudioAttributes = AudioAttributes.Builder()
         .setContentType(C.CONTENT_TYPE_MUSIC)

@@ -19,6 +19,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
+repositories {
+    flatDir {
+        dirs '.'
+    }
+}
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
 
