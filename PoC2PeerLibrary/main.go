@@ -146,8 +146,10 @@ func loadfiles(lib *core.LibP2pCore, dirs []string) error {
 		for _, file := range files {
 			if file.IsDir() {
 				continue
+				//if err := loadfiles(lib, []string{dirPath+ "/"+ file.Name()}); err != nil {
+				//	return err
+				//}
 			}
-			file.Name()
 			content, err := ioutil.ReadFile(dirPath + "/" + file.Name())
 			if err != nil {
 				log.Printf("Can't read file %s: %v\n", file, err)

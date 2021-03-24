@@ -8,29 +8,39 @@ type PeerID interface {
 }
 
 type PeerStorage interface {
-	AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID) error
+	AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID, FileSize int) error
 	GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID, error)
+	GetFileSize(hash FileID) (int, error)
 }
 
 type P2PRemoteStorage map[string]P2PFileStorage
 
-type P2PFileStorage map[PeerID][]ChunkID
+type P2PFileStorage struct {
+	Haves    map[PeerID][]ChunkID
+	FileSize int
+}
 
 func NewP2PRemoteStorage() *P2PRemoteStorage {
 	ret := make(P2PRemoteStorage)
 	return &ret
 }
 
-func (s P2PRemoteStorage) AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID) error {
+func (s P2PRemoteStorage) AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID, FileSize int) error {
 	peerStorage, ok := s[hash.String()]
 	if !ok {
-		peerStorage = make(P2PFileStorage)
+		peerStorage = P2PFileStorage{
+			Haves:    make(map[PeerID][]ChunkID),
+			FileSize: -1,
+		}
 	}
-	fileChunks, ok := peerStorage[peer]
+	fileChunks, ok := peerStorage.Haves[peer]
 	if !ok {
-		peerStorage[peer] = chunkIDS
+		peerStorage.Haves[peer] = chunkIDS
 	} else {
-		peerStorage[peer] = removeDuplicates(append(fileChunks, chunkIDS...))
+		peerStorage.Haves[peer] = removeDuplicates(append(fileChunks, chunkIDS...))
+	}
+	if FileSize > peerStorage.FileSize {
+		peerStorage.FileSize = FileSize
 	}
 	s[hash.String()] = peerStorage
 	return nil
@@ -42,15 +52,23 @@ func (s P2PRemoteStorage) GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID,
 		return nil, errors.New("File not remote Peer Storage")
 	}
 	// Create the target map
-	targetMap := make(map[PeerID][]ChunkID, len(file))
+	targetMap := make(map[PeerID][]ChunkID, len(file.Haves))
 
 	// Copy from the original map to the target map
-	for key, value := range file {
+	for key, value := range file.Haves {
 		newValue := make([]ChunkID, len(value))
 		copy(newValue, value)
 		targetMap[key] = newValue
 	}
 	return targetMap, nil
+}
+
+func (s P2PRemoteStorage) GetFileSize(hash FileID) (int, error) {
+	file, ok := s[hash.String()]
+	if !ok {
+		return -1, errors.New("File not remote Peer Storage")
+	}
+	return file.FileSize, nil
 }
 
 func removeDuplicates(s []ChunkID) []ChunkID {
