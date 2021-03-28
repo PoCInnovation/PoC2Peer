@@ -87,6 +87,6 @@ dependencies {
     testImplementation "org.robolectric:robolectric:$robolectric_version"
 
     // P2P
-    implementation (name:'gomobile', ext:'aar')
+    implementation (name:'poc2peer', ext:'aar')
 
 }

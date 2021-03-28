@@ -26,7 +26,8 @@ import com.google.android.exoplayer2.upstream.DataSourceException
 import com.google.android.exoplayer2.upstream.DataSpec
 import java.io.IOException
 import java.net.URLDecoder
-import gomobile.Gomobile
+//import kotlinLib.KotlinLib
+import poc2PeerKotlinInterface.Poc2PeerKotlinInterface
 import java.util.*
 
 /** A [DataSource] for reading P2P urls, via Bittorrent.  */
@@ -46,7 +47,7 @@ class P2PDataSource
         readPosition = dataSpec.position
         val uri = dataSpec.uri
         ID = uri.schemeSpecificPart.removePrefix("//")
-        endPosition = Gomobile.open(ID)
+        endPosition = Poc2PeerKotlinInterface.open(ID)
         transferStarted(dataSpec)
         return endPosition - readPosition
     }
@@ -61,7 +62,7 @@ class P2PDataSource
             return C.RESULT_END_OF_INPUT
         }
         readLength = readLength.coerceAtMost(remainingBytes)
-        val data = Gomobile.read(buffer, readPosition, offset.toLong(), readLength, ID);
+        val data = Poc2PeerKotlinInterface.read(buffer, readPosition, offset.toLong(), readLength, ID);
         System.arraycopy(Util.castNonNull(data), 0, buffer, offset, readLength.toInt())
         readPosition += data.size
         bytesTransferred(data.size)
