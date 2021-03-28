@@ -29,6 +29,9 @@ It's composed of 4 parts:
  - It uses a P2P Library written in [Go](https://golang.org/) based on [IPFS libp2p](https://libp2p.io/)
 
  - A Tracker is used to keep information about available files and Connected Peers.
+ 
+ - The Dashboard is a graphical interface allowing access to the permanent peer (tracker) of the Project. 
+   It permits to visualize the music available on the network, to remove  them and also to visualize the entire peers present on the network 
 
  - Uamp is the base Application for the player.
 
@@ -80,6 +83,13 @@ It's composed of 4 parts:
     ```
   ![PermPeer_load](./doc/assets/PermPeer_load.png)
 
+
+- ## Dashboard
+  **Directory:** Dashboard/
+
+  Go to dashboard's directory.
+    - run `flutter start`
+      
 - ## Android
   **Directory:** app/
 
@@ -110,6 +120,8 @@ It's composed of 4 parts:
 - ### CLI
     - #### [Golang](https://golang.org/)
       Go is the main (and only) language used in CLI.
+- ### Dashboard
+   - ### [Flutter](https://flutter.dev/docs)
 
 # Features
 
