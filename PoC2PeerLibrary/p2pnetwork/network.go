@@ -16,7 +16,6 @@ import (
 	ma "github.com/multiformats/go-multiaddr"
 	"io"
 	"log"
-	"time"
 )
 
 // Network handles interactions with the underlying protocol
@@ -243,8 +242,8 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 			return -1, err
 		}
 	}
-	time.Sleep(time.Second * 2)
-	ls, err := remoteStorage.GetPeersFileChunks(file)
+	//time.Sleep(time.Second * 2)
+	ls, err := remoteStorage.PeersHasFileChunks(file)
 	if err != nil {
 		return -1, err
 	}
@@ -257,7 +256,7 @@ func (n *P2PNetwork) RequestFileToPeers(file storage.FileHash, remoteStorage sto
 			return -1, err
 		}
 	}
-	size, err := remoteStorage.GetFileSize(file)
+	size, err := remoteStorage.FileSize(file)
 	if err != nil {
 		return -1, err
 	}

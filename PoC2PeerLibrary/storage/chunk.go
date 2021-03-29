@@ -27,3 +27,9 @@ func NewChunkFromData(id ChunkID, size int, data []byte) Chunk {
 	copy(c.B, data)
 	return c
 }
+
+type ChunkIDs []ChunkID
+
+func (a ChunkIDs) Len() int           { return len(a) }
+func (a ChunkIDs) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ChunkIDs) Less(i, j int) bool { return a[i] < a[j] }

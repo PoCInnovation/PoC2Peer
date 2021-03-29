@@ -8,9 +8,9 @@ type PeerID interface {
 }
 
 type PeerStorage interface {
-	AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID, FileSize int) error
-	GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID, error)
-	GetFileSize(hash FileID) (int, error)
+	UpdateFileInfos(peer PeerID, hash FileID, fileSize int, chunkIDS []ChunkID) error
+	PeersHasFileChunks(hash FileID) (map[PeerID][]ChunkID, error)
+	FileSize(hash FileID) (int, error)
 }
 
 type P2PRemoteStorage map[string]P2PFileStorage
@@ -25,7 +25,7 @@ func NewP2PRemoteStorage() *P2PRemoteStorage {
 	return &ret
 }
 
-func (s P2PRemoteStorage) AddFileChunksForPeer(peer PeerID, hash FileID, chunkIDS []ChunkID, FileSize int) error {
+func (s P2PRemoteStorage) UpdateFileInfos(peer PeerID, hash FileID, fileSize int, chunkIDS []ChunkID) error {
 	peerStorage, ok := s[hash.String()]
 	if !ok {
 		peerStorage = P2PFileStorage{
@@ -39,14 +39,14 @@ func (s P2PRemoteStorage) AddFileChunksForPeer(peer PeerID, hash FileID, chunkID
 	} else {
 		peerStorage.Haves[peer] = removeDuplicates(append(fileChunks, chunkIDS...))
 	}
-	if FileSize > peerStorage.FileSize {
-		peerStorage.FileSize = FileSize
+	if fileSize != -1 && peerStorage.FileSize == -1 {
+		peerStorage.FileSize = fileSize
 	}
 	s[hash.String()] = peerStorage
 	return nil
 }
 
-func (s P2PRemoteStorage) GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID, error) {
+func (s P2PRemoteStorage) PeersHasFileChunks(hash FileID) (map[PeerID][]ChunkID, error) {
 	file, ok := s[hash.String()]
 	if !ok {
 		return nil, errors.New("File not remote Peer Storage")
@@ -63,7 +63,7 @@ func (s P2PRemoteStorage) GetPeersFileChunks(hash FileID) (map[PeerID][]ChunkID,
 	return targetMap, nil
 }
 
-func (s P2PRemoteStorage) GetFileSize(hash FileID) (int, error) {
+func (s P2PRemoteStorage) FileSize(hash FileID) (int, error) {
 	file, ok := s[hash.String()]
 	if !ok {
 		return -1, errors.New("File not remote Peer Storage")

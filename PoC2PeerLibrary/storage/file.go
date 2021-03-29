@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"log"
+	"sort"
 )
 
 // FileHash:
@@ -44,6 +45,7 @@ type P2PFile struct {
 	Hash   FileHash
 	State  FileState
 	Data   []byte
+	IDs    ChunkIDs
 	Chunks map[ChunkID]Chunk
 }
 
@@ -54,11 +56,13 @@ func NewFile(hash FileHash, state FileState, fileData []byte, chunkSize int) P2P
 		Hash:   hash,
 		State:  state,
 		Data:   fileData,
+		IDs:    make(ChunkIDs, len(chunks)),
 		Chunks: make(map[ChunkID]Chunk, len(chunks)),
 	}
 	for i, chunk := range chunks {
 		//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
 		newFile.Chunks[chunk.ID()] = chunks[i]
+		newFile.IDs[i] = chunks[i].Id
 	}
 	log.Printf("Creating New file %s with %v bytes.\n", newFile.Hash.Decode(), len(fileData))
 	return newFile
@@ -87,14 +91,23 @@ func (f P2PFile) GetRequestedChunks(ids []ChunkID) []Chunk {
 // TODO
 func (f *P2PFile) AddChunks(chunks []Chunk) error {
 	for i, chunk := range chunks {
-		// TODO: keep ??
 		if _, ok := f.Chunks[chunk.Id]; ok {
-			log.Println("Adding Chunk but was already there")
+			// TODO: keep ??
+			// log.Println("Adding Chunk but was already there")
+			continue
 		}
+		f.IDs = append(f.IDs, chunk.Id)
 		f.Chunks[chunk.Id] = chunks[i]
 		f.State = FSUpdated
 	}
 	return nil
+}
+
+func (f P2PFile) Size() int {
+	if f.Complete() {
+		return len(f.Data)
+	}
+	return -1
 }
 
 // Complete: Check P2PFile state, return true if file is completed.
@@ -103,13 +116,12 @@ func (f P2PFile) Complete() bool {
 }
 
 // GetChunksIDs: Return all ChunkID's in a P2PFile.
-func (f P2PFile) GetChunksIDs() []ChunkID {
-	ids := make([]ChunkID, len(f.Chunks))
-	i := 0
-	for id, _ := range f.Chunks {
-		ids[i] = id
-		i += 1
+func (f P2PFile) GetChunksIDs() ChunkIDs {
+	if f.State == FSUpdated {
+		sort.Sort(f.IDs)
 	}
+	ids := make(ChunkIDs, len(f.IDs))
+	copy(ids, f.IDs)
 	return ids
 }
 
@@ -132,10 +144,10 @@ func (f *P2PFile) UpdateData() {
 		if !ok1 {
 			break
 		}
-		if chunkLen := len(chunk.B); chunkLen == 0 {
+		if len(chunk.B) == 0 {
 			break
 		} else {
-			dataLen += chunkLen
+			dataLen += len(chunk.B)
 		}
 	}
 	data := make([]byte, dataLen)
@@ -158,9 +170,10 @@ func (f *P2PFile) UpdateData() {
 	}
 }
 
-//DeleteData: Delete file Data to free ressources
+// DeleteData: Delete file Data to free ressources
 func (f *P2PFile) DeleteData() {
 	f.Data = []byte{}
+	f.State = FSUnchanged
 }
 
 // FileDataToChunks: Transform array of bytes (content of a file) into Chunk's array with 'chunkSize' size.

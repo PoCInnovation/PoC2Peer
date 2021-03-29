@@ -94,10 +94,22 @@ It's composed of 4 parts:
   **Directory:** app/
 
   Either:
-    - Open Project with Android Studio and run application.
-    - Build Apk and install it on your android.
-    
+      - Open Project with Android Studio and run application.
+      - Build Apk and install it on your android.
+
   You Should Have a list of files kept by the tracker
+
+- ## If you need to rebuild KotlinInterface:
+  **Directory:** Poc2PeerLibrary/poc2PeerKotlinInterface/
+
+    go to Library directory:
+  ```shell
+    gomobile bind -v  -o poc2peer.aar -target=android ./
+  ```
+  copy `poc2peer.aar` and `poc2peer-sources.jar` into:
+   - app/app
+   - app/automotive
+   - app/common
 
 # Requirements.
 
@@ -136,4 +148,9 @@ It's composed of 4 parts:
 - [ ] Upgrade local storage to write file given a configuration file.
 - [ ] Log System in file and level of verbose.
 
-# Timeline
+[comment]: <> (# Timeline)
+
+Contributors:
+ - [Damien Bernard](https://github.com/Encorpluptit/)
+ - [Maxime Oursin](https://github.com/Oursin)
+ - [Grégoire Brasseur](https://github.com/lerimeur)

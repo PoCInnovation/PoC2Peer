@@ -188,10 +188,25 @@ func (c *LibP2pCore) UpdatePeers() error {
 
 func (c *LibP2pCore) Launch() error {
 	log.Println("Launching peer: ", c.ID())
-	if err := c.UpdatePeers(); err != nil {
-		log.Println(err)
-		return err
-	}
+	go func() {
+		for {
+			if err := c.UpdatePeers(); err != nil {
+				log.Println(err)
+			}
+			time.Sleep(time.Second * 30)
+		}
+	}()
+	go func() {
+		for {
+			log.Println("Syncing with peers", c.network.Peers())
+			for _, peer := range c.network.Peers() {
+				c.network.SendDatagram(
+					protocol.NewDataGram(protocol.Msg{Op: protocol.Sync, Data: protocol.SyncMsg{Type: protocol.SyncRequest}}), peer,
+				)
+			}
+			time.Sleep(time.Second * 5)
+		}
+	}()
 	return nil
 }
 
@@ -212,7 +227,7 @@ func (c *LibP2pCore) HandleDatagram(d *protocol.Datagram, pid p2pnetwork.PeerID)
 		//}
 		switch msg.Op {
 		case protocol.Have:
-			log.Println("handling HAVE message datagram")
+			//log.Println("handling HAVE message datagram")
 			resp, err := msg.HandleHave(pid, c.LocalStorage, c.PeerStorage)
 			if err != nil {
 				return err
@@ -221,20 +236,29 @@ func (c *LibP2pCore) HandleDatagram(d *protocol.Datagram, pid p2pnetwork.PeerID)
 				return c.network.SendDatagram(resp, pid)
 			}
 		case protocol.Data:
-			log.Println("handling DATA message datagram")
+			//log.Println("handling DATA message datagram")
 			err := msg.HandleDataExchange(c.LocalStorage)
 			if err != nil {
 				return err
 			}
 		case protocol.Request:
-			log.Printf("handling REQUEST message datagram\n")
+			//log.Printf("handling REQUEST message datagram\n")
 			chunks, err := msg.HandleRequest(c.LocalStorage)
 			if err != nil {
 				log.Println("ERROR WHEN HANDLING REQUEST message datagram")
 				return err
 			}
-			log.Println("finished processing REQUEST message datagram")
+			//log.Println("finished processing REQUEST message datagram")
 			return c.network.SendDatagram(chunks, pid)
+		case protocol.Sync:
+			//log.Printf("handling Sync message datagram\n")
+			files, err := msg.HandleSync(pid, c.LocalStorage, c.PeerStorage)
+			if err != nil {
+				//log.Println("ERROR WHEN HANDLING SYNC message datagram")
+				return err
+			}
+			//log.Println("finished processing SYNC message datagram")
+			return c.network.SendDatagram(files, pid)
 		default:
 			log.Println("Unknown Datagram: ", d)
 		}
@@ -259,11 +283,11 @@ func (c *LibP2pCore) TestFile(file string) error {
 	fmt.Printf("File has approximative size: %d\n", l)
 	time.Sleep(time.Second * 2)
 	data, err := c.RequestFile(hash)
-	if err != nil {
-		return err
-	}
-	if err != nil {
-		return err
+	for len(data) != l {
+		if err != nil {
+			return err
+		}
+		data, err = c.RequestFile(hash)
 	}
 	err = ioutil.WriteFile("test_file.mp3", data, os.ModePerm)
 	if err != nil {
@@ -282,12 +306,12 @@ func (c *LibP2pCore) InitRequestFile(fileID storage.FileHash) (int, error) {
 }
 
 func (c *LibP2pCore) RequestFile(fileID storage.FileHash) ([]byte, error) {
-	datas, err := c.LocalStorage.GetFileData(fileID)
+	datas, err := c.LocalStorage.FileData(fileID)
 	if err == storage.FILENOTFOUND {
 		log.Println("Requesting files to peers")
 		c.network.RequestFileToPeers(fileID, c.PeerStorage)
 		time.Sleep(time.Second * 2)
-		datas, err = c.LocalStorage.GetFileData(fileID)
+		datas, err = c.LocalStorage.FileData(fileID)
 	}
 	if err != nil {
 		return nil, err

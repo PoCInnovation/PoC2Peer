@@ -68,5 +68,5 @@ func Close(ID string) {
 		log.Printf("decoding filehash failed")
 		return
 	}
-	Lib.LocalStorage.DeleteData(storage.FileHash(he))
+	Lib.LocalStorage.DeleteFileData(storage.FileHash(he))
 }

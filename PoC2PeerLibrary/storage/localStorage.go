@@ -4,17 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"sort"
 	"sync"
 )
 
 type LocalStorage interface {
 	AddFile(fileData []byte) (FileID, error)
-	AddReceivedFileChunks(hash FileID, chunks []Chunk) error
+	AddFileChunks(hash FileID, chunks []Chunk) error
 	GetRequestedChunks(hash FileID, ids []ChunkID) ([]Chunk, error)
-	GetChunkIDsInStorage(hash FileID) ([]ChunkID, error)
-	GetFileData(hash FileID) ([]byte, error)
-	DeleteData(hash FileID) error
+	FilesList() []FileHash
+	FileInfos(hash FileID) (ids []ChunkID, fileSize int, err error)
+	FileData(hash FileID) (data []byte, err error)
+	DeleteFileData(hash FileID) error
 }
 
 type FileID interface {
@@ -41,16 +41,9 @@ func NewP2PStorage() LocalStorage {
 	}
 }
 
-type FileHashTmp int
-
-func (f FileHashTmp) String() string {
-	return fmt.Sprintf("%d", f)
-}
-
 // AddFile Add a file to local storage. Return the hashed file when successfull
 func (s *P2PStorage) AddFile(fileData []byte) (FileID, error) {
 	hash := NewHashFromFile(fileData)
-	//hash := tmp
 	key := hash.String()
 	s.Lock()
 	if _, ok := s.LocalFiles[key]; ok {
@@ -58,22 +51,15 @@ func (s *P2PStorage) AddFile(fileData []byte) (FileID, error) {
 		return nil, errors.New("Trying to add existing file")
 	}
 	s.LocalFiles[key] = NewFile(hash, FSComplete, fileData, s.Config.ChunkSize)
-	//file := FileDataToChunks(fileData, s.Config.ChunkSize)
-	//s.LocalFiles[key] = P2PFile{state: FSComplete, Data: fileData, Chunks: make(map[ChunkID]Chunk, len(file))}
-	//for i, chunk := range file {
-	//	//log.Printf("Adding Chunk whith ID: %v\nFile: %v\nBytes: %v\n", chunk.Id, hash, chunk.B)
-	//	s.LocalFiles[key].Chunks[chunk.ID()] = file[i]
-	//}
-	//s.LocalFiles[key] = FileDataToChunks(fileData, s.Config.ChunkSize)
 	s.Unlock()
 	return hash, nil
 }
 
 // AddFile Add a file to local storage. Return the hashed file when successfull
-func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
+func (s *P2PStorage) AddFileChunks(hash FileID, chunks []Chunk) error {
 	if len(chunks) < 1 {
 		// TODO: Return Err ?
-		log.Printf("AddReceivedFileChunks received an empty chunks List for File %x, nothing to do ...")
+		log.Printf("AddFileChunks received an empty chunks List for File %x, nothing to do ...")
 		return nil
 	}
 	s.Lock()
@@ -87,9 +73,9 @@ func (s *P2PStorage) AddReceivedFileChunks(hash FileID, chunks []Chunk) error {
 	}
 	file := s.LocalFiles[key]
 	log.Printf("Adding File %x whith chunks from %v to %v", hash, chunks[0].Id, chunks[len(chunks)-1].Id)
+	file.AddChunks(chunks)
 	file.UpdateData()
 	s.LocalFiles[key] = file
-	file.AddChunks(chunks)
 	s.Unlock()
 	return nil
 }
@@ -107,30 +93,35 @@ func (s *P2PStorage) GetRequestedChunks(hash FileID, ids []ChunkID) ([]Chunk, er
 	return chunks, nil
 }
 
-func (s *P2PStorage) GetChunkIDsInStorage(hash FileID) ([]ChunkID, error) {
+func (s *P2PStorage) FilesList() []FileHash {
+	s.Lock()
+	lst := make([]FileHash, len(s.LocalFiles))
+	i := 0
+	for _, file := range s.LocalFiles {
+		lst[i] = file.Hash
+		i += 1
+	}
+	s.Unlock()
+	return lst
+}
+
+func (s *P2PStorage) FileInfos(hash FileID) ([]ChunkID, int, error) {
 	s.Lock()
 	file, ok := s.LocalFiles[hash.String()]
 	if !ok {
 		s.Unlock()
-		return nil, fmt.Errorf("Requested file is not in storage: {%s}", hash.String())
+		return nil, -1, fmt.Errorf("Requested file is not in storage: {%s}", hash.String())
 	}
+	sz := file.Size()
 	chunks := file.GetChunksIDs()
 	s.Unlock()
-	sort.Sort(ChunkIDs(chunks))
-	return chunks, nil
+	return chunks, sz, nil
 }
-
-// TODO: modify Sort
-type ChunkIDs []ChunkID
-
-func (a ChunkIDs) Len() int           { return len(a) }
-func (a ChunkIDs) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ChunkIDs) Less(i, j int) bool { return a[i] < a[j] }
 
 var FILENOTFOUND = errors.New("P2PFile not in storage")
 
 // GetChunkIDsInStorage Search for requested chunk with file Hash
-func (s *P2PStorage) GetFileData(hash FileID) ([]byte, error) {
+func (s *P2PStorage) FileData(hash FileID) ([]byte, error) {
 	s.Lock()
 	file, ok := s.LocalFiles[hash.String()]
 	if !ok {
@@ -142,7 +133,7 @@ func (s *P2PStorage) GetFileData(hash FileID) ([]byte, error) {
 	return data, nil
 }
 
-func (s *P2PStorage) DeleteData(hash FileID) error {
+func (s *P2PStorage) DeleteFileData(hash FileID) error {
 	s.Lock()
 	file, ok := s.LocalFiles[hash.String()]
 	if !ok {
